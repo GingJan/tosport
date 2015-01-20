@@ -8,20 +8,23 @@
 
 #####`操作成功`
 **Response**
-
-"code" : 20000,
-
-"response" : Json格式数据
+```json
+{
+	"code": 20000,
+	"response": [Json格式数据集  或  操作成功提示信息]
+}
+```
 ##
 
 
 #####`操作失败`
 **Response**
-
-"code":40000,
-
-"response":"错误提示信息"
-
+```json
+{
+	"error_code": 40000,
+	"msg": "错误提示信息"
+}
+```
 ##
 
-注意：u_id代表User表的id标示、f_id代表Friend表的id标示
+另外请注意：u_id代表UserInfo表的id标示、f_id代表Friend表的id标示
