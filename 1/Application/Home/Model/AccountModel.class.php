@@ -15,6 +15,12 @@ class AccountModel extends Model{
         array('password','md5',3,'function')
     );
     
+    /**
+     * 检测密码是否正确
+     * @param string $account
+     * @param string $password
+     * @return boolean
+     */
     protected function checkPassword($account,$password){
         if($this->where("account='%s' AND password='%s'",$account,$password)->find()){
             return true;
@@ -22,31 +28,40 @@ class AccountModel extends Model{
         return false;
     }
     
-    public function register($account){
-        if($this->create($account)){
+    /**
+     * Account表 注册
+     */
+    public function register($data){
+        if($this->create($data)){
             if($this->add()){
                 return spt_json_success();
             }
-//             $msg='Oops!something was rong!+'.$this->getDbError();
             return spt_json_error('注册发生错误!');
         }
         return spt_json_error($this->getError());
     }
     
+    /**
+     * 登录
+     */
     public function login($data){
         $where="account='%s' AND password='%s'";
         $res=$this->where($where,$data['account'],$data['password'])->find();
         if($res){
             session(array('session_id'=>session_id(),'expire'=>3600));//设置session过期的时间
             $userInfo=D('UserInfo');
-            $res=$userInfo->getUserInfo($res);
-            session('user',$res);
-            $userInfo->where("u_id=%d",$res['u_id'])->save($userInfo->create($res));
+            $info=$userInfo->getUserInfo($res);
+            $info['a_id']=$res['a_id'];
+            session('user',$info);
+            $userInfo->where("u_id=%d",$info['u_id'])->save($userInfo->create($res));
             return spt_json_success('登陆成功!');
         }
         return spt_json_error('用户不存在或者密码错误!');
     }
     
+    /**
+     * 修改密码
+     */
     public function updatePassword($data){
         $validate_rules=array(
             array('password','','新密码不能为空',self::MUST_VALIDATE,'notequal',3),

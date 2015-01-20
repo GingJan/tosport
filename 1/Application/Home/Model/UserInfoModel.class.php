@@ -17,19 +17,27 @@ class UserInfoModel extends Model{
 
     );
     
+    /**
+     * 获取IP地址
+     */
     protected function getIP($data){
         return $_SERVER['REMOTE_ADDR'];
     }
     
-    protected function checkSex($sex){
-        if($sex == '男' || $sex == '女'){
-            return true;
-        }
-        return false;
-    }
+    /**
+     * 检测是否正确填写性别
+     */
+//     protected function checkSex($sex){
+//         if($sex == '男' || $sex == '女'){
+//             return true;
+//         }
+//         return false;
+//     }
     
 
-        
+    /**
+     * UserInfo表 注册
+     */
     public function register($data){
         if($this->create($data)){
             if($this->add()){
@@ -41,7 +49,10 @@ class UserInfoModel extends Model{
         return spt_json_error($this->getError());
     }
     
-    public function update($data){
+    /**
+     * 更新个人信息 
+     */
+    public function updateInfo($data){
         $validate_rules=array(
             array('phone','11','电话格式不正确',2,'length',2),
             array('email','email','邮箱格式不正确',2,'regex',2)//邮箱
@@ -62,7 +73,7 @@ class UserInfoModel extends Model{
     
     /**
      * 获取登陆用户的基本信息
-     * @param mixed $account
+     * @param string $account
      */
     public function getUserInfo($data){
         $where="account='%s'";

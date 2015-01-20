@@ -1,7 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
-	'URL_MODEL'            => 2,//URL模式为REWRITE模式,此模式可以不用输入入口文件
+	'URL_MODEL'            => 2,			//URL模式为REWRITE模式,此模式可以不用输入入口文件
 	'TMPL_TEMPLATE_SUFFIX' => '.html',      //模板后缀名
     'URL_HTML_SUFFIX'      => 'html|phtml', //伪静态后缀名设置
     'URL_CASE_INSENSITIVE' => true,         //不区分URL大小写

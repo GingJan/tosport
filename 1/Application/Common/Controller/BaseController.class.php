@@ -56,15 +56,14 @@ class BaseController extends Controller{
 	/**
 	 * 登录检测
 	 * @param int
-	 * @return 当$type=0时，返回$this (默认);
-	 *         当$type=1时，返回spt_json_success()
+	 * @return $this
 	 */
 	protected function getlogin($type = 0){
-		if(session('?user')){  //或者可以session('?user');
-		    return $type?  spt_json_success() : $this;//当$type=0时，返回$this;当$type=1时，返回spt_json_success()
+		if(session('?user')){
+		    return $this;
 		}
 		else{
-            return spt_json_error('请先登录');
+            $this->ajaxReturn(spt_json_error('请先登录'));
 		}
 	}
 	

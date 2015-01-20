@@ -13,7 +13,14 @@ class UserController extends BaseController{
      */    
     public function register(){
         $data=I('post.');
-        $res=D('User')->register($data);
+        $res=D('Account')->register($data);//在Account表注册
+        if($res['code'] === 20000){
+            $res=D('UserInfo')->register($data);//这UserInfo表注册
+            if($res['code'] === 20000){
+                $this->ajaxReturn($res);
+            }
+            $this->ajaxReturn($res);
+        }
         $this->ajaxReturn($res);
     }
     
@@ -21,12 +28,12 @@ class UserController extends BaseController{
      * 修改用户基本信息
      * @param int u_id
      */
-    public function update(){
+    public function updateInfo(){
         $this->getlogin();//登陆检测
         $data=I('post.');
         $data['u_id'] = session('user.u_id');
         $data['account'] = session('user.account');
-        $res=D('UserInfo')->update($data);
+        $res=D('UserInfo')->updateInfo($data);
         $this->ajaxReturn($res);
     }
     
@@ -36,8 +43,6 @@ class UserController extends BaseController{
     public function login(){
         $data=I('post.');
         $data['password']=md5($data['password']);
-//         dump($data);
-//         exit;
         $account=D('Account')->login($data);
         $this->ajaxReturn($account);
     }
@@ -65,5 +70,9 @@ class UserController extends BaseController{
 //         $account=D('Account')->updatePassword($data);
         $this->ajaxReturn(D('Account')->updatePassword($data));
     }
-
+    
+    public function listsUserInfo(){
+        $this->getlogin();
+        $this->ajaxReturn(session('user'));
+    }
 }
