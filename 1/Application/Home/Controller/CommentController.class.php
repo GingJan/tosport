@@ -26,8 +26,9 @@ class MessageController extends BaseController{
      */
     public function send(){
         $this->getlogin();
-        $content=I('post.');
-        
+        $data['content']=I('post.content');
+        $data['sender_id']
+        D('Comment')->send($data);
     }
     
     

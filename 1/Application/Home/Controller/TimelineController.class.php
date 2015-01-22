@@ -9,8 +9,8 @@ class TimelineController extends BaseController{
      */
     public function send(){
         $this->getlogin();
-        $data=I('post.');
-        $data['u_id']=session('user.u_id');
+        $data['content']=I('post.content');
+        $data['sender_id']=session('user.u_id');
         $this->ajaxReturn(D('Timeline')->send($data));
     }
     
@@ -19,7 +19,8 @@ class TimelineController extends BaseController{
      */
     public function delete(){
         $this->getlogin();
-//         D('Timeine')->
+        $tl_id=I('post.tl_id');
+        $this->ajaxReturn(D('Timeline')->deleteTimeline($tl_id));
     }
     
     public function lists($page=1,$limit=15){
