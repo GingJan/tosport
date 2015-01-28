@@ -1,4 +1,4 @@
-﻿## 简介
+## 简介
 The API of ToSport，约运动API
 
 ## Features
@@ -6,6 +6,7 @@ Please go to Docs directory to read more details，THX
 
 
 ## 目录结构
+```markdown
 |-Application 应用目录
 |  |-Common
 |  |  |-Common      function.php自定义函数放此处
@@ -27,3 +28,4 @@ Please go to Docs directory to read more details，THX
 |-ThinkPHP	    ThinkPHP框架
 |
 |-...
+```
