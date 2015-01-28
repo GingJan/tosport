@@ -1,4 +1,4 @@
-Api Friend
+Api friend
 ===
 >By zjien
 
