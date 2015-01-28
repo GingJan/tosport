@@ -15,9 +15,9 @@ class IndexController extends Controller {
 		$this->ajaxReturn(qc_json_success(I('post.')));
 	}
 
-    public function req_get_test(){
-        $this->reqGet(array('id','ruby'));
-        $this->ajaxReturn(I('id'));
-    }
+//     public function req_get_test(){
+//         $this->reqGet(array('id','ruby'));
+//         $this->ajaxReturn(I('id'));
+//     }
 	
 }

@@ -14,7 +14,7 @@ class FriendModel extends Model{
      */
     public function addFriend($data){
         //判读是否已经添加改朋友
-        $res=$this->where("me_id=%d AND friend_id=%d",$data['me_id'],$data['friend_id'])->find();
+        $res=$this->where("me_id=%d AND friend_id=%d",$data['me_id'],$data['u_id'])->find();
         if($res){
             return spt_json_error('已经添加该朋友了');
         }
@@ -49,7 +49,7 @@ class FriendModel extends Model{
      */
     public function listsFriend($me_id,$page,$limit){
         $res=$this->table("spt_user_info u,spt_friend f")
-                 ->field("u.u_id,u.nickname,u.sex,f.f_id")
+                 ->field("u.u_id,u.nickname,u.sex,u.avatar,f.f_id")
                  ->where("f.me_id=%d AND u.u_id=f.friend_id",$me_id)
                  ->limit(($page-1)*$limit,$limit)
                  ->order('add_time desc')//以添加时间倒叙显示

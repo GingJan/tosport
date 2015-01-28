@@ -12,13 +12,13 @@ ps:该Api需要用户登陆
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
-friend_id | 朋友的u_id | Y | int | 
+u_id | 朋友的u_id | Y | int | 
 
 **Response**
 ```json
 {
 	"code":20000,
-	"response":"添加成功"
+	"response":"关注成功"
 }
 ```
 
@@ -44,7 +44,7 @@ f_id | 朋友表对应的f_id | Y | int | friends表对应的id号:f_id
 
 
 
-###获取个人的朋友表
+###显示个人的朋友表
 ps:该Api需要登陆
 `POST`
 
@@ -64,12 +64,14 @@ limit | 每页显示多少条 | N | int | 默认15
             "u_id": "8",
             "nickname": "xiaoming5",
             "sex": null,
+            "avatar": null,
             "f_id": "7"
         },
         {
             "u_id": "7",
             "nickname": "xiaoming4",
             "sex": null,
+            "avatar": null,
             "f_id": "6"
         }
     ]

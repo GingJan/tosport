@@ -20,6 +20,14 @@ function spt_json_success($data='operate successfully',$code = 20000){
 }
 
 /**
+ * 常用的请求方法错误
+ * @return Ambigous <multitype:number, multitype:number string >
+ */
+function spt_json_error_request(){
+    return spt_json_error('Request method error',40001);
+}
+
+/**
  * 试着获取登录用户的信息,如果没登录，则无法获取
  */
 function spt_getLoginUser(){//能否只能想取的字段的值,该处可以优化

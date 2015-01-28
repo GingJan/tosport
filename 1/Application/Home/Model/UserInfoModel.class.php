@@ -75,10 +75,13 @@ class UserInfoModel extends Model{
      * 获取登陆用户的基本信息
      * @param string $account
      */
-    public function getUserInfo($data){
+    public function getUserInfo($account){
         $where="account='%s'";
-        $res=$this->where($where,$data['account'])->find();
+        $res=$this->where($where,$account)->find();
 //         $this->where("id=%d",$res['id'])->save($this->create($res,3));//create()是返回数据对象而不是$this,因此后面不能连贯操作save()/add()
-        return $res;
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('无此用户');
     }
 }

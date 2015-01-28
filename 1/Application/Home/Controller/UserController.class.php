@@ -12,6 +12,7 @@ class UserController extends BaseController{
      * @return json
      */    
     public function register(){
+        $this->reqPost(array('account','password','repassword','email'));
         $data=I('post.');
         $res=D('Account')->register($data);//在Account表注册
         if($res['code'] === 20000){
@@ -24,12 +25,14 @@ class UserController extends BaseController{
         $this->ajaxReturn($res);
     }
     
+    
+    
     /**
      * 修改用户基本信息
      * @param int u_id
      */
     public function updateInfo(){
-        $this->getlogin();//登陆检测
+        $this->getlogin()->reqPost(array('nickname','sex','phone','avatar','intro','birth','spt_favor','region'));
         $data=I('post.');
         $data['u_id'] = session('user.u_id');
         $data['account'] = session('user.account');
@@ -41,6 +44,7 @@ class UserController extends BaseController{
      * 用户登陆
      */
     public function login(){
+        $this->reqPost(array('account','password'));
         $data=I('post.');
         $data['password']=md5($data['password']);
         $account=D('Account')->login($data);
@@ -57,22 +61,30 @@ class UserController extends BaseController{
         }
     }
     
+    /**
+     * 更新密码
+     */
     public function updatePassword(){
-        $this->getlogin();//登陆检测
+        $this->getlogin()->reqPost(array('password','newPassword','repassword'));
         $data=I('post.');
-        if($data['newPassword'] == NULL || $data['repassword'] == NULL){
-            $this->ajaxReturn('需要newPassword 和 repassword 字段');
-        }
         $data['account']=session('user.account');
         $data['password']=md5($data['password']);
-//         var_dump($data);
-//         exit;
-//         $account=D('Account')->updatePassword($data);
         $this->ajaxReturn(D('Account')->updatePassword($data));
     }
     
+    /**
+     * 显示用户个人信息
+     */
     public function listsUserInfo(){
-        $this->getlogin();
-        $this->ajaxReturn(session('user'));
+        $this->getlogin()->reqPost(array('account'));
+        $this->ajaxReturn(D('UserInfo')->getUserInfo(I('post.account')));
+    }
+    
+    /**
+     * Todo
+     */
+    public function forgetPassword(){
+        $email=I('post.email');
+        $this->ajaxReturn(D('Account')->forgetPassword($email));
     }
 }

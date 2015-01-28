@@ -8,7 +8,7 @@ class FriendController extends BaseController{
      * @param string $friends_account
      */
     public function addFriend(){
-        $this->getlogin();
+        $this->getlogin()->reqPost(array('u_id'));
         $data['friend_id']=I('post.u_id');
         $data['me_id']=session('user.u_id');
         $this->ajaxReturn(D('Friend')->addFriend($data));
@@ -19,7 +19,7 @@ class FriendController extends BaseController{
      * @param int $f_id
      */
     public function deleteFriend(){
-        $this->getlogin();
+        $this->getlogin()->reqPost(array('f_id'));
         $data['f_id']=I('post.f_id');
         $data['me_id']=session('user.u_id');
         $this->ajaxReturn(D('Friend')->deleteFriend($data));
@@ -35,6 +35,5 @@ class FriendController extends BaseController{
         $this->getlogin();
         $this->ajaxReturn(D('Friend')->listsFriend(session('user.u_id'),$page,$limit));
     }
-    
     
 }
