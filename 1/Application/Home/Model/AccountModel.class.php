@@ -10,7 +10,8 @@ class AccountModel extends Model{
         array('password','6,12','password length 6~12',self::EXISTS_VALIDATE,'length',3),
         array('repassword','password','The two passwords do not match, please re-enter',self::EXISTS_VALIDATE,'confirm',3), // 验证确认密码是否和密码一致
         array('email','','邮箱不能为空',self::EXISTS_VALIDATE,'notequal',3),
-        array('email','/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
+//         array('email','/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
+        array('email','email','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
     );       //邮箱正则需要改进          
     
     protected $_auto=array(
