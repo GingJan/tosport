@@ -5,8 +5,8 @@
  * @param number $error_code 错误码
  * @return multitype:number string
  */
-function spt_json_error($msg='operate error',$error_code = 40000){
-    return array('code'=> $error_code,'msg'=>$msg);
+function spt_json_error($msg='operate error',$error_code=40000){
+    return array('error_code'=> $error_code,'msg'=>$msg);
 }
 
 /**
@@ -15,7 +15,7 @@ function spt_json_error($msg='operate error',$error_code = 40000){
  * @param number $code  默认20000
  * @return multitype:number unknown
  */
-function spt_json_success($data='operate successfully',$code = 20000){
+function spt_json_success($data='operate successfully',$code=20000){
     return array('code'=> $code,'response'=>$data);
 }
 
