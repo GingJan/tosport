@@ -73,7 +73,14 @@ class UserController extends BaseController{
     }
     
     /**
-     * 显示用户个人信息
+     * 显示本人的基本信息
+     */
+    public function getMyInfo(){
+        $this->getlogin();
+        $this->ajaxReturn(D('UserInfo')->getUserInfo(session('user.account')));
+    }
+    /**
+     * 显示其他用户个人信息
      */
     public function listsUserInfo(){
         $this->getlogin()->reqPost(array('account'));

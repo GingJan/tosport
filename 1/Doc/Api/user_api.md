@@ -110,7 +110,41 @@ repassword | 确认密码 | Y | varchar(32) | 与newPassword匹配
 
 
 
-###显示用户信息
+
+###显示本人基本信息
+ps:该Api需要用户登陆
+`POST`
+
+`/Home/User/getMyInfo`
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": {
+        "u_id": "1",
+        "account": "zjien",
+        "nickname": "zjien",
+        "sex": null,
+        "phone": "12345678901",
+        "email": "694396727@qq.com",
+        "avatar": null,
+        "intro": null,
+        "birth": null,
+        "spt_favor": null,
+        "region": "广东",
+        "ctime": "1422431594",
+        "cIP": "127.0.0.1",
+        "last_time": "1422431594",
+        "last_IP": "127.0.0.1"
+    }
+}
+```
+
+
+	
+
+###显示其他用户信息
 ps:该Api需要用户登陆
 `POST`
 
