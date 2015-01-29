@@ -77,7 +77,7 @@ class AccountModel extends Model{
     public function register($data){
         if($this->create($data)){
             if($this->add()){
-                return spt_json_success();
+                return spt_json_success('注册成功');
             }
             return spt_json_error('注册发生错误!');
         }
@@ -130,7 +130,7 @@ class AccountModel extends Model{
             $title='约运动——找回密码';
             $body='This is a test';
             if($this->sendemail($email, $title, $body)){
-                return spt_json_success();
+                return spt_json_success('找回密码邮件已发送');
             }
             return spt_json_error('error!!!!!!!!!!!!,email_function inner error');
         }
