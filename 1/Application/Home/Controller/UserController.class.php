@@ -15,9 +15,9 @@ class UserController extends BaseController{
         $this->reqPost(array('account','password','repassword','email'));
         $data=I('post.');
         $res=D('Account')->register($data);//在Account表注册
-        if($res['code'] === 20000){
+        if(isset($res['code'])){
             $res=D('UserInfo')->register($data);//这UserInfo表注册
-            if($res['code'] === 20000){
+            if(isset($res['code'])){
                 $this->ajaxReturn($res);
             }
             $this->ajaxReturn($res);
