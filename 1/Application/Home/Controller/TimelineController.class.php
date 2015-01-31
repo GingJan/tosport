@@ -35,8 +35,9 @@ class TimelineController extends BaseController{
         $this->ajaxReturn(D('Timeline')->listsMyTimeline($me_id,$page,$limit));
     }
     
+    
     /**
-     * 列出朋友发的动态
+     * 列出我关注的人的动态(可能需要改为列出 好友 动态)
      * @param number $page
      * @param number $limit
      */
@@ -46,10 +47,15 @@ class TimelineController extends BaseController{
         $this->ajaxReturn(D('Timeline')->listsAllTimeline($me_id,$page,$limit));
     }
     
+    /**
+     * 列出同城用户的动态
+     * @param number $page
+     * @param number $limit
+     */
     public function listsCityTimeline($page=1,$limit=15){
         $this->getlogin();
-        $me_id=session('user.u_id');
-        $this->ajaxReturn(D('Timeline')->lists($me_id,$page,$limit));
+        $me_region=session('user.region');
+        $this->ajaxReturn(D('Timeline')->listsCityTimeline($me_region,$page,$limit));
     }
     
 }
