@@ -23,6 +23,9 @@ class BaseController extends Controller{
      * @return $this
      */
     public function reqGet(array $require_data = null){
+        if(! IS_GET){
+            $this->ajaxReturn(spt_json_error_request());
+        }
         if($require_data){
             foreach ($require_data as $key){
                 $_k = I('get.' . $key,null);

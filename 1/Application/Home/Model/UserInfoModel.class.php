@@ -1,21 +1,18 @@
 <?php
 namespace Home\Model;
 
-use Think\Model;
-class UserInfoModel extends Model{
-//     protected $_validate=array(
-//         array('account','','',self::EXISTS_VALIDATE,'notequal',1),
-//         array('account','require','b',self::EXISTS_VALIDATE,'unique',1)
-//     );
-    
+use Common\Model\BaseModel;
+
+class UserInfoModel extends BaseModel{
     protected $_auto=array(
         array('ctime','time',1,'function'),
         array('cIP','getIP',1,'callback'),
         array('nickname','account',1,'field'),
-        array('last_time','time',3,'function'),
-        array('last_IP','getIP',3,'callback')
-
+        array('last_time','time',4,'function'),//4代表登录时
+        array('last_IP','getIP',4,'callback')
     );
+    
+    protected $readonlyField=array('account','ctime','cIP');
     
     /**
      * 获取IP地址
@@ -41,7 +38,7 @@ class UserInfoModel extends Model{
     public function register($data){
         if($this->create($data)){
             if($this->add()){
-                return spt_json_success();
+                return spt_json_success('注册成功');
             }
 //             $msg='注册发生错误'.$this->getDbError();
             return spt_json_error('注册发生错误!');
@@ -64,7 +61,7 @@ class UserInfoModel extends Model{
        
        if($this->validate($validate_rules)->create($data,2)){
            if($this->where("u_id=%d",$data['u_id'])->save()){
-               return spt_json_success();
+               return spt_json_success('更新资料成功！');
            }
            return spt_json_error('信息更改发生错误!');
        }

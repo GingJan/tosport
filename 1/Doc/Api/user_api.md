@@ -49,7 +49,7 @@ region | 地区 | N |varchar(32) |
 ```json
 {
     "code":20000,
-    "response":"修改信息成功"
+    "response":"更新资料成功！"
 }
 ```
 
@@ -125,14 +125,14 @@ ps:该Api需要用户登陆
         "u_id": "1",
         "account": "zjien",
         "nickname": "zjien",
-        "sex": null,
+        "sex": "男",
         "phone": "12345678901",
-        "email": "694396727@qq.com",
+        "email": "zjien@qq.com",
         "avatar": null,
-        "intro": null,
+        "intro": good,
         "birth": null,
         "spt_favor": null,
-        "region": "广东",
+        "region": "深圳",
         "ctime": "1422431594",
         "cIP": "127.0.0.1",
         "last_time": "1422431594",
@@ -159,27 +159,27 @@ account| 对方账号  | Y | varchar(32) | 要获取该账号信息的账号
 {
     "code": 20000,
     "response": {
-        "u_id": "1",
-        "account": "zjien",
-        "nickname": "zjien",
-        "sex": null,
-        "phone": "12345678901",
-        "email": "694396727@qq.com",
+        "u_id": "2",
+        "account": "zjien1",
+        "nickname": "zjien1",
+        "sex": "男",
+        "phone": null,
+        "email": "zjien1@qq.com",
         "avatar": null,
         "intro": null,
         "birth": null,
         "spt_favor": null,
-        "region": "广东",
-        "ctime": "1422431594",
+        "region": "江门",
+        "ctime": "1422430617",
         "cIP": "127.0.0.1",
-        "last_time": "1422431594",
+        "last_time": "1422430617",
         "last_IP": "127.0.0.1"
     }
 }
 ```
 
 
-###找回密码
+###找回密码（TODO）
 `POST`
 
 `/Home/User/forgetPassword`

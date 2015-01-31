@@ -6,25 +6,27 @@ Api friend
 
 ###添加好友
 ps:该Api需要用户登陆
+
+PPS：该接口有可能修改
 `POST`
 
 `/Home/Friend/addFriend`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
-u_id | 朋友的u_id | Y | int | 
+u_id | 对方u_id | Y | int | A关注B，不代表A和B相互建立关系
 
 **Response**
 ```json
 {
-	"code":20000,
-	"response":"关注成功"
+    "code": 20000,
+    "response": "关注成功"
 }
 ```
 
 
 
-###删除好友关系
+###取消关注
 ps:该Api需要用户登陆
 `POST`
 
@@ -37,14 +39,14 @@ f_id | 朋友表对应的f_id | Y | int | friends表对应的id号:f_id
 **Response**
 ```json
 {
-	"code":20000,
-	"response":"删除成功"
+    "code": 20000,
+    "response": "取消关注成功"
 }
 ```
 
 
 
-###显示个人的朋友表
+###显示我关注的人
 ps:该Api需要登陆
 `POST`
 
@@ -61,18 +63,20 @@ limit | 每页显示多少条 | N | int | 默认15
     "code": 20000,
     "response": [
         {
-            "u_id": "8",
-            "nickname": "xiaoming5",
-            "sex": null,
+            "u_id": "3",
+            "nickname": "zjien3",
+            "sex": "男",
             "avatar": null,
-            "f_id": "7"
+            "region": "广州",
+            "f_id": "2"
         },
         {
-            "u_id": "7",
-            "nickname": "xiaoming4",
-            "sex": null,
+            "u_id": "2",
+            "nickname": "zjien1",
+            "sex": "男",
             "avatar": null,
-            "f_id": "6"
+            "region": "江门",
+            "f_id": "1"
         }
     ]
 }

@@ -25,36 +25,36 @@ class AccountModel extends Model{
      * @param unknown $body
      * @return boolean
      */
-    protected function sendemail($to,$title,$body){
-        $mail = new \Org\Util\PHPMailer\phpmailer;
-        $mail->isSMTP();
-        $mail->Host = 'smtp.qq.com;smtp.126.com;smtp.gmail.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = '1873866421@qq.com';                 // SMTP username
-        $mail->Password = 'wzzh105aa';                           // SMTP password
-        $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 465;                                    // TCP port to connect to,465 port support ssl
+//     protected function sendemail($to,$title,$body){
+//         $mail = new \Org\Util\PHPMailer\phpmailer;
+//         $mail->isSMTP();
+//         $mail->Host = 'smtp.qq.com;smtp.126.com;smtp.gmail.com';  // Specify main and backup SMTP servers
+//         $mail->SMTPAuth = true;                               // Enable SMTP authentication
+//         $mail->Username = '1873866421@qq.com';                 // SMTP username
+//         $mail->Password = 'wzzh105aa';                           // SMTP password
+//         $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+//         $mail->Port = 465;                                    // TCP port to connect to,465 port support ssl
         
-        $mail->From = 'from@example.com';
-        $mail->FromName = 'Mailer';
-//         $mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
-        $mail->addAddress($to);               // Name is optional
-        $mail->addReplyTo('1873866421@qq.com', 'admin');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+//         $mail->From = 'from@example.com';
+//         $mail->FromName = 'Mailer';
+// //         $mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
+//         $mail->addAddress($to);               // Name is optional
+//         $mail->addReplyTo('1873866421@qq.com', 'admin');
+//         $mail->addCC('cc@example.com');
+//         $mail->addBCC('bcc@example.com');
         
-//         $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments,添加附件
-//         $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-        $mail->isHTML(false);                                  // Set email format to HTML 设置邮件格式为HTML
+// //         $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments,添加附件
+// //         $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+//         $mail->isHTML(false);                                  // Set email format to HTML 设置邮件格式为HTML
         
-        $mail->Subject = 'get password';//邮件主题
-        $mail->Body    = 'test1 password';//邮件内容主题
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';//邮件备用内容主题
-        if($mail->sent()){
-            return true;
-		}
-		return false;
-    }
+//         $mail->Subject = 'get password';//邮件主题
+//         $mail->Body    = 'test1 password';//邮件内容主题
+//         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';//邮件备用内容主题
+//         if($mail->sent()){
+//             return true;
+// 		}
+// 		return false;
+//     }
     
     
     /**
@@ -95,7 +95,7 @@ class AccountModel extends Model{
             $userInfo=D('UserInfo');
             $info=$userInfo->getUserInfo($res['account']);
             session('user',$info['response']);
-            $userInfo->where("u_id=%d",$info['u_id'])->save($userInfo->create($res));
+            $userInfo->where("u_id=%d",$info['response']['u_id'])->save($userInfo->create($res,4));
             return spt_json_success('登陆成功!');
         }
         return spt_json_error('用户不存在或者密码错误!');

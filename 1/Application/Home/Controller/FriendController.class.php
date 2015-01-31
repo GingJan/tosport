@@ -4,7 +4,11 @@ namespace Home\Controller;
 use Common\Controller\BaseController;
 class FriendController extends BaseController{
     /**
-     * 添加朋友
+     * 发送交友请求，对方接受后，才建立好友关系Todo
+     */
+    
+    /**
+     * 关注对方
      * @param string $friends_account
      */
     public function addFriend(){
@@ -15,7 +19,7 @@ class FriendController extends BaseController{
     }
     
     /**
-     * 删除朋友关系
+     * 删除关注
      * @param int $f_id
      */
     public function deleteFriend(){
@@ -26,7 +30,7 @@ class FriendController extends BaseController{
     }
     
     /**
-     * 列出改用户所加的朋友
+     * 列出我关注的人
      * @param number $page
      * @param number $limit
      */

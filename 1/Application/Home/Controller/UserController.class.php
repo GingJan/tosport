@@ -32,7 +32,7 @@ class UserController extends BaseController{
      * @param int u_id
      */
     public function updateInfo(){
-        $this->getlogin()->reqPost(array('nickname','sex','phone','avatar','intro','birth','spt_favor','region'));
+        $this->getlogin()->reqPost();
         $data=I('post.');
         $data['u_id'] = session('user.u_id');
         $data['account'] = session('user.account');
