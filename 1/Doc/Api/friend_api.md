@@ -4,7 +4,7 @@ Api friend
 
 `Friend 接口`
 
-###添加好友
+###关注其他用户
 ps:该Api需要用户登陆
 
 PPS：该接口有可能修改
