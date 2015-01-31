@@ -1,11 +1,13 @@
 <?php
 /**
  * 此配置文件为公共配置文件，需要适用于本地的配置，请在local_config.php文件中配置，配置格式如下
+ //请根据本地环境，在local_config.php文件中配置数据库密码
  */
 $common_config = array(
 	//'配置项'=>'配置值'
 	
     //公共配置
+	'APP_DEBUG'			   => true, // 开启调试模式
 	'URL_MODEL'            => 2,			//URL模式为REWRITE模式,此模式可以不用输入入口文件
 	'TMPL_TEMPLATE_SUFFIX' => '.html',      //模板后缀名
     'URL_HTML_SUFFIX'      => 'html|phtml', //伪静态后缀名设置
@@ -15,28 +17,25 @@ $common_config = array(
     'URL_CASE_INSENSITIVE' => true,         //不区分URL大小写
 //     'SESSION_TYPE'         => 'Db',         //用数据库的形式存储session
     
-    //数据库
-    'DB_TYPE'              => 'mysql',
-    'DB_HOST'              => 'localhost',  //主机名
-    'DB_PORT'              =>  3306,        //端口
-    'DB_NAME'              => 'tosport',    //数据库名称
-    'DB_CHARSET'           => 'utf8',       //字符集
-    'DB_PREFIX'            => 'spt_',       //表前缀
-    
-    //请根据本地环境，在local_config.php文件中配置数据库密码
-    //'DB_USER'              => 'root',       //数据库用户名
-    //'DB_PWD'               => '123',        //密码
 );
 
 
-//一下为配置文件的合成
+//以下为配置文件的合成
 //CONF_PATH 公共配置路径： APP_PATH . 'Common' . 'Conf/'
 $local_config = CONF_PATH.'local_config.php';
 if(file_exists($local_config)){
     $config = require($local_config);
     return array_merge($common_config,$config);
 }
+
     return array_merge($common_config,array(
-        'DB_USER'   => 'root',//默认数据库用户名
-        'DB_PWD'    => '123'//数据库密码    
+	    //默认数据库配置
+		'DB_TYPE'              => 'mysql',
+		'DB_HOST'              => 'localhost',  //主机名
+		'DB_PORT'              =>  3306,        //端口
+		'DB_NAME'              => 'tosport',    //数据库名称
+		'DB_CHARSET'           => 'utf8',       //字符集
+		'DB_PREFIX'            => 'spt_',       //表前缀
+        'DB_USER'			   => 'root',		//默认数据库用户名
+        'DB_PWD'			   => '123'			//数据库密码    
     ));
