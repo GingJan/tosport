@@ -46,7 +46,7 @@ class TimelineModel extends Model{
         if($limit <= 0){
             $limit =15;
         }
-        $res=$this->field("tl_id,sender_id,content,create_time,c_amount")
+        $res=$this->field("tl_id,sender_id,content,create_time")
                     ->where("sender_id=%d",$me_id)
                     ->limit(($page-1)*$limit,$limit)
                     ->order('create_time desc')//以发表发表时间倒叙显示
