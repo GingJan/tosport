@@ -12,7 +12,7 @@ class LetterModel extends Model{
     );
     
     protected $_auto=array(
-        array('send_time','time',1,'function')
+        array('send_time',NOW_TIME,1)
     );
     
     /**

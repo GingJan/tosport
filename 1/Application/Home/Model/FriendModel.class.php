@@ -4,7 +4,7 @@ use Think\Model;
 
 class FriendModel extends Model{
     protected $_auto=array(
-        array('add_time','time',3,'function')
+        array('add_time',NOW_TIME,3)
     );
     
     /**

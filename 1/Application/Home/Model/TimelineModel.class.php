@@ -9,7 +9,7 @@ class TimelineModel extends Model{
     );
     
     protected $_auto=array(
-        array('create_time','time',1,'function')
+        array('create_time',NOW_TIME,1)
     );
     
     /**

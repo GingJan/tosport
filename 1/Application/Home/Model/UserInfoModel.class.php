@@ -5,10 +5,10 @@ use Common\Model\BaseModel;
 
 class UserInfoModel extends BaseModel{
     protected $_auto=array(
-        array('ctime','time',1,'function'),
+        array('ctime',NOW_TIME,1),
         array('cIP','getIP',1,'callback'),
         array('nickname','account',1,'field'),
-        array('last_time','time',4,'function'),//4代表登录时
+        array('last_time',NOW_TIME,4),//4代表登录时
         array('last_IP','getIP',4,'callback')
     );
     
