@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2015 年 01 月 31 日 20:36
+-- 生成日期: 2015 年 02 月 03 日 21:46
 -- 服务器版本: 5.5.28
 -- PHP 版本: 5.3.13
 
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- 视图结构 `spt_view_city_timeline`
 --
 
-CREATE ALGORITHM=UNDEFINED DEFINER=``@`` SQL SECURITY DEFINER VIEW `spt_view_city_timeline` AS select `spt_user_info`.`u_id` AS `u_id`,`spt_timeline`.`tl_id` AS `tl_id`,`spt_timeline`.`sender_id` AS `sender_id`,`spt_user_info`.`nickname` AS `nickname`,`spt_user_info`.`sex` AS `sex`,`spt_user_info`.`avatar` AS `avatar`,`spt_timeline`.`content` AS `content`,`spt_timeline`.`create_time` AS `create_time`,`spt_timeline`.`region` AS `region` from (`spt_user_info` join `spt_timeline`) where (`spt_user_info`.`u_id` = `spt_timeline`.`sender_id`) order by `spt_timeline`.`create_time` desc;
+CREATE ALGORITHM=UNDEFINED DEFINER=``@`` SQL SECURITY INVOKER VIEW `spt_view_city_timeline` AS select `spt_user_info`.`u_id` AS `u_id`,`spt_timeline`.`tl_id` AS `tl_id`,`spt_timeline`.`sender_id` AS `sender_id`,`spt_user_info`.`nickname` AS `nickname`,`spt_user_info`.`sex` AS `sex`,`spt_user_info`.`avatar` AS `avatar`,`spt_timeline`.`content` AS `content`,`spt_timeline`.`c_amount` AS `c_amount`,`spt_timeline`.`create_time` AS `create_time`,`spt_timeline`.`region` AS `region` from (`spt_user_info` join `spt_timeline`) where (`spt_user_info`.`u_id` = `spt_timeline`.`sender_id`) order by `spt_timeline`.`create_time` desc;
 
 --
 -- VIEW  `spt_view_city_timeline`
