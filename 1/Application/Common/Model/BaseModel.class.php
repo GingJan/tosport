@@ -12,4 +12,17 @@ class BaseModel extends AdvModel{
     protected $_auto = array();
     //只读字段，插入后不能通过save更新
     protected $readonlyField = array();
+    
+    /**
+     * 检测密码是否正确
+     * @param string $account
+     * @param string $password
+     */
+    protected function checkPassword($account,$password){
+        if($this->where("account='%s' AND password='%s'",$account,$password)->find()){
+            return true;
+        }
+        return false;
+    }
 }
+

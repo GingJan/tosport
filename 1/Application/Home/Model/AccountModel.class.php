@@ -1,14 +1,14 @@
 <?php
 namespace Home\Model;
 
-use Think\Model;
-class AccountModel extends Model{
+use Common\Model\BaseModel;
+class AccountModel extends BaseModel{
     protected $_validate=array(
-        array('account','','Account can not be null',self::EXISTS_VALIDATE,'notequal',1),
-        array('account','require','account has been existed',self::EXISTS_VALIDATE,'unique',1),
-        array('password','','password can not be null',self::EXISTS_VALIDATE,'notequal',3),
-        array('password','6,12','password length 6~12',self::EXISTS_VALIDATE,'length',3),
-        array('repassword','password','The two passwords do not match, please re-enter',self::EXISTS_VALIDATE,'confirm',3), // 验证确认密码是否和密码一致
+        array('account','','账户不能为空',self::EXISTS_VALIDATE,'notequal',1),
+        array('account','require','账户已经存在',self::EXISTS_VALIDATE,'unique',1),
+        array('password','','密码不能为空',self::EXISTS_VALIDATE,'notequal',3),
+        array('password','6,12','密码长度6~12',self::EXISTS_VALIDATE,'length',3),
+        array('repassword','password','两次输入密码不一致',self::EXISTS_VALIDATE,'confirm',3), // 验证确认密码是否和密码一致
         array('email','','邮箱不能为空',self::EXISTS_VALIDATE,'notequal',3),
 //         array('email','/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
         array('email','email','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
@@ -58,20 +58,6 @@ class AccountModel extends Model{
     
     
     /**
-     * 检测密码是否正确
-     * @param string $account
-     * @param string $password
-     * @return boolean
-     */
-    protected function checkPassword($account,$password){
-        if($this->where("account='%s' AND password='%s'",$account,$password)->find()){
-            return true;
-        }
-        return false;
-    }
-    
-    
-    /**
      * Account表 注册
      */
     public function register($data){
@@ -91,7 +77,7 @@ class AccountModel extends Model{
         $where="account='%s' AND password='%s'";
         $res=$this->where($where,$data['account'],$data['password'])->find();
         if($res){
-            session(array('session_id'=>session_id(),'expire'=>3600));//设置session过期的时间
+            session(array('session_id'=>session_id(),'expire'=>3600));//如果session方法的第一个参数传入数组则表示进行session初始化设置
             $userInfo=D('UserInfo');
             $info=$userInfo->getUserInfo($res['account']);
             session('user',$info['response']);

@@ -12,7 +12,7 @@ class IndexController extends Controller {
 	}
 
 	public function test_mutiPost(){
-		$this->ajaxReturn(qc_json_success(I('post.')));
+		$this->ajaxReturn(spt_json_success(I('post.')));
 	}
 
 //     public function req_get_test(){
