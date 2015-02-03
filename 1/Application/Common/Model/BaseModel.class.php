@@ -24,5 +24,12 @@ class BaseModel extends AdvModel{
         }
         return false;
     }
+    
+    /**
+     * 获取IP地址
+     */
+    protected function getIP($data){
+        return $_SERVER['REMOTE_ADDR'];
+    }
 }
 

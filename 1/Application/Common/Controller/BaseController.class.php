@@ -79,4 +79,16 @@ class BaseController extends Controller{
 	    unset($member["password"],$member["ctime"],$member["cIP"]);
 	    return $member;
 	}
+	
+	/**
+	 * 检测是否管理员
+	 */
+	protected function checkManager(){
+	   if(session('?manager')){
+	       return $this;
+	   }
+	   else{
+	       $this->ajaxReturn(spt_json_error('你不是管理员或者你还未登录'));
+	   } 
+	}
 }

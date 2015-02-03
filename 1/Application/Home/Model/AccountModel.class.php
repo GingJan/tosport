@@ -6,13 +6,10 @@ class AccountModel extends BaseModel{
     protected $_validate=array(
         array('account','','账户不能为空',self::EXISTS_VALIDATE,'notequal',1),
         array('account','require','账户已经存在',self::EXISTS_VALIDATE,'unique',1),
-        array('password','','密码不能为空',self::EXISTS_VALIDATE,'notequal',3),
-        array('password','6,12','密码长度6~12',self::EXISTS_VALIDATE,'length',3),
-        array('repassword','password','两次输入密码不一致',self::EXISTS_VALIDATE,'confirm',3), // 验证确认密码是否和密码一致
-        array('email','','邮箱不能为空',self::EXISTS_VALIDATE,'notequal',3),
-//         array('email','/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
-        array('email','email','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
-    );       //邮箱正则需要改进          
+        array('password','','密码不能为空',self::EXISTS_VALIDATE,'notequal',1),
+        array('password','6,12','密码长度6~12',self::EXISTS_VALIDATE,'length',1),
+        array('repassword','password','两次输入密码不一致',self::EXISTS_VALIDATE,'confirm',1), // 验证确认密码是否和密码一致
+    );       
     
     protected $_auto=array(
         array('password','md5',3,'function')
@@ -75,13 +72,13 @@ class AccountModel extends BaseModel{
      */
     public function login($data){
         $where="account='%s' AND password='%s'";
-        $res=$this->where($where,$data['account'],$data['password'])->find();
+        $res=$this->field('password',true)->where($where,$data['account'],$data['password'])->find();
         if($res){
             session(array('session_id'=>session_id(),'expire'=>3600));//如果session方法的第一个参数传入数组则表示进行session初始化设置
             $userInfo=D('UserInfo');
             $info=$userInfo->getUserInfo($res['account']);
             session('user',$info['response']);
-            $userInfo->where("u_id=%d",$info['response']['u_id'])->save($userInfo->create($res,4));
+            $userInfo->where("u_id=%d",$info['response']['u_id'])->save($userInfo->create($info['response'],4));
             return spt_json_success('登陆成功!');
         }
         return spt_json_error('用户不存在或者密码错误!');
