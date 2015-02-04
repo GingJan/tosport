@@ -13,6 +13,7 @@ ps:该Api需要用户登陆
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
 content | 动态内容 | Y | text | 不能为空，字数不超过140字
+region | 实时位置 | Y | varchar | GPS实时定位的位置
 
 **Response**
 ```json
@@ -46,14 +47,14 @@ tl_id | 动态表对应的tl_id | Y | int |
 
 ###显示本人发过的动态
 ps:该Api需要登陆
-`POST`
+`POST/GET`
 
 `/Home/Timeline/listsMyTimeline`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
 page | 当前页码 | N | int | 默认1
-limit | 每页显示多少条 | N | int | 默认15 
+limit | 每页显示多少条 | N | int | 默认10
 
 **Response**
 ```json
@@ -79,16 +80,18 @@ limit | 每页显示多少条 | N | int | 默认15
 ```
 
 
-###显示关注的人的动态
+
+###显示某个人的动态
 ps:该Api需要登陆
 `POST`
 
-`/Home/Timeline/listsAllTimeline`
+`/Home/Timeline/listsSpeTimeline`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
---------------------- | ----------------- | ----------------- | ---------------------- | ------------------
+--------------------- | ----------------- | ----------------- | ---------------------- | ------------------------------------
+u_id | 被显示人的u_id | Y | int | 如要显示用户A的动态，则这里的u_id就是用户A的u_id
 page | 当前页码 | N | int | 默认1
-limit | 每页显示多少条 | N | int | 默认15 
+limit | 每页显示多少条 | N | int | 默认10
 
 **Response**
 ```json
@@ -102,6 +105,7 @@ limit | 每页显示多少条 | N | int | 默认15
             "nickname": "zjien3",
             "avatar": null,
             "content": "hello,I'm zjien3.my second test",
+            "c_amount": null,
             "create_time": "1422691883"
         },
         {
@@ -111,6 +115,52 @@ limit | 每页显示多少条 | N | int | 默认15
             "nickname": "zjien3",
             "avatar": null,
             "content": "hello,I'm zjien3.my first test",
+            "c_amount": null,
+            "create_time": "1422691870"
+        }
+    ]
+}
+```
+
+
+
+
+
+
+###显示关注的人的动态（包含我的动态）
+ps:该Api需要登陆
+`POST`
+
+`/Home/Timeline/listsAllTimeline`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ----------------- | ----------------- | ---------------------- | ------------------
+page | 当前页码 | N | int | 默认1
+limit | 每页显示多少条 | N | int | 默认10
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "u_id": "3",
+            "tl_id": "6",
+            "sender_id": "3",
+            "nickname": "zjien3",
+            "avatar": null,
+            "content": "hello,I'm zjien3.my second test",
+	    "c_amount": null,
+            "create_time": "1422691883"
+        },
+        {
+            "u_id": "3",
+            "tl_id": "5",
+            "sender_id": "3",
+            "nickname": "zjien3",
+            "avatar": null,
+            "content": "hello,I'm zjien3.my first test",
+	    "c_amount": null,
             "create_time": "1422691870"
         },
         {
@@ -120,7 +170,18 @@ limit | 每页显示多少条 | N | int | 默认15
             "nickname": "zjien1",
             "avatar": null,
             "content": "hello,I'm zjien1.my first test",
+	    "c_amount": null,
             "create_time": "1422691844"
+        }
+	{
+            "u_id": "1",
+            "tl_id": "2",
+            "sender_id": "1",
+            "nickname": "handsomeguy",
+            "avatar": null,
+            "content": "hello,I'm zjien.This is my second test",
+            "c_amount": null,
+            "create_time": "1422691737"
         }
     ]
 }
@@ -139,6 +200,7 @@ ps:该Api需要登陆
 page | 当前页码 | N | int | 默认1
 limit | 每页显示多少条 | N | int | 默认15 
 
+以下返回的数据均为同城的数据
 **response**
 ```json
 {
@@ -152,6 +214,7 @@ limit | 每页显示多少条 | N | int | 默认15
             "sex": "女",
             "avatar": null,
             "content": "hello,I'm xiaohong .my test",
+	    "c_amount": null,
             "create_time": "1422692023"
         },
         {
@@ -162,6 +225,7 @@ limit | 每页显示多少条 | N | int | 默认15
             "sex": "女",
             "avatar": null,
             "content": "hello,I'm xiaoli.my test",
+	    "c_amount": null,
             "create_time": "1422691956"
         },
         {
@@ -172,6 +236,7 @@ limit | 每页显示多少条 | N | int | 默认15
             "sex": "女",
             "avatar": null,
             "content": "hello,I'm xiaoli.my test",
+	    "c_amount": null,
             "create_time": "1422691943"
         },
         {
@@ -182,6 +247,7 @@ limit | 每页显示多少条 | N | int | 默认15
             "sex": "男",
             "avatar": null,
             "content": "hello,I'm zjien.This is my third test",
+	    "c_amount": null,
             "create_time": "1422691748"
         },
         {
@@ -192,6 +258,7 @@ limit | 每页显示多少条 | N | int | 默认15
             "sex": "男",
             "avatar": null,
             "content": "hello,I'm zjien.This is my second test",
+	    "c_amount": null,
             "create_time": "1422691737"
         }
     ]

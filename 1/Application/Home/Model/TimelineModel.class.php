@@ -37,17 +37,18 @@ class TimelineModel extends Model{
     }
     
     /**
-     * 列出我发的动态
+     * 显示某个人的动态
      */
-    public function listsMyTimeline($me_id,$page,$limit){
+    public function listsSpeTimeline($sender_id,$page,$limit){
         if($page <= 0){
             $page = 1;
         }
         if($limit <= 0){
-            $limit =15;
+            $limit =10;
         }
-        $res=$this->field("tl_id,sender_id,content,create_time")
-                    ->where("sender_id=%d",$me_id)
+        $res=$this->table("spt_timeline tl,spt_user_info u")
+                    ->field("tl.tl_id,tl.sender_id,tl.content,tl.create_time,tl.c_amount,u.u_id,u.nickname,u.avatar")
+                    ->where("tl.sender_id=%d AND u.u_id=tl.sender_id",$sender_id)
                     ->limit(($page-1)*$limit,$limit)
                     ->order('create_time desc')//以发表发表时间倒叙显示
                     ->select();
@@ -58,21 +59,24 @@ class TimelineModel extends Model{
     }
     
     /**
-     * 列出我关注的人的动态
+     * 列出我关注的人的动态（包含我的动态）
      */
     public function listsAllTimeline($me_id,$page,$limit){
         if($page <= 0){
             $page = 1;
         }
         if($limit <= 0){
-            $limit =15;
+            $limit =10;
         }
         $res=$this->table("spt_view_all_timeline at,spt_friend f")
-                    ->field("at.u_id,at.tl_id,at.sender_id,at.nickname,at.avatar,at.content,at.create_time")
-//                     ->where("(f.me_id=%d AND at.sender_id=f.friend_id) OR (f.friend_id=%d AND at.sender_id=f.me_id)",$me_id,$me_id)//取决于FriendModel的请求的完成才开启
-                    ->where("f.me_id=%d AND at.sender_id=f.friend_id",$me_id)
+                    ->distinct(true)//与下面的field('f.me_id')字段一起使用，即数据集排除f.me_id字段中重复的的记录
+                    ->field("f.me_id")
+                    ->field("at.u_id,at.tl_id,at.sender_id,at.nickname,at.avatar,at.content,at.c_amount,at.create_time")
+                    //->where("(f.me_id=%d AND at.sender_id=f.friend_id) OR (f.friend_id=%d AND at.sender_id=f.me_id)",$me_id,$me_id)//取决于FriendModel的请求的完成才开启
+                    ->where("f.me_id=%d AND (at.sender_id=f.friend_id OR at.sender_id=f.me_id)",$me_id)
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
+
         if($res){
             return spt_json_success($res);
         }
@@ -87,7 +91,7 @@ class TimelineModel extends Model{
             $page = 1;
         }
         if($limit <= 0){
-            $limit =15;
+            $limit =10;
         }
         $res=$this->table("spt_view_city_timeline")
                    ->field("region",true)//获取除了region字段之外的所有字段
