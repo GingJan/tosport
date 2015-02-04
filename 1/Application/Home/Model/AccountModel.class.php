@@ -95,7 +95,7 @@ class AccountModel extends BaseModel{
         );
         
         if($this->checkPassword($data['account'], $data['password'])){
-            $res=$this->validate($validate_rules)->create(array('password'=>$data['newPassword'],'repassword'=>$data['repassword']));
+            $res=$this->validate($validate_rules)->create(array('password'=>$data['newPassword'],'repassword'=>$data['repassword']),3);
             if($res){
                 $this->where("account='%s'",$data['account'])->setField('password',$res['password']);
                 return spt_json_success('密码修改成功!');
