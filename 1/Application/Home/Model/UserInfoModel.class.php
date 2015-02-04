@@ -37,6 +37,26 @@ class UserInfoModel extends BaseModel{
     }
     
     /**
+     * 附近的人
+     */
+    public function nearby($region,$page,$limit){
+        if($page <= 0){
+            $page = 1;
+        }
+        if($limit <= 0){
+            $limit =10;
+        }
+        $res=$this->where("region='%s'",$region)
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('附近很冷清啊');
+        
+    }
+    
+    /**
      * 更新个人信息 
      */
     public function updateInfo($data){

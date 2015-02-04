@@ -73,6 +73,15 @@ class UserController extends BaseController{
     }
     
     /**
+     * 附近的人
+     */
+    public function nearby($page = 1,$limit = 10){
+        $this->getlogin()->reqPost(array('region'));
+        $region=I('post.');
+        $this->ajaxReturn(D('UserInfo')->nearby($region,$page,$limit));
+    }
+    
+    /**
      * 显示本人的基本信息
      */
     public function getMyInfo(){

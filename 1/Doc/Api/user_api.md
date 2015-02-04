@@ -111,6 +111,48 @@ repassword | 确认密码 | Y | varchar(32) | 与newPassword匹配
 
 
 
+
+###附近的人
+ps:该Api需要用户登陆
+`POST`
+
+`/Home/User/nearby`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+------------- | ------------ | -------- | ------------- | ---------------
+region | 实时位置 | Y | varchar(32) | GPS定位
+
+
+**Response**  
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "u_id": "9",
+            "account": "xiaowang",
+            "nickname": "xiaowang",
+            "sex": "男",
+            "phone": null,
+            "email": "xiaowang@qq.com",
+            "avatar": null,
+            "intro": null,
+            "birth": null,
+            "spt_favor": null,
+            "region": "珠海",
+            "ctime": "1420438001",
+            "cIP": "127.0.0.1",
+            "last_time": "1420438001",
+            "last_IP": "127.0.0.1"
+        }
+    ]
+}
+```
+
+
+
+
+
 ###显示本人基本信息
 ps:该Api需要用户登陆
 `POST`
