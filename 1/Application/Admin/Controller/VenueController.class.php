@@ -39,10 +39,7 @@ class VenueController extends BaseController{
      * 列出所有场馆,只提供给超级管理员使用
      */
     public function listsAllVenue($page = 1,$limit = 10){
-        $this->checkManager();
-        if(session('manager.ma_id') !== 1 && session('manager.account') !== 'super'){
-            $this->ajaxReturn(spt_json_error('你不是超级管理员，无法使用此功能'));
-        }
+        $this->checkSuper();
         $this->ajaxReturn(D('VenueInfo')->listsAllVenue($page,$limit));
     }
 }

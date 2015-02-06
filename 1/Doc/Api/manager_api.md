@@ -175,3 +175,60 @@ limit | 每页显示数目 | N | int | 默认为10
     ]
 }
 ```
+
+
+
+
+###显示我的信息
+ps:该API要登陆
+`POST`
+
+`/Admin/Manager/getMyInfo`
+
+**Response**  
+```json
+{
+    "code": 20000,
+    "response": {
+        "ma_id": "2",
+        "account": "admin1",
+        "nickname": "admin1",
+        "email": "admin1@qq.com",
+        "phone": "12345678901",
+        "create_time": "1423039536",
+        "create_IP": "127.0.0.1",
+        "last_time": "1423042972",
+        "last_IP": "127.0.0.1"
+    }
+}
+```
+
+
+
+###获取其他管理员信息
+ps:该API要登陆
+`POST`
+
+`/Admin/Manager/getOtherInfo`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+------------- | ------------ | -------- | ------------- | ---------------
+ma_id | 该管理员的ma_id | Y | int |
+
+**Response**  
+```json
+{
+    "code": 20000,
+    "response": {
+        "ma_id": "3",
+        "account": "admin2",
+        "nickname": "admin2",
+        "email": "admin2@qq.com",
+        "phone": "12345678902",
+        "create_time": "1423039636",
+        "create_IP": "127.0.0.1",
+        "last_time": "1423042872",
+        "last_IP": "127.0.0.1"
+    }
+}
+```

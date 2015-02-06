@@ -91,4 +91,14 @@ class BaseController extends Controller{
 	       $this->ajaxReturn(spt_json_error('你不是管理员或者你还未登录'));
 	   } 
 	}
+	
+	/**
+	 * 检测是否超级管理员
+	 */
+	protected function checkSuper(){
+	    if(session('manager.ma_id') === 1){
+	        return $this;
+	    }
+	    $this->ajaxReturn(spt_json_error('你不是超级管理员,无法使用该功能'));
+	}
 }

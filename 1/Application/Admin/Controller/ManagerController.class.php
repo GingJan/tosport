@@ -7,11 +7,7 @@ class ManagerController extends BaseController{
      * 管理员注册（只限于超级管理员使用）
      */
     public function register(){
-        $this->checkManager();
-        if(session('manager.ma_id') !== 1 && session('manager.account') !== 'super'){
-            $this->ajaxReturn(spt_json_error('你不是超级管理员，无法注册管理员账户'));
-        }
-        $this->reqPost(array('account','password','repassword'));
+        $this->checkSuper()->reqPost(array('account','password','repassword'));
         $data=I('post.');
         $this->ajaxReturn(D('Manager')->register($data));
     }
@@ -20,11 +16,7 @@ class ManagerController extends BaseController{
      * 删除一管理员(只限于超级管理员使用)
      */
     public function deleteManager(){
-        $this->checkManager();
-        if(session('manager.ma_id') !== 1 && session('manager.account') !== 'super'){
-            $this->ajaxReturn(spt_json_error('你不是超级管理员，无法删除管理员账户'));
-        }
-        $this->reqPost(array('ma_id'));
+        $this->checkManager()->reqPost(array('ma_id'));
         $ma_id=I('post.ma_id');
         $this->ajaxReturn(D('Manager')->deleteManager($ma_id));
     }
@@ -77,5 +69,21 @@ class ManagerController extends BaseController{
     public function listsManager($page = 1,$limit = 10){
         $this->checkManager();
         $this->ajaxReturn(D('Manager')->listsManager($page,$limit));
+    }
+    
+    /**
+     * 获取我的信息
+     */
+    public function getMyInfo(){
+        $this->checkManager();
+        $this->ajaxReturn(D('Manager')->getInfo(session('manager.ma_id')));
+    }
+    
+    /**
+     * 获取其他管理员信息
+     */
+    public function getOtherInfo(){
+        $this->checkManager()->reqPost(array('ma_id'));
+        $this->ajaxReturn(D('Manager')->getInfo(I('post.ma_id')));
     }
 }

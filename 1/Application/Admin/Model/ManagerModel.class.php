@@ -121,5 +121,15 @@ class ManagerModel extends BaseModel{
         return spt_json_error('暂无数据');
     }
     
+    /**
+     * 获取某管理员信息
+     */
+    public function getInfo($ma_id){
+        $res=$this->field('password',true)->where('ma_id=%d',$ma_id)->find();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('无此管理员');
+    }
     
 }
