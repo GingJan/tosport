@@ -1,9 +1,9 @@
 <?php
-namespace Home\Model;
+namespace Common\Model;
 
-use Think\Model;
+use Common\Model\BaseModel;
 
-class DateVenueModel extends Model{
+class DateVenueModel extends BaseModel{
     protected $_validate=array(
         array('date_time',array(0,NOW_TIME),'预约时间不能早于下单时间',self::MUST_VALIDATE,'notbetween',1)
     );

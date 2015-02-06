@@ -1,8 +1,7 @@
 <?php
-namespace Admin\Model;
+namespace Common\Model;
 
 use Common\Model\BaseModel;
-
 class VenueInfoModel extends BaseModel{
     protected $_validate=array(
         array('name','','场馆名称不能为空',self::MUST_VALIDATE,'notequal',1),

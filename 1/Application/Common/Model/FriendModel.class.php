@@ -1,8 +1,8 @@
 <?php
-namespace Home\Model;
-use Think\Model;
+namespace Common\Model;
+use Common\Model\BaseModel;
 
-class FriendModel extends Model{
+class FriendModel extends BaseModel{
     protected $_auto=array(
         array('add_time',NOW_TIME,3)
     );

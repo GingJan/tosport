@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Model;
+namespace Common\Model;
 
 use Common\Model\BaseModel;
 class ManagerModel extends BaseModel{

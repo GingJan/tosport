@@ -1,9 +1,9 @@
 <?php
-namespace Home\Model;
+namespace Common\Model;
 
-use Think\Model;
+use Common\Model\BaseModel;
 
-class CommentModel extends Model{
+class CommentModel extends BaseModel{
     protected $_validate=array(
         array('content','','评论不能为空',self::EXISTS_VALIDATE,'notequal',1),
         array('sender_id','require','缺少发表者id',self::EXISTS_VALIDATE,'regex',1)

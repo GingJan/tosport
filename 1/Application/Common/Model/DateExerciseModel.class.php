@@ -1,8 +1,8 @@
 <?php
-namespace Home\Model;
+namespace Common\Model;
 
-use Think\Model;
-class DateExerciseModel extends Model{
+use Common\Model\BaseModel;
+class DateExerciseModel extends BaseModel{
     protected $_validate=array(
         array('sport_time',array(0,NOW_TIME),'运动时间不能早于发布时间',self::MUST_VALIDATE,'notbetween',1),
         array('people_amount',array(1,25),'人数必须在1~25人之间',self::MUST_VALIDATE,'between',1),

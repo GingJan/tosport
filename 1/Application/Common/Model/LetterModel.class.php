@@ -1,9 +1,9 @@
 <?php
-namespace Home\Model;
+namespace Common\Model;
 
-use Think\Model;
+use Common\Model\BaseModel;
 
-class LetterModel extends Model{
+class LetterModel extends BaseModel{
     protected $_validate=array(
         array('content','','私信内容不能为空',self::MUST_VALIDATE,'notequal',1),
         array('sender_id','require','必须有发送人id',self::MUST_VALIDATE,'regex',1),

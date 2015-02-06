@@ -1,8 +1,8 @@
 <?php
-namespace Home\Model;
+namespace Common\Model;
 
-use Think\Model;
-class TimelineModel extends Model{
+use Common\Model\BaseModel;
+class TimelineModel extends BaseModel{
     protected $_validate=array(
         array('content','','内容不能为空',self::EXISTS_VALIDATE,'notequal',1),
         array('content','1,140','内容长度不能超过140字',self::EXISTS_VALIDATE,'length',1)
