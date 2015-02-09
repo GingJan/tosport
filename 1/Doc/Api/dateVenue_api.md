@@ -62,12 +62,14 @@ vi_id | 对应场馆的vi_id | Y | int |
     "code": 20000,
     "response": {
         "vi_id": "1",
-	"ma_id": "2",
+        "ma_id": "2",
         "name": "市第一体育馆",
+        "people": "5",
+        "booked": "0",
         "picture": null,
         "type": "羽毛球 乒乓球",
         "price": "25",
-        "bought": "0",
+        "bought": "1",
         "region": "江门",
         "intro": "提供场地，不提供球拍"
     }
@@ -93,19 +95,23 @@ region | 实时位置 | Y | varchar | GPS获取位置
     "response": [
         {
             "vi_id": "1",
-	    "ma_id": "2",
+            "ma_id": "2",
             "name": "市第一体育馆",
+            "people": "5",
+            "booked": "0",
             "picture": null,
             "type": "羽毛球 乒乓球",
             "price": "25",
-            "bought": "0",
+            "bought": "1",
             "region": "江门",
             "intro": "提供场地，不提供球拍"
         },
         {
             "vi_id": "3",
-	    "ma_id": "1",
+            "ma_id": "1",
             "name": "市第三体育馆",
+            "people": "7",
+            "booked": "1",
             "picture": null,
             "type": "足球",
             "price": "35",
@@ -115,8 +121,10 @@ region | 实时位置 | Y | varchar | GPS获取位置
         },
         {
             "vi_id": "5",
-	    "ma_id": "2",
+            "ma_id": "2",
             "name": "网球体育馆",
+            "people": "5",
+            "booked": "0",
             "picture": null,
             "type": "网球",
             "price": "20",
@@ -142,14 +150,25 @@ ps:该Api需要用户登陆
     "code": 20000,
     "response": [
         {
-            "dv_id": "4",
+            "dv_id": "5",
+            "subscriber": "1",
+            "vi_id": "3",
+            "date_time": "1423327220",
+            "order_time": "1423326232",
+            "ma_id": "1",
+            "name": "市第三体育馆",
+            "bought": "0",
+            "price": "35"
+        },
+        {
+            "dv_id": "1",
             "subscriber": "1",
             "vi_id": "1",
             "date_time": "1423159938",
             "order_time": "1423151968",
-	    "ma_id": "2",
+            "ma_id": "2",
             "name": "市第一体育馆",
-            "bought": "0",
+            "bought": "1",
             "price": "25"
         },
         {
@@ -158,10 +177,10 @@ ps:该Api需要用户登陆
             "vi_id": "2",
             "date_time": "1423146000",
             "order_time": "1423145858",
-	    "ma_id": "2",
-            "name": "市第二体育馆",
-            "bought": "0",
-            "price": "30"
+            "ma_id": "2",
+            "name": "超级体育馆",
+            "bought": "1",
+            "price": "25"
         }
     ]
 }
