@@ -4,7 +4,7 @@ Api dateVenue
 
 `DateVenue 接口`
 
-###约该场馆
+###预约该场馆
 ps:该Api需要用户登陆
 `POST`
 
@@ -61,6 +61,7 @@ vi_id | 对应场馆的vi_id | Y | int |
     "code": 20000,
     "response": {
         "vi_id": "1",
+	"ma_id": "2".
         "name": "市第一体育馆",
         "picture": null,
         "type": "羽毛球 乒乓球",
@@ -91,6 +92,7 @@ region | 实时位置 | Y | varchar | GPS获取位置
     "response": [
         {
             "vi_id": "1",
+	    "ma_id": "2",
             "name": "市第一体育馆",
             "picture": null,
             "type": "羽毛球 乒乓球",
@@ -101,6 +103,7 @@ region | 实时位置 | Y | varchar | GPS获取位置
         },
         {
             "vi_id": "3",
+	    "ma_id": "1",
             "name": "市第三体育馆",
             "picture": null,
             "type": "足球",

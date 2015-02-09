@@ -15,6 +15,8 @@ class AccountModel extends BaseModel{
         array('password','md5',3,'function')
     );
     
+    protected $readonlyField=array('account');
+    
     /**
      * TODO
      * @param unknown $to

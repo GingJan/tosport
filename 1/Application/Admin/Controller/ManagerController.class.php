@@ -36,7 +36,7 @@ class ManagerController extends BaseController{
      */
     public function logout(){
         session('manager',null);
-        if(!session('?manager')){
+        if(!session('?manager')){//可以试下is_null()函数
             $this->ajaxReturn(spt_json_success('成功退出'));
         }
         $this->ajaxReturn(spt_json_error('退出失败'));

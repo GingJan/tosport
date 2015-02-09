@@ -25,8 +25,6 @@ class UserController extends BaseController{
         $this->ajaxReturn($res);
     }
     
-    
-    
     /**
      * 修改用户基本信息
      * @param int u_id

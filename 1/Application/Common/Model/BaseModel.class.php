@@ -31,5 +31,18 @@ class BaseModel extends AdvModel{
     protected function getIP($data){
         return $_SERVER['REMOTE_ADDR'];
     }
+    
+    /**
+     * 判断输入的页码和每页显示数
+     */
+    protected function pageLegal(&$page,&$limit){
+        if($page <= 0){
+            $page = 1;
+        }
+        if($limit <= 10){
+            $limit = 10;
+        }
+        return $this;
+    }
 }
 

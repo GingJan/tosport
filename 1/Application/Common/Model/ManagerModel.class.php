@@ -26,7 +26,7 @@ class ManagerModel extends BaseModel{
     );
     
     //只读字段
-    protected $readonlyField=array('create_time','create_IP','account');
+    protected $readonlyField=array('account');
     
     
     /**

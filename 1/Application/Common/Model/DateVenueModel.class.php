@@ -17,7 +17,7 @@ class DateVenueModel extends BaseModel{
      */
     public function listsSpeVenue($vi_id){
         $res=$this->table("spt_venue_info")
-                    ->field('ma_id,last_time,last_IP',true)
+                    ->field('last_time,last_IP',true)
                     ->where("vi_id=%d",$vi_id)
                     ->find();
         if($res){
@@ -30,14 +30,9 @@ class DateVenueModel extends BaseModel{
      * 显示所有的场馆(均为同城场馆)
      */
     public function listsCityVenue($region,$page,$limit){
-        if($page <= 0){
-            $page = 1;
-        }
-        if($limit <= 0){
-            $limit = 10;
-        }
+        $this->pageLegal($page, $limit);
         $res=$this->table("spt_venue_info")
-                    ->field('ma_id,last_time,last_IP',true)
+                    ->field('last_time,last_IP',true)
                     ->where("region='%s'",$region)
                     ->order('bought desc')
                     ->select();
@@ -74,14 +69,9 @@ class DateVenueModel extends BaseModel{
      * 显示我预约的场馆
      */
     public function listsDate($subscriber,$page,$limit){
-        if($page <= 0){
-            $page = 1;
-        }
-        if($limit <= 0){
-            $limit = 10;
-        }
+        $this->pageLegal($page, $limit);
         $res=$this->table("spt_date_venue dv,spt_venue_info vi")
-                    ->field("dv.dv_id,dv.subscriber,dv.vi_id,dv.date_time,dv.order_time,vi.name,vi.bought,vi.price")
+                    ->field("dv.dv_id,dv.subscriber,dv.vi_id,dv.date_time,dv.order_time,vi.ma_id,vi.name,vi.bought,vi.price")
                     ->where("dv.subscriber=%d AND vi.vi_id=dv.vi_id",$subscriber)
                     ->order('dv.order_time desc')
                     ->limit(($page-1)*$limit,$limit)
@@ -89,6 +79,63 @@ class DateVenueModel extends BaseModel{
         if($res){
             return spt_json_success($res);
         }
-        return spt_json_error($this->getDbError());
+        return spt_json_error('暂无场馆');
+    }
+    
+    /**
+     * 查看预约单(只提供给管理员使用)
+     */
+    public function listsAllOrder($ma_id,$page,$limit){
+        $this->pageLegal($page, $limit);//判断该两个参数是否合法
+        $res=$this->where("ma_id=%d",$ma_id)
+                    ->order('order_time desc')
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无预约单');
+    }
+    
+    /**
+     * 显示某一场馆的预约单(只提供给管理员使用)
+     */
+    public function listsSpeOrder($data,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->where("vi_id=%d AND ma_id=%d",$data['vi_id'],$data['ma_id'])
+                    ->order('order_time desc')
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('无法查看该场所的信息');
+    }
+    
+    /**
+     * 显示未结的预约单(只提供给管理员使用)
+     */
+    public function listsUndone($ma_id,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->where("done is null AND ma_id=%d",$ma_id)
+                    ->order('order_time desc')
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无未结预约单');
+    }
+    
+    /**
+     * 结单(只提供给管理员使用)
+     */
+    public function doneOrder($dv_id,$ma_id){
+        if($this->where("dv_id=%d AND done=1",$dv_id)->find()){
+            return spt_json_error('结单失败，你已经结过单');
+        }
+        if($this->where("dv_id=%d AND ma_id=%d",$dv_id,$ma_id)->setField('done',1)){
+            return spt_json_success('结单成功');
+        }
     }
 }
