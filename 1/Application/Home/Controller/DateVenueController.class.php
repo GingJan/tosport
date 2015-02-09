@@ -36,8 +36,7 @@ class DateVenueController extends BaseController{
      */
     public function cancelDate(){
         $this->getlogin()->reqPost(array('dv_id'));
-        $subscriber=session('user.u_id');
-        $this->ajaxReturn(D('DateVenue')->cancelDate(I('post.dv_id'),$subscriber));
+        $this->ajaxReturn(D('DateVenue')->cancelDate(I('post.dv_id'),session('user.u_id')));
     }
     
     /**
@@ -45,7 +44,6 @@ class DateVenueController extends BaseController{
      */
     public function listsDate($page =1,$limit =10){
         $this->getlogin();
-        $subscriber=session('user.u_id');
-        $this->ajaxReturn(D('DateVenue')->listsDate($subscriber,$page,$limit));
+        $this->ajaxReturn(D('DateVenue')->listsDate(session('user.u_id'),$page,$limit));
     }
 }

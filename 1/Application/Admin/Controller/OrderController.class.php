@@ -8,7 +8,7 @@ class OrderController extends BaseController{
      */
     public function listsAllOrder($page= 1,$limit = 10){
         $this->checkManager();
-        $this->ajaxReturn(D('DateVenue')->listsAllOrder(session('manager.ma_id'),$page,$limit));
+        $this->ajaxReturn(D('Order')->listsAllOrder(session('manager.ma_id'),$page,$limit));
     }
     
     /**
@@ -18,7 +18,7 @@ class OrderController extends BaseController{
         $this->checkManager()->reqPost(array('vi_id'));
         $data=I('post.');
         $data['ma_id']=session('manager.ma_id');
-        $this->ajaxReturn(D('DateVenue')->listsSpeOrder($data,$page,$limit));
+        $this->ajaxReturn(D('Order')->listsSpeOrder($data,$page,$limit));
     }
     
     /**
@@ -26,7 +26,7 @@ class OrderController extends BaseController{
      */
     public function listsUndone($page = 1,$limit = 10){
         $this->checkManager();
-        $this->ajaxReturn(D('DateVenue')->listsUndone(session('manager.ma_id'),$page,$limit));
+        $this->ajaxReturn(D('Order')->listsUndone(session('manager.ma_id'),$page,$limit));
     }
     
     
@@ -35,6 +35,6 @@ class OrderController extends BaseController{
      */
     public function doneOrder(){
         $this->checkManager()->reqPost(array('dv_id'));
-        $this->ajaxReturn(D('DateVenue')->doneOrder(I('post.dv_id'),session('manager.ma_id')));
+        $this->ajaxReturn(D('Order')->doneOrder(I('post.dv_id'),session('manager.ma_id')));
     }
 }
