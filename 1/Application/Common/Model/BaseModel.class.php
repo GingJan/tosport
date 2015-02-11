@@ -44,5 +44,16 @@ class BaseModel extends AdvModel{
         }
         return $this;
     }
+    
+    
+    /**
+     * 是否为整数 
+     */
+    protected function isInteger($data){
+        if($data == floor($data)){
+            return true;
+        }
+        return false;
+    }
 }
 
