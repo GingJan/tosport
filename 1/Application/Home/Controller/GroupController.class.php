@@ -105,6 +105,26 @@ class GroupController extends BaseController{
         $this->ajaxReturn(D('GroupPerson')->rescindPower($data));
     }
     
+    /**
+     * 踢人
+     */
+    
+    
+    /**
+     * 邀请人
+     */
+    
+    
+    /**
+     * 入群请求
+     */
+    
+    
+    /**
+     * 被邀请求
+     */
+    
+    
     
 
 }

@@ -8,9 +8,9 @@ class TimelineController extends BaseController{
      * 发表一条 动态/打卡
      */
     public function send(){
-        $this->getlogin()->reqPost(array('content','region'));
+        $this->getlogin()->reqPost(array('content','now_region'));
         $data['content']=I('post.content');
-        $data['region']=I('post.region');//通过定位，获取用户所在的位置
+        $data['now_region']=I('post.region');//通过定位，获取用户实时所在的位置
         $data['sender_id']=session('user.u_id');
         $this->ajaxReturn(D('Timeline')->send($data));
     }
@@ -61,9 +61,8 @@ class TimelineController extends BaseController{
      * @param number $limit
      */
     public function listsCityTimeline($page=1,$limit=10){
-        $this->getlogin()->reqPost(array('region'));
-        $me_region=I('post.region');
-        $this->ajaxReturn(D('Timeline')->listsCityTimeline($me_region,$page,$limit));
+        $this->getlogin()->reqPost(array('now_region'));
+        $this->ajaxReturn(D('Timeline')->listsCityTimeline(I('post.now_region'),$page,$limit));
     }
     
 }

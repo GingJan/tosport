@@ -107,19 +107,4 @@ class AccountModel extends BaseModel{
         return spt_json_error('原密码错误!');
     }
     
-    /**
-     * 找回密码,暂未实现 TODO
-     */
-    public function forgetPassword($email){
-        if($this->where("email='%s'",$email)->find()){
-            $title='约运动——找回密码';
-            $body='This is a test';
-            if($this->sendemail($email, $title, $body)){
-                return spt_json_success('找回密码邮件已发送');
-            }
-            return spt_json_error('error!!!!!!!!!!!!,email_function inner error');
-        }
-        return spt_json_error('This email does not register yet');
-    }
-    
 }

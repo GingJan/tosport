@@ -9,9 +9,11 @@ class CommentModel extends BaseModel{
         array('sender_id','require','缺少发表者id',self::EXISTS_VALIDATE,'regex',1)
     );
     
+    
     protected $_auto=array(
         array('send_time',NOW_TIME,1)
     );
+    
     
     /**
      * 发送/回复 消息/评论动态
@@ -25,6 +27,7 @@ class CommentModel extends BaseModel{
         }
         return spt_json_error($this->getError());
     }
+    
     
     /**
      * 点/取消 赞
@@ -42,6 +45,7 @@ class CommentModel extends BaseModel{
         }
         return spt_json_error('点赞失败');
     }
+    
     
     /**
      * 删除自己发的评论
@@ -62,8 +66,11 @@ class CommentModel extends BaseModel{
      * @param int $limit 每页大小
      */
     public function listsAllComment($me_id,$page,$limit){
-        $res=$this->table("spt_view_receive_comment")
-                    ->where("c_sender_id=%d OR c_receiver_id=%d",$me_id,$me_id)
+        $this->pageLegal($page, $limit);
+        $res=$this->table("spt_user_info u,spt_comment c,spt_timeline t")
+                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.like,c.send_time,t.sender_id as tl_sender_id")
+                    ->where("t.tl_id=c.tl_id AND u.u_id=c.sender_id AND (c.sender_id=%d OR c.receiver_id=%d)",$me_id,$me_id)
+                    ->order("c.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
@@ -72,14 +79,18 @@ class CommentModel extends BaseModel{
         return spt_json_error('暂无评论');
     }
     
+    
     /**
      * 获取指定动态的评论/赞
      * @param int $page 当前页数
      * @param int $limit 每页大小
      */
-    public function listsSpeComment($data,$page,$limit){
-        $res=$this->table("spt_view_receive_comment")
-                    ->where("(c_sender_id=%d OR c_receiver_id=%d) AND tl_id=%d",$data['me_id'],$data['me_id'],$data['tl_id'])//need to fix
+    public function listsSpeComment($tl_id,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->table("spt_user_info u,spt_comment c,spt_timeline t")
+                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.like,c.send_time,t.sender_id as tl_sender_id")
+                    ->where("t.tl_id=%d AND t.tl_id=c.tl_id AND u.u_id=c.sender_id",$tl_id)
+                    ->order("c.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){

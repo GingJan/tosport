@@ -5,9 +5,9 @@ use Common\Model\BaseModel;
 
 class UserInfoModel extends BaseModel{
     protected $_validate=array(
-        array('email','','邮箱不能为空',self::MUST_VALIDATE,'notequal',1),
+        array('email','','邮箱不能为空',self::EXISTS_VALIDATE,'notequal',3),
         //array('email','/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)
-        array('email','email','邮箱格式不正确',self::MUST_VALIDATE,'regex',1)//邮箱正则需要改进
+        array('email','/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/','邮箱格式不正确',self::EXISTS_VALIDATE,'regex',3)//邮箱正则需要改进
     );
     
     protected $_auto=array(
@@ -30,7 +30,6 @@ class UserInfoModel extends BaseModel{
             if($this->add()){
                 return spt_json_success('注册成功');
             }
-//             $msg='注册发生错误'.$this->getDbError();
             return spt_json_error('注册发生错误!');
         }
         return spt_json_error($this->getError());
@@ -40,12 +39,7 @@ class UserInfoModel extends BaseModel{
      * 附近的人
      */
     public function nearby($region,$page,$limit){
-        if($page <= 0){
-            $page = 1;
-        }
-        if($limit <= 0){
-            $limit =10;
-        }
+        $this->pageLegal($page, $limit);
         $res=$this->where("region='%s'",$region)
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
@@ -62,7 +56,7 @@ class UserInfoModel extends BaseModel{
     public function updateInfo($data){
         $validate_rules=array(
             array('phone','11','电话格式不正确',self::VALUE_VALIDATE,'length',5),//5代表更改时
-            array('email','email','邮箱格式不正确',self::VALUE_VALIDATE,'regex',5)//邮箱
+            array('email','/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/','邮箱格式不正确',self::VALUE_VALIDATE,'regex',5)//邮箱
         );
        if($data['nickname'] === ''){
            $data['nickname'] = $data['account'];
@@ -85,10 +79,24 @@ class UserInfoModel extends BaseModel{
      */
     public function getUserInfo($account){
         $res=$this->where("account='%s'",$account)->find();
-//         $this->where("id=%d",$res['id'])->save($this->create($res,3));//create()是返回数据对象而不是$this,因此后面不能连贯操作save()/add()
         if($res){
             return spt_json_success($res);
         }
         return spt_json_error('无此用户');
+    }
+    
+    /**
+     * 找回/忘记 密码
+     */
+    public function forgetPassword($email){
+        if($this->where("email='%s'")->find()){
+            $content="<b>你好，请点击以下链接找回密码</b><br/>";
+            $content.="www.egerla.com/index.php/home/Index/test";
+            if(sendEmail($email,'找回密码',$content)){
+                return spt_json_success('发送成功,请到邮箱查找邮件');
+            }
+            return spt_json_error('发送失败，请重试');
+        }
+        return spt_json_error('此邮箱未注册');
     }
 }

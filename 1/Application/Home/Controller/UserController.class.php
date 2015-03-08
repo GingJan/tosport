@@ -9,7 +9,6 @@ class UserController extends BaseController{
     
     /**
      * 创建用户
-     * @return json
      */    
     public function register(){
         $this->reqPost(array('account','password','repassword','email'));
@@ -27,15 +26,13 @@ class UserController extends BaseController{
     
     /**
      * 修改用户基本信息
-     * @param int u_id
      */
     public function updateInfo(){
         $this->getlogin()->reqPost();
         $data=I('post.');
         $data['u_id'] = session('user.u_id');
         $data['account'] = session('user.account');
-        $res=D('UserInfo')->updateInfo($data);
-        $this->ajaxReturn($res);
+        $this->ajaxReturn(D('UserInfo')->updateInfo($data));
     }
     
     /**
@@ -95,10 +92,10 @@ class UserController extends BaseController{
     }
     
     /**
-     * Todo
+     * 找回/忘记 密码
      */
     public function forgetPassword(){
-        $email=I('post.email');
-        $this->ajaxReturn(D('Account')->forgetPassword($email));
+        $this->reqPost(array('email'));
+        $this->ajaxReturn(D('UserInfo')->forgetPassword(I('post.email')));
     }
 }

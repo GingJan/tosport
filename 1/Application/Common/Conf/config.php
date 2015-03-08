@@ -17,6 +17,13 @@ $common_config = array(
     'URL_CASE_INSENSITIVE' => true,         //不区分URL大小写
 //     'SESSION_TYPE'         => 'Db',         //用数据库的形式存储session
     
+    
+    //邮箱配置
+    'MAIL_ADDRESS'=>'forgetpassword@egerla.com', // 邮箱地址
+    'MAIL_SMTP'=>'smtp.qq.com', // 邮箱SMTP服务器
+    'MAIL_LOGINNAME'=>'1873866421', // 邮箱登录帐号
+    'MAIL_PASSWORD'=>'123456aa', // 邮箱密码
+    'MAIL_SENDER'=>'约运动', //发件人名字
 );
 
 

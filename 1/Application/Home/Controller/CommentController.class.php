@@ -51,8 +51,6 @@ class CommentController extends BaseController{
      */
     public function listsSpeComment($page = 1,$limit = 15){
         $this->getlogin()->reqPost(array('tl_id'));
-        $data['tl_id']=I('post.tl_id');
-        $data['me_id']=session('user.u_id');
-        $this->ajaxReturn(D('Comment')->listsSpeComment($data,$page,$limit));
+        $this->ajaxReturn(D('Comment')->listsSpeComment(I('post.tl_id'),$page,$limit));
     }
 }
