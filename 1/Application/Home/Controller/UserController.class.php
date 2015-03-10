@@ -92,10 +92,32 @@ class UserController extends BaseController{
     }
     
     /**
-     * 找回/忘记 密码
+     * 找回密码
      */
     public function forgetPassword(){
         $this->reqPost(array('email'));
-        $this->ajaxReturn(D('UserInfo')->forgetPassword(I('post.email')));
+        $this->ajaxReturn(D('Account')->forgetPassword(I('post.email')));
+    }
+    
+    /**
+     * 判断PIN码
+     */
+    public function judge(){
+        $data['account']=I('get.u');
+        $data['PIN']=I('get.p');
+        if(D('PinCode')->judgePIN($data)){
+            $this->assign('account',$data['account']);
+            $this->display('resetPassword');
+            return;
+        }
+        $this->ajaxReturn('校验码过期或者错误');
+    }
+    
+    /**
+     * 找回密码-重设密码
+     */
+    public function resetPassword(){//尝试改为private
+        $this->reqPost(array('password','repassword','account'));
+        $this->ajaxReturn(D('Account')->resetPassword(I('post.')));
     }
 }

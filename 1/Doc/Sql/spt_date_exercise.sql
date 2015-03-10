@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `spt_date_exercise` (
   `content` text COMMENT '附加内容',
   `people_amount` int(10) unsigned NOT NULL COMMENT '人数上限',
   `booked_amount` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '已预约人数',
-  `creator_region` varchar(32) NOT NULL COMMENT '发布人的地区',
+  `creator_region` varchar(32) COMMENT '发布人的地区',
   `create_time` int(10) unsigned NOT NULL COMMENT '发布时间',
   PRIMARY KEY (`de_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='约运动表' AUTO_INCREMENT=9 ;

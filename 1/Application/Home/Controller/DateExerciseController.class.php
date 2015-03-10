@@ -8,7 +8,7 @@ class DateExerciseController extends BaseController{
      * 创建一条约运动
      */
     public function create(){
-        $this->getlogin()->reqPost(array('sport_type','sport_place','sport_time','content','people_amount','creator_region'));
+        $this->getlogin()->reqPost(array('sport_type','sport_place','sport_time','content','people_amount'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
         $this->ajaxReturn(D('DateExercise')->createDE($data));

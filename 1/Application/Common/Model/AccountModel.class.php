@@ -17,50 +17,12 @@ class AccountModel extends BaseModel{
     
     protected $readonlyField=array('account');
     
-    /**
-     * TODO
-     * @param unknown $to
-     * @param unknown $title
-     * @param unknown $body
-     * @return boolean
-     */
-//     protected function sendemail($to,$title,$body){
-//         $mail = new \Org\Util\PHPMailer\phpmailer;
-//         $mail->isSMTP();
-//         $mail->Host = 'smtp.qq.com;smtp.126.com;smtp.gmail.com';  // Specify main and backup SMTP servers
-//         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-//         $mail->Username = '1873866421@qq.com';                 // SMTP username
-//         $mail->Password = 'wzzh105aa';                           // SMTP password
-//         $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-//         $mail->Port = 465;                                    // TCP port to connect to,465 port support ssl
-        
-//         $mail->From = 'from@example.com';
-//         $mail->FromName = 'Mailer';
-// //         $mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
-//         $mail->addAddress($to);               // Name is optional
-//         $mail->addReplyTo('1873866421@qq.com', 'admin');
-//         $mail->addCC('cc@example.com');
-//         $mail->addBCC('bcc@example.com');
-        
-// //         $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments,添加附件
-// //         $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-//         $mail->isHTML(false);                                  // Set email format to HTML 设置邮件格式为HTML
-        
-//         $mail->Subject = 'get password';//邮件主题
-//         $mail->Body    = 'test1 password';//邮件内容主题
-//         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';//邮件备用内容主题
-//         if($mail->sent()){
-//             return true;
-// 		}
-// 		return false;
-//     }
-    
     
     /**
      * Account表 注册
      */
     public function register($data){
-        if($this->create($data)){
+        if($this->create($data,1)){
             if($this->add()){
                 return spt_json_success('注册成功');
             }
@@ -91,13 +53,13 @@ class AccountModel extends BaseModel{
      */
     public function updatePassword($data){
         $validate_rules=array(
-            array('password','','新密码不能为空',self::MUST_VALIDATE,'notequal',3),
-            array('password','6,12','密码长度为6~12位',self::MUST_VALIDATE,'length',3),
-            array('repassword','password','确认密码不一致，请重新输入',self::MUST_VALIDATE,'confirm',3) // 验证确认密码是否和密码一致
+            array('password','','新密码不能为空',self::MUST_VALIDATE,'notequal',2),
+            array('password','6,12','密码长度为6~12位',self::MUST_VALIDATE,'length',2),
+            array('repassword','password','确认密码不一致，请重新输入',self::MUST_VALIDATE,'confirm',2) // 验证确认密码是否和密码一致
         );
         
         if($this->checkPassword($data['account'], $data['password'])){
-            $res=$this->validate($validate_rules)->create(array('password'=>$data['newPassword'],'repassword'=>$data['repassword']),3);
+            $res=$this->validate($validate_rules)->create(array('password'=>$data['newPassword'],'repassword'=>$data['repassword']),2);
             if($res){
                 $this->where("account='%s'",$data['account'])->setField('password',$res['password']);
                 return spt_json_success('密码修改成功!');
@@ -106,5 +68,46 @@ class AccountModel extends BaseModel{
         }
         return spt_json_error('原密码错误!');
     }
+    
+    /**
+     * 找回/忘记 密码
+     */
+    public function forgetPassword($email){
+        $res=M('UserInfo')->field("u_id,account")->where("email='%s'",$email)->find();
+        if($res){
+            if(D('PinCode')->createPIN($res)){
+                $account=$res['account'];
+                $content="<b>你好，请点击以下链接找回密码</b><br/>";
+                $content.="www.egerla.com/index.php/Home/User/judge?u=".$res['account']."&p=".$res['PIN_code'];
+                if(sendEmail($email,'约运动找回密码',$content)){
+                    return spt_json_success('发送成功,请到邮箱查找邮件');
+                }
+                return spt_json_error('发送失败，请重试');
+            }
+            return spt_json_error('发生错误，请重试');
+        }
+        return spt_json_error('此邮箱未注册');
+    }
+    
+    /**
+     * 找回密码-重设密码
+     * @param unknown $data
+     */
+    public function resetPassword($data){
+        $validate_rules=array(
+            array('password','','密码不能为空',self::EXISTS_VALIDATE,'notequal',2),
+            array('password','6,12','密码长度6~12',self::EXISTS_VALIDATE,'length',2),
+            array('repassword','password','两次输入密码不一致',self::EXISTS_VALIDATE,'confirm',2)
+        );
+        $res=$this->validate($validate_rules)->create($data);
+        if($res){
+            if($this->where("account='%s'",$data['account'])->setField('password',$res['password'])){
+                return spt_json_success('重设密码成功,请使用新密码登陆');
+            }
+            return spt_json_error('操作失败');
+        }
+        return spt_json_error($this->getError());
+    }
+    
     
 }

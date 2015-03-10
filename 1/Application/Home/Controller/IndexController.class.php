@@ -19,5 +19,11 @@ class IndexController extends Controller {
 //         $this->reqGet(array('id','ruby'));
 //         $this->ajaxReturn(I('id'));
 //     }
+
+	
+	public function resetPage(){
+	    $this->display('resetPassword');
+	    
+	}
 	
 }

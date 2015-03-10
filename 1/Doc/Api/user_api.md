@@ -221,7 +221,7 @@ account| 对方账号  | Y | varchar(32) | 要获取该账号信息的账号
 ```
 
 
-###找回密码（TODO）
+###找回密码
 `POST`
 
 `/Home/User/forgetPassword`

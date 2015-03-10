@@ -98,3 +98,32 @@ function sendEmail($toEmail,$title,$content){
     return false;
     
 }
+
+/**
+ * 生成一个伪随机数
+ * @param int $length
+ */
+function random_str(int $length)
+{
+    //生成一个包含 大写英文字母, 小写英文字母, 数字 的数组
+    $arr = array_merge(range(0, 9), range('a', 'z'), range('A', 'Z'));//生成3个数组（range生成一个0-9共10个元素的数组）并且合并
+    $str = '';
+    $arr_len = count($arr);
+    for ($i = 0; $i < $length; $i++){
+        $rand = mt_rand(0, $arr_len-1);//生成一个伪随机数
+        $str.=$arr[$rand];
+    }
+    return $str;
+}
+
+
+/**
+ * 自动填充
+ * @param array $data
+ */
+function autofill(array &$data){
+    foreach ($data as $key=>$value){
+        $data[$key] = $value? : session('user.'.$key);//可以把第二表达式写成  session('user'.$key)? : $with 
+    }
+    return $this;
+}
