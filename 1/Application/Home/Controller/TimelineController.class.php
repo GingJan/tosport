@@ -8,9 +8,8 @@ class TimelineController extends BaseController{
      * 发表一条 动态/打卡
      */
     public function send(){
-        $this->getlogin()->reqPost(array('content','now_region'));
-        $data['content']=I('post.content');
-        $data['now_region']=I('post.region');//通过定位，获取用户实时所在的位置
+        $this->getlogin()->reqPost(array('content','picture','now_region'));
+        $data=I('post.');//通过定位，获取用户实时所在的位置
         $data['sender_id']=session('user.u_id');
         $this->ajaxReturn(D('Timeline')->send($data));
     }

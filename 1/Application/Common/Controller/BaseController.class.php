@@ -101,4 +101,18 @@ class BaseController extends Controller{
 	    }
 	    $this->ajaxReturn(spt_json_error('你不是超级管理员,无法使用该功能'));
 	}
+	
+	/**
+	 * 获取上传凭证
+	 */
+	public function uploadToken(){
+	    return D('Qiniu')->upToken();
+	}
+	
+	/**
+	 * 获取下载凭证(下载链接)
+	 */
+	public function downloadToken($key){
+	    return D('Qiniu')->downToken($key);
+	}
 }

@@ -55,5 +55,24 @@ class BaseModel extends AdvModel{
         }
         return false;
     }
+    
+   
+     /************************* 调用七牛***********************/
+    /**
+     * 获取upToken上传凭证
+     */
+    public function upToken($CallbackUrl){
+        vendor('php-sdk-6.1.13/qiniu.io');
+        vendor('php-sdk-6.1.13/qiniu.rs');
+        Qiniu_SetKeys(C('ACCESSKEY'), C('SECRETKEY'));
+        global $putPolicy;
+        $putPolicy = new \Qiniu_RS_PutPolicy(C('BUCKET'));
+        $putPolicy->Expires=86400;//上传凭证的有效期为24小时
+        $putPolicy->CallbackUrl=$CallbackUrl;
+        $putPolicy->CallbackBody="key=$(key)&etag=$(etag)";
+        $upToken = $putPolicy->Token(null);
+        return $upToken;
+    }
+     
 }
 

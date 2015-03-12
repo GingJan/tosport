@@ -19,11 +19,17 @@ $common_config = array(
     
     
     //邮箱配置
-    'MAIL_ADDRESS'=>'forgetpassword@egerla.com', // 邮箱地址
-    'MAIL_SMTP'=>'smtp.qq.com', // 邮箱SMTP服务器
-    'MAIL_LOGINNAME'=>'1873866421', // 邮箱登录帐号
-    'MAIL_PASSWORD'=>'123456aa', // 邮箱密码
-    'MAIL_SENDER'=>'约运动', //发件人名字
+    'MAIL_ADDRESS'          => 'forgetpassword@egerla.com', // 邮箱地址
+    'MAIL_SMTP'             => 'smtp.qq.com', // 邮箱SMTP服务器
+    'MAIL_LOGINNAME'        => '1873866421', // 邮箱登录帐号
+    'MAIL_PASSWORD'         => '123456aa', // 邮箱密码
+    'MAIL_SENDER'           => '约运动', //发件人名字
+    
+    //七牛云存储配置
+    'ACCESSKEY'             => 'gd4ZebkZHJvrSLD-YHZTyc2RZsEF1lnXFJWnyJ2d',
+    'SECRETKEY'             => 'xhlFWwIEpLCSeOli1XrsfqOmaqWvRn4HP9xQnzhx',
+    'BUCKET'                => 'tosport',
+    'DOMAIN'                => 'tosport.qiniudn.com',
 );
 
 

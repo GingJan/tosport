@@ -91,7 +91,7 @@ class AccountModel extends BaseModel{
     
     /**
      * 找回密码-重设密码
-     * @param unknown $data
+     * @param mixed $data
      */
     public function resetPassword($data){
         $validate_rules=array(
