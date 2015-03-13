@@ -79,4 +79,12 @@ class DateExerciseController extends BaseController{
         $creator_id=session('user.u_id');
         $this->ajaxReturn(D('DateExercise')->listsDateGuy($creator_id,$page,$limit));
     }
+    
+    /**
+     * 列出我参加的约运动
+     */
+    public function listsJoin($page,$limit){
+        $this->getlogin();
+        $this->ajaxReturn(D('DateExercise')->listsJoin(session('user.u_id'),$page,$limit));
+    }
 }

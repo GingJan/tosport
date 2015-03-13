@@ -2,8 +2,8 @@
 namespace Common\Model;
 use Common\Model\BaseModel;
 
-vendor('php-sdk-6.1.13/qiniu.io');
-vendor('php-sdk-6.1.13/qiniu.rs');
+vendor('qiniu_sdk/qiniu.io');
+vendor('qiniu_sdk/qiniu.rs');
 class QiniuModel extends BaseModel{
     /**
      * 上传凭证 

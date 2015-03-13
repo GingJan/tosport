@@ -107,7 +107,7 @@ class BaseController extends Controller{
 	 */
 	public function uploadToken(){
 	    $this->getlogin()->reqPost();
-	    return D('Qiniu')->upToken();
+	    $this->ajaxReturn(D('Qiniu')->upToken());
 	}
 	
 	/**
@@ -115,6 +115,6 @@ class BaseController extends Controller{
 	 */
 	public function downloadToken($key){
 	    $this->getlogin()->reqPost();
-	    return D('Qiniu')->downToken($key);
+	    $this->ajaxReturn(D('Qiniu')->downToken($key));
 	}
 }

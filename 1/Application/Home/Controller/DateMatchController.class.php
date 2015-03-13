@@ -80,7 +80,6 @@ class DateMatchController extends BaseController{
      */
     public function listsJoin($page,$limit){
         $this->getlogin();
-        $me_id=session('user.u_id');
-        $this->ajaxReturn(D('DateMatch')->listsJoin($me_id,$page,$limit));
+        $this->ajaxReturn(D('DateMatch')->listsJoin(session('user.u_id'),$page,$limit));
     }
 }
