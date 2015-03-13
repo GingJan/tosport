@@ -129,4 +129,21 @@ class DateExerciseModel extends BaseModel{
         }
         return spt_json_error('暂无约');
     }
+    
+    /**
+     * 列出我参加的约运动
+     */
+    public function listsJoin($me_id,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->table("spt_date_person dp,spt_date_exercise de")
+                    ->field("dp.d_id,de.creator_id,de.de_id,de.creator_region,dp.create_time",true)
+                    ->where("m.me_id=%d",$me_id)
+                    ->order("dp.create_time desc")
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无约');
+    }
 }

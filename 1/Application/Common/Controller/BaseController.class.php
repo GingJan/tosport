@@ -106,6 +106,7 @@ class BaseController extends Controller{
 	 * 获取上传凭证
 	 */
 	public function uploadToken(){
+	    $this->getlogin()->reqPost();
 	    return D('Qiniu')->upToken();
 	}
 	
@@ -113,6 +114,7 @@ class BaseController extends Controller{
 	 * 获取下载凭证(下载链接)
 	 */
 	public function downloadToken($key){
+	    $this->getlogin()->reqPost();
 	    return D('Qiniu')->downToken($key);
 	}
 }

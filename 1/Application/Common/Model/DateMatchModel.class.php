@@ -5,7 +5,7 @@ use Common\Model\BaseModel;
 class DateMatchModel extends BaseModel{
     protected $_validate=array(
         array('match_time',array(0,NOW_TIME),'运动时间不能早于发布时间',self::MUST_VALIDATE,'notbetween',1),
-        array('people_amount',array(1,25),'人数必须在1~25人之间',self::MUST_VALIDATE,'between',1),
+        array('people_amount',array(1,50),'人数必须在1~50人之间',self::MUST_VALIDATE,'between',1),
         array('content','0,140','附加内容不可超过140字',self::MUST_VALIDATE,'length',1)
     );
     
@@ -88,7 +88,7 @@ class DateMatchModel extends BaseModel{
      */
     public function dateIt($data){
         if($data['me_id'] === $data['creator_id']){
-            return spt_json_error('不能自己约自己');
+            return spt_json_error('不能与自己比赛');
         }
         $res=$this->field('people_amount,booked_amount')->where("dm_id=%d",$data['dm_id'])->find();
         if($res['people_amount'] === $res['booked_amount']){
@@ -119,10 +119,10 @@ class DateMatchModel extends BaseModel{
      */
     public function listsDateGuy($creator_id,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->table('spt_match m,spt_user_info u')
+        $res=$this->table("spt_match m,spt_user_info u")
                     ->field("u.u_id,u.nickname,u.sex,u.avatar,m.dm_id,m.create_time")
-                    ->where('m.creator_id=%d AND u.u_id=m.me_id',$creator_id)
-                    ->order('m.create_time desc')
+                    ->where("m.creator_id=%d AND u.u_id=m.me_id",$creator_id)
+                    ->order("m.create_time desc")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
@@ -130,4 +130,22 @@ class DateMatchModel extends BaseModel{
         }
         return spt_json_error('暂无约');
     }
+    
+   /**
+    * 列出我参加的比赛
+    */
+    public function listsJoin($me_id,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->table("spt_match m,spt_date_match dm")
+                    ->field("dm.creator_region,dm.create_time,m.mt_id,m.dm_id,m.creator_id",true)
+                    ->where("m.me_id=%d",$me_id)
+                    ->order("m.create_time desc")
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无约');
+    }
+    
 }

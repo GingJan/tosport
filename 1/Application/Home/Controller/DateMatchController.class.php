@@ -1,12 +1,13 @@
 <?php
 namespace Home\Controller;
 
+use Common\Controller\BaseController;
 class DateMatchController extends BaseController{
     /**
      * 发布一条比赛
      */
     public function create(){
-        $this->getlogin()->reqPost(array('match_type','match_place','sport_time','content','people_amount','picture'));
+        $this->getlogin()->reqPost(array('match_type','match_place','match_time','content','picture','people_amount','my_region'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
         $this->ajaxReturn(D('DateMatch')->createDM($data));
@@ -17,7 +18,7 @@ class DateMatchController extends BaseController{
      */
     public function delete(){
         $this->getlogin()->reqPost(array('dm_id'));
-        $this->ajaxReturn(D('DateExercise')->deleteDM(I('post.dm_id'),session('user.u_id')));
+        $this->ajaxReturn(D('DateMatch')->deleteDM(I('post.dm_id'),session('user.u_id')));
     }
     
     /**
@@ -42,7 +43,7 @@ class DateMatchController extends BaseController{
     public function listsHotDM($page = 1,$limit = 10){
         $this->getlogin()->reqPost('my_region');
         $my_region=I('post.my_region');
-        $this->ajaxReturn(D('DateMatch')->listsHotDE($my_region,$page,$limit));
+        $this->ajaxReturn(D('DateMatch')->listsHotDM($my_region,$page,$limit));
     }
     
     /**
@@ -72,5 +73,14 @@ class DateMatchController extends BaseController{
         $this->getlogin();
         $creator_id=session('user.u_id');
         $this->ajaxReturn(D('DateMatch')->listsDateGuy($creator_id,$page,$limit));
+    }
+    
+    /**
+     * 列出我参加的比赛
+     */
+    public function listsJoin($page,$limit){
+        $this->getlogin();
+        $me_id=session('user.u_id');
+        $this->ajaxReturn(D('DateMatch')->listsJoin($me_id,$page,$limit));
     }
 }

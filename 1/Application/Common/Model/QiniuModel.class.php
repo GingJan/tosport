@@ -14,7 +14,7 @@ class QiniuModel extends BaseModel{
         $putPolicy->Expires=86400;//上传凭证的有效期为24小时
 //         $putPolicy->CallbackUrl=$CallbackUrl;
 //         $putPolicy->CallbackBody="key=$(key)&etag=$(etag)";
-        return $putPolicy->Token(null);//返回一个upToken
+        return spt_json_success($putPolicy->Token(null));//返回一个upToken
     }
     
     /**
