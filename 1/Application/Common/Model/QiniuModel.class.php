@@ -24,24 +24,7 @@ class QiniuModel extends BaseModel{
         Qiniu_SetKeys(C('ACCESSKEY'), C('SECRETKEY'));
         $baseUrl = Qiniu_RS_MakeBaseUrl(C('DOMAIN'), $key);
         $getPolicy = new \Qiniu_RS_GetPolicy();
-        return $getPolicy->MakeRequest($baseUrl, null);
+        return spt_json_success($getPolicy->MakeRequest($baseUrl, null));
     }
-    
-    
-    /**
-     * 把七牛返回来的信息保存起来
-     * @param unknown $data
-     */
-    public function saveKey($data){
-        if($this->data($data)){
-            if($this->add()){
-                return spt_json_success('上传成功');
-            }
-            return spt_json_error('发生错误了');
-        }
-        return spt_json_error('发生错误了');
-    }
-    
-    
     
 }
