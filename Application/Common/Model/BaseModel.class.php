@@ -39,7 +39,7 @@ class BaseModel extends AdvModel{
         if($page <= 0){
             $page = 1;
         }
-        if($limit <= 10){
+        if($limit <= 0){
             $limit = 10;
         }
         return $this;

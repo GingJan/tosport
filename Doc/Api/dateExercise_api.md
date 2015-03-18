@@ -16,8 +16,10 @@ sport_type | 运动类型 | Y | varchar(32) | 如：网球，羽毛球
 sport_place | 运动地点 | Y | varchar(32) | 如：五邑大学1号网球场
 sport_time | 运动时间 | Y | int | 时间戳
 people_amount | 限定人数上限 | Y | int | 人数上限不能超过25人
-creator_region | 发布者实时位置 | N | varchar(32) | 根据GPS定位获取地理位置
 content | 附加内容/主题 | N | text | 如果为空则用运动类型自动填补
+picture | 附件图片 | N | string | 图片的key
+creator_region | 发布者实时位置 | N | varchar(32) | 根据GPS定位获取地理位置
+content | 附加内容/主题 | N | text | 字数不能超过140字，如果为空则用运动类型自动填补，
 
 **Response**
 ```json
@@ -206,7 +208,7 @@ creator_id | 该条约运动发布人的id | Y | int |
 ```json
 {
     "code": 20000,
-    "response": "成功约到！"
+    "response": "预约运动成功！"
 }
 ```
 
@@ -238,7 +240,7 @@ de_id | 要取消的约运动的id | Y | int |
 ps:该Api需要用户登陆
 `POST`
 
-`/Home/DateExercise/listsDateGuy
+`/Home/DateExercise/listsDateGuy`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ------------------- | ------------------- | ---------------------- | ------------------
@@ -270,3 +272,70 @@ limit | 每页大小 | N |int | 默认为10
 }
 ```
 
+
+
+
+###列出我参加的约运动
+ps:该Api需要用户登陆
+`POST`
+
+`/Home/DateExercise/listsJoin`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ------------------- | ------------------- | ---------------------- | ------------------
+page | 当前页码 | N | int | 默认为1
+limit | 每页大小 | N |int | 默认为10
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "dp_id": "13",
+            "de_id": "1",
+            "creator_id": "1",
+            "me_id": "2",
+            "create_time": "1422874342",
+            "sport_type": "网球",
+            "sport_place": "五邑大学1号网球场",
+            "sport_time": "1422875858",
+            "content": "网球王子，来打网球吧",
+            "people_amount": "2",
+            "booked_amount": "2",
+            "picture": null,
+            "creator_region": "江门"
+        },
+        {
+            "dp_id": "12",
+            "de_id": "6",
+            "creator_id": "5",
+            "me_id": "2",
+            "create_time": "1422874630",
+            "sport_type": "足球",
+            "sport_place": "天河体育馆",
+            "sport_time": "1422876257",
+            "content": "大家来踢足球",
+            "people_amount": "13",
+            "booked_amount": "1",
+            "picture": null,
+            "creator_region": "广州"
+        },
+        {
+            "dp_id": "11",
+            "de_id": "5",
+            "creator_id": "4",
+            "me_id": "2",
+            "create_time": "1422874577",
+            "sport_type": "乒乓球",
+            "sport_place": "深圳体育馆",
+            "sport_time": "1422876157",
+            "content": "大家来打乒乓球咯",
+            "people_amount": "3",
+            "booked_amount": "1",
+            "picture": null,
+            "creator_region": "深圳"
+        }
+    ]
+}
+```

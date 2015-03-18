@@ -120,8 +120,8 @@ class DateExerciseModel extends BaseModel{
         $this->pageLegal($page, $limit);
         $res=$this->table('spt_date_person dp,spt_user_info u')
                    ->field("u.u_id,u.nickname,u.sex,u.avatar,dp.de_id,dp.create_time")
-                   ->where('dp.creator_id=%d AND u.u_id=dp.me_id',$creator_id)
-                   ->order('dp.create_time desc')
+                   ->where("dp.creator_id=%d AND u.u_id=dp.me_id",$creator_id)
+                   ->order("dp.create_time desc")
                    ->limit(($page-1)*$limit,$limit)
                    ->select();
         if($res){
@@ -135,15 +135,14 @@ class DateExerciseModel extends BaseModel{
      */
     public function listsJoin($me_id,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->table("spt_date_person dp,spt_date_exercise de")
-                    ->field("dp.d_id,de.creator_id,de.de_id,de.creator_region,dp.create_time",true)
-                    ->where("m.me_id=%d",$me_id)
-                    ->order("dp.create_time desc")
+        $res=$this->table('spt_date_person dp,spt_date_exercise de')
+                    ->where('dp.me_id=%d AND de.de_id=dp.de_id',$me_id)
+                    ->order('dp.create_time desc')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
             return spt_json_success($res);
         }
-        return spt_json_error('暂无约');
+        return spt_json_error('暂无参加的约运动');
     }
 }

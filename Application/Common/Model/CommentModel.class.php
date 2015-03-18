@@ -46,6 +46,20 @@ class CommentModel extends BaseModel{
         return spt_json_error('点赞失败');
     }
     
+    /**
+     * 显示自己发的评论
+     */
+    public function listsMyComment($sender_id,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->where("sender_id=%d",$sender_id)
+                    ->order("send_time desc")
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无评论');
+    }
     
     /**
      * 删除自己发的评论

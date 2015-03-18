@@ -14,7 +14,7 @@ Api user
 account| 账号  | Y | varchar(32) | 唯一
 password | 密码 | Y | varchar(32) | 加密
 repassword | 确认密码 | Y | varchar(32) | 要与password匹配
-email | 邮箱 | Y | varchar(64) | 用于找回密码/todo
+email | 邮箱 | Y | varchar(64) | 用于找回密码
 
 **Response**
 ```json
@@ -38,11 +38,11 @@ nickname | 昵称 | N | varchar(32) | 为空时自动填充account,注册时默�
 sex | 性别 | N | varchar(8) | 
 phone | 电话 | N | varchar(16) | 
 email | 邮箱 | N | varchar(64) | 
-avatar | 头像 | N | varchar(256) | 头像图片的URL
+avatar | 头像 | N | varchar(256) | 七牛上的图片key
 intro | 个性签名 | N | text | 
 birth | 生日 | N | int(10) | 时间戳
 spt_favor | 运动爱好 | N | text | 字符串 
-region | 地区 | N |varchar(32) |
+region | 地区 | N | varchar(32) |
 
 **Response**  
 
@@ -155,7 +155,7 @@ region | 实时位置 | Y | varchar(32) | GPS定位
 
 ###显示本人基本信息
 ps:该Api需要用户登陆
-`POST`
+`POST` or `GET`
 
 `/Home/User/getMyInfo`
 
@@ -186,7 +186,7 @@ ps:该Api需要用户登陆
 
 	
 
-###显示其他用户信息
+###显示特定一用户信息
 ps:该Api需要用户登陆
 `POST`
 

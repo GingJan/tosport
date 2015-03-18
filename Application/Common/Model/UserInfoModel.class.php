@@ -63,17 +63,11 @@ class UserInfoModel extends BaseModel{
            if($this->where("u_id=%d AND account='%s'",$data['u_id'],$data['account'])->save()){
                return spt_json_success('更新资料成功！');
            }
-           return spt_json_error('信息更改发生错误!');
+           return spt_json_error('更新资料失败!');
        }
        return spt_json_error($this->getError());
     }
     
-    /**
-     * 只修改用户地区
-     */
-    public function updateRegion($data){
-        
-    }
     
     /**
      * 获取登陆用户的基本信息

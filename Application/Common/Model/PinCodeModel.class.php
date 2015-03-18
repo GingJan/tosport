@@ -32,12 +32,5 @@ class PinCodeModel extends BaseModel{
             return true;
         }
         return false;
-        
-        
-    }
-    
-    
-    public function deletePIN($u_id){
-        
     }
 }

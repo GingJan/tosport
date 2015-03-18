@@ -72,8 +72,7 @@ class UserController extends BaseController{
      */
     public function nearby($page = 1,$limit = 10){
         $this->getlogin()->reqPost(array('region'));
-        $region=I('post.');
-        $this->ajaxReturn(D('UserInfo')->nearby($region,$page,$limit));
+        $this->ajaxReturn(D('UserInfo')->nearby(I('post.region'),$page,$limit));
     }
     
     /**
@@ -83,8 +82,9 @@ class UserController extends BaseController{
         $this->getlogin();
         $this->ajaxReturn(D('UserInfo')->getUserInfo(session('user.account')));
     }
+    
     /**
-     * 显示其他用户个人信息
+     * 显示特定一用户信息
      */
     public function listsUserInfo(){
         $this->getlogin()->reqPost(array('account'));
@@ -116,7 +116,7 @@ class UserController extends BaseController{
     /**
      * 找回密码-重设密码
      */
-    public function resetPassword(){//尝试改为private
+    public function resetPassword(){
         $this->reqPost(array('password','repassword','account'));
         $this->ajaxReturn(D('Account')->resetPassword(I('post.')));
     }

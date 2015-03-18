@@ -94,6 +94,9 @@ class DateMatchModel extends BaseModel{
         if($res['people_amount'] === $res['booked_amount']){
             return spt_json_error('预约人数已经满了');
         }
+        if(M('Match')->where("dm_id=%d AND me_id=%d",$data['dm_id'],$data['me_id'])->find()){
+            return spt_json_error('你已经预约了该比赛');
+        }
         $data['create_time']=NOW_TIME;
         if(M('Match')->data($data)){
             if(M('Match')->add()){
@@ -138,7 +141,7 @@ class DateMatchModel extends BaseModel{
         $this->pageLegal($page, $limit);
         $res=$this->table("spt_match m,spt_date_match dm")
                     ->field("dm.creator_region,dm.create_time,m.mt_id,m.dm_id,m.creator_id",true)
-                    ->where("m.me_id=%d",$me_id)
+                    ->where("m.me_id=%d AND dm.dm_id=m.dm_id",$me_id)
                     ->order("m.create_time desc")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
