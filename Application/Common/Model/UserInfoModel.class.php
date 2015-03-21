@@ -81,6 +81,7 @@ class UserInfoModel extends BaseModel{
        }
        if($this->create($data,2)){
            if($this->where("u_id=%d AND account='%s'",$data['u_id'],$data['account'])->save()){
+               session('user',$data);
                return spt_json_success('更新资料成功！');
            }
            return spt_json_error('新信息与旧信息相同');
