@@ -54,6 +54,29 @@ region | 地区 | N | varchar(32) |
 ```
 
 
+
+###保存用户实时位置
+ps:该Api需要用户登陆
+
+`POST`
+
+`/Home/User/saveLocation`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------- | ------------------ | -------------------- | ------------------ | --------------------
+u_id | 用户u_id | Y | int | 
+location | 用户实时位置 | Y | varchar | 
+**Response**  
+
+```json
+{
+    "code":20000,
+    "response":"operate successfully"
+}
+```
+
+
+
 ###用户登陆
 `POST`
 

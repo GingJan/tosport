@@ -7,9 +7,10 @@ class DateMatchController extends BaseController{
      * 发布一条比赛
      */
     public function create(){
-        $this->getlogin()->reqPost(array('match_type','match_place','match_time','content','picture','people_amount'));
+        $this->getlogin()->reqPost(array('match_type','match_place','match_time','people_amount'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
+        $data['region']=session('user.region');
         $this->ajaxReturn(D('DateMatch')->createDM($data));
     }
     
@@ -33,16 +34,16 @@ class DateMatchController extends BaseController{
      * 显示同城的约运动
      */
     public function listsCityDM($page = 1,$limit = 10){
-        $this->getlogin()->reqPost(array('my_region'));
-        $this->ajaxReturn(D('DateMatch')->listsCityDM(I('post.my_region'),$page,$limit));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('DateMatch')->listsCityDM(session('user.region'),$page,$limit));
     }
     
     /**
      * 显示热门的约比赛
      */
     public function listsHotDM($page = 1,$limit = 10){
-        $this->getlogin()->reqPost(array('my_region'));
-        $this->ajaxReturn(D('DateMatch')->listsHotDM(I('post.my_region'),$page,$limit));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('DateMatch')->listsHotDM(session('user.region'),$page,$limit));
     }
     
     /**
@@ -77,7 +78,7 @@ class DateMatchController extends BaseController{
      * 列出我参加的比赛
      */
     public function listsJoin($page = 1,$limit = 10){
-        $this->getlogin();
+        $this->getlogin()->reqPost();
         $this->ajaxReturn(D('DateMatch')->listsJoin(session('user.u_id'),$page,$limit));
     }
 }

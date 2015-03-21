@@ -17,7 +17,7 @@ class DateExerciseModel extends BaseModel{
      * 创建一条约运动
      */
     public function createDE($data){
-        if($data['content'] === ''){
+        if(!isset($data['content'])){
             $data['content'] = $data['sport_type'];
         }
         if($this->create($data,1)){

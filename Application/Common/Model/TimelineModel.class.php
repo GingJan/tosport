@@ -30,7 +30,7 @@ class TimelineModel extends BaseModel{
      */
     public function deleteTimeline($data){
         if($this->where("tl_id=%d AND sender_id=%d",$data['tl_id'],$data['sender_id'])->delete()){
-            M('Comment')->where('tl_id=%d',$data['tl_id'])->delete();
+            M('Comment')->where("tl_id=%d",$data['tl_id'])->delete();
             return spt_json_success('删除成功');
         }
         return spt_json_error('删除失败');

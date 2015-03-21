@@ -18,8 +18,6 @@ match_time | 比赛时间 | Y | int | 时间戳
 content | 附加内容/主题 | N | text | 如果为空则用运动类型自动填补
 picture | 附加图片 | N | varchar(64) | 
 people_amount | 限定人数上限 | Y | int | 人数上限不能超过50人
-creator_region | 发布者实时位置 | N | varchar(32) | 根据GPS定位获取地理位置
-
 
 **Response**
 ```json
@@ -87,10 +85,6 @@ ps:该Api需要用户登陆
 
 `/Home/DateMatch/listsCityDM`
 
-字段 | 描述 | 是否必须 | 数据类型 | 备注
---------------------- | ------------------- | ------------------- | ---------------------- | ------------------
-my_region | 本人的实时位置 | Y | varchar(32) | GPS定位获取
-
 **Response**
 ```json
 {
@@ -130,10 +124,6 @@ ps:该Api需要用户登陆
 `POST`
 
 `/Home/DateMatch/listsHotDM`
-
-字段 | 描述 | 是否必须 | 数据类型 | 备注
---------------------- | ------------------- | ------------------- | ---------------------- | ------------------
-my_region | 本人的实时位置 | Y | varchar(32) | GPS定位获取
 
 **Response**
 ```json

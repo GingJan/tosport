@@ -6,7 +6,7 @@ class DateMatchModel extends BaseModel{
     protected $_validate=array(
         array('match_time',array(0,NOW_TIME),'运动时间不能早于发布时间',self::MUST_VALIDATE,'notbetween',1),
         array('people_amount',array(1,50),'人数必须在1~50人之间',self::MUST_VALIDATE,'between',1),
-        array('content','0,140','附加内容不可超过140字',self::MUST_VALIDATE,'length',1)
+        array('content','0,140','附加内容不可超过140字',self::EXISTS_VALIDATE,'length',1)
     );
     
     protected $_auto=array(
@@ -18,7 +18,7 @@ class DateMatchModel extends BaseModel{
      * 创建一条约比赛
      */
     public function createDM($data){
-        if($data['content'] === ''){
+        if(!isset($data['content'])){
             $data['content'] = $data['match_type'];
         }
         if($this->create($data,1)){

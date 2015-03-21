@@ -49,6 +49,21 @@ class AccountModel extends BaseModel{
     }
     
     /**
+     * 第三方登陆
+     */
+    public function thirdLogin($account){
+        $res=$this->table('spt_user_info')
+                    ->where("account='%s'",$account)
+                    ->find();
+        if($res){
+            session(array('session_id'=>session_id(),'expire'=>3600));
+            session('user',$res);
+            return spt_json_success('登陆成功');
+        }
+        return spt_json_error('登陆失败');
+    }
+    
+    /**
      * 修改密码
      */
     public function updatePassword($data){

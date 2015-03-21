@@ -14,7 +14,6 @@ class UserInfoModel extends BaseModel{
     protected $_auto=array(
         array('ctime',NOW_TIME,1),
         array('cIP','getIP',1,'callback'),
-        array('nickname','account',1,'field'),
         array('last_time',NOW_TIME,1),
         array('last_IP','getIP',1,'callback'),
         array('last_time',NOW_TIME,4),//4代表登录时
@@ -27,6 +26,7 @@ class UserInfoModel extends BaseModel{
      * UserInfo表 注册
      */
     public function register($data){
+        $data['nickname']=$data['account'];
         if($this->create($data)){
             if($this->add()){
                 return spt_json_success('注册成功');
@@ -36,12 +36,20 @@ class UserInfoModel extends BaseModel{
         return spt_json_error($this->getError());
     }
     
+//     /**
+//      * 第三方用户-第一次登陆
+//      */
+//     public function firstLogin($data){
+//         if($this->validate()->create($data))
+//     }
+    
     /**
      * 附近的人
      */
-    public function nearby($region,$page,$limit){
+    public function nearby($u_id,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->where("region='%s'",$region)
+        $location=$this->where("u_id=%d",$u_id)->find();
+        $res=$this->where("location='%s'",$location['location'])
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
@@ -52,18 +60,30 @@ class UserInfoModel extends BaseModel{
     }
     
     /**
+     * 获取实时位置
+     */
+    public function saveLocation($data){
+        if($this->data($data)){
+            if($this->where("u_id=%d",$data)->setField('location',$data['location'])){
+                return spt_json_success();
+            }
+            return spt_json_error();
+        }
+        return spt_json_error($this->getError());
+    }
+    
+    /**
      * 更新个人信息 
      */
     public function updateInfo($data){
        if($data['nickname'] === ''){
            $data['nickname'] = $data['account'];
        }
-       autofill($data);
        if($this->create($data,2)){
            if($this->where("u_id=%d AND account='%s'",$data['u_id'],$data['account'])->save()){
                return spt_json_success('更新资料成功！');
            }
-           return spt_json_error('更新资料失败!');
+           return spt_json_error('新信息与旧信息相同');
        }
        return spt_json_error($this->getError());
     }
@@ -80,6 +100,7 @@ class UserInfoModel extends BaseModel{
         }
         return spt_json_error('无此用户');
     }
+    
     
     
 }

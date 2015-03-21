@@ -8,9 +8,10 @@ class TimelineController extends BaseController{
      * 发表一条 动态/打卡
      */
     public function send(){
-        $this->getlogin()->reqPost(array('content','picture','now_region'));
-        $data=I('post.');//通过定位，获取用户实时所在的位置
+        $this->getlogin()->reqPost(array('content'));
+        $data=I('post.');
         $data['sender_id']=session('user.u_id');
+        $data['region']=session('user.region');
         $this->ajaxReturn(D('Timeline')->send($data));
     }
     
@@ -29,9 +30,8 @@ class TimelineController extends BaseController{
      */
     
     public function listsMyTimeline($page=1,$limit=10){
-        $this->getlogin();
-        $sender_id=session('user.u_id');
-        $this->ajaxReturn(D('Timeline')->listsSpeTimeline($sender_id,$page,$limit));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('Timeline')->listsSpeTimeline(session('user.u_id'),$page,$limit));
     }
     
     /**
@@ -39,8 +39,7 @@ class TimelineController extends BaseController{
      */
     public function listsSpeTimeline($page=1,$limit=10){
         $this->getlogin()->reqPost(array('u_id'));
-        $sender_id=I('post.u_id');
-        $this->ajaxReturn(D('Timeline')->listsSpeTimeline($sender_id,$page,$limit));
+        $this->ajaxReturn(D('Timeline')->listsSpeTimeline(I('post.u_id'),$page,$limit));
     }
     
     /**
@@ -49,7 +48,7 @@ class TimelineController extends BaseController{
      * @param number $limit
      */
     public function listsAllTimeline($page=1,$limit=10){
-        $this->getlogin();
+        $this->getlogin()->reqPost();
         $me_id=session('user.u_id');
         $this->ajaxReturn(D('Timeline')->listsAllTimeline($me_id,$page,$limit));
     }
@@ -60,8 +59,8 @@ class TimelineController extends BaseController{
      * @param number $limit
      */
     public function listsCityTimeline($page=1,$limit=10){
-        $this->getlogin()->reqPost(array('now_region'));
-        $this->ajaxReturn(D('Timeline')->listsCityTimeline(I('post.now_region'),$page,$limit));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('Timeline')->listsCityTimeline(session('user.region'),$page,$limit));
     }
     
 }

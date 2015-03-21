@@ -25,6 +25,8 @@ $common_config = array(
     'MAIL_PASSWORD'         => '123456aa', // 邮箱密码
     'MAIL_SENDER'           => '约运动', //发件人名字
     
+    
+    
     //七牛云存储配置
     'ACCESSKEY'             => 'gd4ZebkZHJvrSLD-YHZTyc2RZsEF1lnXFJWnyJ2d',
     'SECRETKEY'             => 'xhlFWwIEpLCSeOli1XrsfqOmaqWvRn4HP9xQnzhx',

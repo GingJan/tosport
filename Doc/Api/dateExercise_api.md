@@ -16,9 +16,7 @@ sport_type | 运动类型 | Y | varchar(32) | 如：网球，羽毛球
 sport_place | 运动地点 | Y | varchar(32) | 如：五邑大学1号网球场
 sport_time | 运动时间 | Y | int | 时间戳
 people_amount | 限定人数上限 | Y | int | 人数上限不能超过25人
-content | 附加内容/主题 | N | text | 如果为空则用运动类型自动填补
 picture | 附件图片 | N | string | 图片的key
-creator_region | 发布者实时位置 | N | varchar(32) | 根据GPS定位获取地理位置
 content | 附加内容/主题 | N | text | 字数不能超过140字，如果为空则用运动类型自动填补，
 
 **Response**
@@ -48,7 +46,6 @@ de_id | 要删除的约运动的id | Y | int |
     "response": "删除成功!"
 }
 ```
-
 
 
 ###显示指定某条约运动
@@ -88,10 +85,6 @@ ps:该Api需要用户登陆
 `POST`
 
 `/Home/DateExercise/listsCityDE`
-
-字段 | 描述 | 是否必须 | 数据类型 | 备注
---------------------- | ------------------- | ------------------- | ---------------------- | ------------------
-my_region | 本人的实时位置 | Y | varchar(32) | GPS定位获取
 
 **Response**
 ```json
@@ -143,10 +136,6 @@ ps:该Api需要用户登陆
 `POST`
 
 `/Home/DateExercise/listsHotDE`
-
-字段 | 描述 | 是否必须 | 数据类型 | 备注
---------------------- | ------------------- | ------------------- | ---------------------- | ------------------
-my_region | 本人的实时位置 | Y | varchar(32) | GPS定位获取
 
 **Response**
 ```json

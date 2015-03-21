@@ -36,6 +36,15 @@ class UserController extends BaseController{
     }
     
     /**
+     * 获取实时位置
+     */
+    public function saveLocation(){
+        $this->getlogin()->reqPost(array('u_id','location'));
+        $this->ajaxReturn(D('UserInfo')->saveLocation(I('post.')));
+    }
+    
+    
+    /**
      * 用户登陆
      */
     public function login(){
@@ -71,8 +80,8 @@ class UserController extends BaseController{
      * 附近的人
      */
     public function nearby($page = 1,$limit = 10){
-        $this->getlogin()->reqPost(array('region'));
-        $this->ajaxReturn(D('UserInfo')->nearby(I('post.region'),$page,$limit));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('UserInfo')->nearby(session('user.u_id'),$page,$limit));
     }
     
     /**
