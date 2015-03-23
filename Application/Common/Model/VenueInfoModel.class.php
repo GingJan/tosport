@@ -58,12 +58,7 @@ class VenueInfoModel extends BaseModel{
      * 显示所有我创建的场馆
      */
     public function listsMyVenue($ma_id,$page,$limit){
-        if($page <= 0){
-            $page = 1;
-        }
-        if($limit <=0){
-            $limit =10;
-        }
+        $this->pageLegal($page, $limit);
         $res=$this->where("ma_id=%d",$ma_id)
                     ->order('last_time desc')
                     ->limit(($page-1)*$limit,$limit)
@@ -78,12 +73,7 @@ class VenueInfoModel extends BaseModel{
      * 列出所有场馆,只提供给超级管理员使用
      */
     public function listsAllVenue($page,$limit){
-        if($page <= 0){
-            $page = 1;
-        }
-        if($limit <=0){
-            $limit =10;
-        }
+        $this->pageLegal($page, $limit);
         $res=$this->order('last_time desc')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();

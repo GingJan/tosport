@@ -7,9 +7,8 @@ class DateVenueController extends BaseController{
      * 显示某一场馆的基本信息
      */
     public function listsSpeVenue(){
-        $this->getlogin()->reqPost(array('vi_id'));
-        $vi_id=I('post.vi_id');
-        $this->ajaxReturn(D('DateVenue')->listsSpeVenue($vi_id));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('DateVenue')->listsSpeVenue(I('post.')));
     }
     
     /**

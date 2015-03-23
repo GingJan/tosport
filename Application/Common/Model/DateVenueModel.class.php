@@ -13,18 +13,26 @@ class DateVenueModel extends BaseModel{
     );
     
     /**
-     * 显示某一场馆的基本信息
+     * 显示/搜索  某一场馆的基本信息
      */
-    public function listsSpeVenue($vi_id){
-        $res=$this->table("spt_venue_info")
-                    ->field('last_time,last_IP',true)
-                    ->where("vi_id=%d",$vi_id)
-                    ->find();
+    public function listsSpeVenue($data){
+        if(isset($data['search'])){
+            $res=$this->table("spt_venue_info")
+                        ->field('last_time,last_IP',true)
+                        ->where("name='%s'",$data['search'])
+                        ->find();
+        }else{
+            $res=$this->table("spt_venue_info")
+                        ->field('last_time,last_IP',true)
+                        ->where("vi_id=%d",$data['vi_id'])
+                        ->find();
+        }
         if($res){
             return spt_json_success($res);
         }
         return spt_json_error('无此场馆');
     }
+    
     
     /**
      * 显示所有的场馆(均为同城场馆)
