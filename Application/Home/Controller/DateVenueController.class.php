@@ -23,7 +23,7 @@ class DateVenueController extends BaseController{
      * 约该场馆
      */
     public function date(){
-        $this->getlogin()->reqPost(array('vi_id','ma_id','date_time'));
+        $this->getlogin()->reqPost(array('vi_id','date_time'));
         $data=I('post.');
         $data['subscriber']=session('user.u_id');
         $this->ajaxReturn(D('DateVenue')->date($data));
