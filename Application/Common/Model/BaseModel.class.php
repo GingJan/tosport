@@ -3,7 +3,7 @@ namespace Common\Model;
 
 use Think\Model\AdvModel;
 /**
- * @author Jayin Ton
+ * @author Zjien
  */
 class BaseModel extends AdvModel{
     //自动验证 //默认,验证条件：0存在字段就进行验证 , 验证时间：1新增/编辑 数据时候验证
@@ -73,6 +73,6 @@ class BaseModel extends AdvModel{
         $upToken = $putPolicy->Token(null);
         return $upToken;
     }
-     
+    
 }
 
