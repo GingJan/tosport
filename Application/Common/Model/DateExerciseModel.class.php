@@ -72,9 +72,10 @@ class DateExerciseModel extends BaseModel{
      */
     public function listsHotDE($my_region,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->field('creator_region',true)//除了这个字段不返回外，其他字段都返回
-                    ->where("creator_region='%s'",$my_region)
-                    ->order('booked_amount desc')
+        $res=$this->table("spt_user_info u,spt_date_exercise de")
+                    ->field("de_id,creator_id,nickname,avatar,sport_type,sport_place,sport_time,content,people_amount,booked_amount,picture,create_time")
+                    ->where("creator_region='%s' AND booked_amount<people_amount AND u.u_id=de.creator_id",$my_region)
+                    ->order('de.booked_amount desc')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
