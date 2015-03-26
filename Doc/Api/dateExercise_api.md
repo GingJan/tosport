@@ -4,6 +4,29 @@ Api dateExercise
 
 `DateExercise 接口`
 
+
+
+
+####各字段的解释
+字段 | 描述 | 备注
+--------------------- | ----------------- | ------------------------
+de_id | 该条约运动的标识符 |
+creator_id | 创建该条约运动的用户id |
+nickname | 创建者的昵称 |
+avatar | 创建者头像 | 
+sport_type | 该条约运动的运动类型 |
+sport_place | 运动的场所/地点 | 
+sport_time | 运动时间 | 
+content | 附加内容 | 
+people_amount | 需要的总人数 | 
+booked_amount | 已预约人数 |
+picture | 附加图片 |
+create_time | 该条约运动的发布时间 | 
+u_id | 用户的id |
+dp_id | 预约表的id | 
+
+
+
 ###发布一条约运动
 ps:该Api需要用户登陆
 `POST`
@@ -92,37 +115,32 @@ ps:该Api需要用户登陆
     "code": 20000,
     "response": [
         {
-            "de_id": "7",
-            "creator_id": "6",
-            "sport_type": "跳舞",
-            "sport_place": "五邑大学舞蹈室",
+            "de_id": "6",
+            "creator_id": "5",
+            "nickname": "xiaoli",
+            "avatar": null,
+            "sport_type": "足球",
+            "sport_place": "天河体育馆",
             "sport_time": "1422876257",
-            "content": "跳舞咯",
-            "people_amount": "5",
-            "booked_amount": "0",
-            "create_time": "1422874751"
+            "content": "大家来踢足球",
+            "people_amount": "13",
+            "booked_amount": "1",
+            "picture": null,
+            "create_time": "1422874630"
         },
         {
-            "de_id": "2",
-            "creator_id": "2",
-            "sport_type": "篮球",
-            "sport_place": "五邑大学风雨篮球场",
-            "sport_time": "1422876010",
-            "content": "大家来打篮球",
-            "people_amount": "10",
-            "booked_amount": "0",
-            "create_time": "1422874449"
-        },
-        {
-            "de_id": "1",
-            "creator_id": "1",
-            "sport_type": "网球",
-            "sport_place": "五邑大学1号网球场",
-            "sport_time": "1422875858",
-            "content": "网球王子，来打网球吧",
+            "de_id": "3",
+            "creator_id": "3",
+            "nickname": "zjien3",
+            "avatar": null,
+            "sport_type": "羽毛球",
+            "sport_place": "广州体育馆",
+            "sport_time": "1422876100",
+            "content": "打羽毛球咯",
             "people_amount": "2",
             "booked_amount": "0",
-            "create_time": "1422874342"
+            "picture": null,
+            "create_time": "1422874493"
         }
     ]
 }
