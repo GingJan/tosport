@@ -26,16 +26,16 @@ receiver_id | 收信人u_id | Y | int |
 
 
 
-###列出所有的私信，包括收到的和发送的
+###列出收到的私信
 ps:该Api需要用户登陆
 `POST`
 
-`/Home/Letter/listsAllLetter`
+`/Home/Letter/listsReceiveLetter`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
 page | 当前页码 | N | int | 默认为1
-limit | 每页显示条数 | N | int | 默认为15
+limit | 每页显示条数 | N | int | 默认为10
 
 **Response**
 ```json
@@ -44,23 +44,60 @@ limit | 每页显示条数 | N | int | 默认为15
     "response": [
         {
             "l_id": "7",
-            "sender_id": "2",
-            "receiver_id": "1",
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
             "content": "test1",
             "send_time": "1422757801"
         },
         {
-            "l_id": "6",
-            "sender_id": "1",
-            "receiver_id": "1",
+            "l_id": "4",
+            "sender_id": "2",
+            "sender_nickname": "zjien1",
             "content": "I want to make friend with you",
-            "send_time": "1422757754"
+            "send_time": "1422757567"
+        }
+    ]
+}
+```
+
+
+
+
+###列出发出的私信
+ps:该Api需要用户登陆
+`POST`
+
+`/Home/Letter/listsSendLetter`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ----------------- | ----------------- | ---------------------- | ------------------
+page | 当前页码 | N | int | 默认为1
+limit | 每页显示条数 | N | int | 默认为10
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "l_id": "5",
+            "receiver_id": "4",
+            "receiver_nickname": "xiaoming",
+            "content": "I want to make friend with you",
+            "send_time": "1422757751"
         },
-	{
+        {
+            "l_id": "2",
+            "receiver_id": "3",
+            "receiver_nickname": "zjien3",
+            "content": "I want to make friend with you",
+            "send_time": "1422757405"
+        },
+        {
             "l_id": "1",
-            "sender_id": "1",
             "receiver_id": "2",
-            "content": "hello",
+            "receiver_nickname": "zjien1",
+            "content": "I want to make friend with you",
             "send_time": "1422757390"
         }
     ]

@@ -15,13 +15,19 @@ class LetterController extends BaseController{
     }
     
     /**
-     * 列出所有的私信,包括收到的和发送的
+     * 列出收到的私信
      */
-    public function listsAllLetter($page = 1,$limit = 15){
-        $this->getlogin();
-        $me_id=session('user.u_id');
-        $this->ajaxReturn(D('Letter')->listsAllLetter($me_id,$page,$limit));
-        
+    public function listsReceiveLetter($page = 1,$limit = 15){
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('Letter')->listsReceiveLetter(session('user.u_id'),$page,$limit));
     }    
+    
+    /**
+     * 列出发出的私信
+     */
+    public function listsSendLetter($page = 1,$limit = 15){
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('Letter')->listsSendLetter(session('user.u_id'),$page,$limit));
+    }
     
 }
