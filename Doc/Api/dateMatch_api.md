@@ -4,6 +4,27 @@ Api dateMatch
 
 `DateMatch 接口`
 
+
+
+####各字段的解释
+字段 | 描述 | 备注
+--------------------- | ----------------- | ---------------------------
+dm_id | 该条约比赛的id |
+creator_id | 创建该条约比赛用户的id |
+nickname | 创建该约比赛用户的昵称
+avatar | 创建该约比赛用户的头像
+match_type | 比赛类型 | 亦即运动类型 |
+match_place | 比赛地点 |
+match_time | 比赛时间 |
+content | 附加内容 | 
+picture | 附加图片 |
+people_amount | 需要的总人数 |
+booked_amount | 已预约人数 |
+create_time | 该条约比赛的发布时间 |
+
+
+
+
 ###发布一条约比赛
 ps:该Api需要用户登陆
 `POST`
@@ -62,19 +83,20 @@ dm_id | 指定的约比赛的id | Y | int |
 ```json
 {
     "code": 20000,
-    "response": [
-        {
-            "dm_id": "5",
-            "creator_id": "5",
-            "match_type": "乒乓球",
-            "match_place": "乒乓球场2",
-            "match_time": "1447224391",
-            "content": "乒乓球比赛，走起",
-            "picture": "pic5",
-            "people_amount": "7",
-            "booked_amount": "0",
-            "create_time": "1426224682"
-        }
+    "response": {
+        "dm_id": "1",
+        "creator_id": "1",
+        "nickname": "zjien",
+        "avatar": "abcdefagaga.jpg",
+        "match_type": "足球",
+        "match_place": "市体育馆",
+        "match_time": "1436224391",
+        "content": "来一场足球比赛",
+        "people_amount": "30",
+        "booked_amount": "15",
+        "picture": "pic1",
+        "create_time": "1426224457"
+    }
 }
 ```
 
@@ -91,28 +113,32 @@ ps:该Api需要用户登陆
     "code": 20000,
     "response": [
         {
-            "dm_id": "5",
-            "creator_id": "5",
-            "match_type": "乒乓球",
-            "match_place": "乒乓球场2",
-            "match_time": "1447224391",
-            "content": "乒乓球比赛，走起",
-            "picture": "pic5",
-            "people_amount": "7",
-            "booked_amount": "0",
-            "create_time": "1426224682"
+            "dm_id": "7",
+            "creator_id": "2",
+            "nickname": "zjien1",
+            "avatar": null,
+            "match_type": "足球",
+            "match_place": "五邑大学足球场",
+            "match_time": "1426695263",
+            "content": "来比赛",
+            "people_amount": "25",
+            "booked_amount": "1",
+            "picture": "thisisakey",
+            "create_time": "1426595381"
         },
         {
-            "dm_id": "4",
-            "creator_id": "4",
-            "match_type": "乒乓球",
-            "match_place": "乒乓球场",
-            "match_time": "1446224391",
-            "content": "来一场乒乓球比赛",
-            "picture": "pic4",
-            "people_amount": "6",
+            "dm_id": "6",
+            "creator_id": "6",
+            "nickname": "xiaohong",
+            "avatar": null,
+            "match_type": "橄榄球",
+            "match_place": "橄榄球场",
+            "match_time": "1445224391",
+            "content": "男人之间的比赛，走起",
+            "people_amount": "30",
             "booked_amount": "0",
-            "create_time": "1426224643"
+            "picture": "pic6",
+            "create_time": "1426224756"
         }
     ]
 }
@@ -131,28 +157,32 @@ ps:该Api需要用户登陆
     "code": 20000,
     "response": [
         {
-            "dm_id": "1",
-            "creator_id": "1",
+            "dm_id": "7",
+            "creator_id": "2",
+            "nickname": "zjien1",
+            "avatar": null,
             "match_type": "足球",
-            "match_place": "市体育馆",
-            "match_time": "1436224391",
-            "content": "来一场足球比赛",
-            "picture": "pic1",
-            "people_amount": "30",
-            "booked_amount": "15",
-            "create_time": "1426224457"
+            "match_place": "五邑大学足球场",
+            "match_time": "1426695263",
+            "content": "来比赛",
+            "people_amount": "25",
+            "booked_amount": "1",
+            "picture": "thisisakey",
+            "create_time": "1426595381"
         },
         {
-            "dm_id": "3",
-            "creator_id": "3",
-            "match_type": "网球",
-            "match_place": "网球场1",
+            "dm_id": "6",
+            "creator_id": "6",
+            "nickname": "xiaohong",
+            "avatar": null,
+            "match_type": "橄榄球",
+            "match_place": "橄榄球场",
             "match_time": "1445224391",
-            "content": "来一场网球比赛",
-            "picture": "pic3",
-            "people_amount": "4",
-            "booked_amount": "2",
-            "create_time": "1426224597"
+            "content": "男人之间的比赛，走起",
+            "people_amount": "30",
+            "booked_amount": "0",
+            "picture": "pic6",
+            "create_time": "1426224756"
         }
     ]
 }

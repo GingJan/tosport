@@ -32,18 +32,27 @@ class LetterModel extends BaseModel{
      * 列出所有的私信,包括收到的和发送的
      */
     public function listsAllLetter($me_id,$page,$limit){
-        if($page <=0){
-            $page = 1;
-        }
-        if($limit <= 0){
-            $limit = 15;
-        }
-        $res=$this->where("sender_id=%d OR receiver_id=%d",$me_id,$me_id)
+        $this->pageLegal($page, $limit);
+        $res1=$this->table("spt_user_info u,spt_letter l")
+                    ->field("l_id,sender_id,nickname as sender_nickname,receiver_id,nickname as receiver_nickname,content,send_time")
+                    ->where("sender_id=%d AND u.u_id=l.sender_id OR u.u_id=l.receiver_id",$me_id)
                     ->order('send_time desc')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
-        if($res){
-            return spt_json_success($res);
+        $res2=$this->table("spt_user_info u,spt_letter l")
+                    ->field("receiver_id,nickname as receiver_nickname,content,send_time")
+                    ->where("receiver_id=%d AND u.u_id=l.receiver_id",$me_id)
+                    ->order('send_time desc')
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+//         $res=array_merge($res1,$res2);
+        if($res1){
+//             foreach ($res1 as $key => $value){
+//                 echo $key.'=>'.$value;
+//             }
+//             var_dump($res);
+//             exit;
+            return spt_json_success($res1);
         }
         return spt_json_error('暂无私信');
     }

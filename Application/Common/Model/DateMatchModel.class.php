@@ -44,7 +44,9 @@ class DateMatchModel extends BaseModel{
      * 显示 指定某条约比赛
      */
     public function listsSpeDM($dm_id){
-        $res=$this->where("dm_id=%d",$dm_id)->find();
+        $res=$this->table("spt_user_info u,spt_date_match dm")
+                    ->field("dm_id,creator_id,nickname,avatar,match_type,match_place,match_time,content,people_amount,booked_amount,picture,create_time")
+                    ->where("dm_id=%d AND u.u_id=dm.creator_id",$dm_id)->find();
         if($res){
             return spt_json_success($res);
         }
@@ -56,8 +58,9 @@ class DateMatchModel extends BaseModel{
      */
     public function listsCityDM($my_region,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->field('creator_region',true)
-                    ->where("creator_region='%s' AND booked_amount<people_amount",$my_region)
+        $res=$this->table("spt_user_info u,spt_date_match dm")
+                    ->field("dm_id,creator_id,nickname,avatar,match_type,match_place,match_time,content,people_amount,booked_amount,picture,create_time")
+                    ->where("creator_region='%s' AND booked_amount<people_amount AND u.u_id=dm.creator_id",$my_region)
                     ->order('create_time desc')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
@@ -72,8 +75,9 @@ class DateMatchModel extends BaseModel{
      */
     public function listsHotDM($my_region,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->field('creator_region',true)//除了这个字段不返回外，其他字段都返回
-                    ->where("creator_region='%s'",$my_region)
+        $res=$this->table("spt_user_info u,spt_date_match dm")
+                    ->field("dm_id,creator_id,nickname,avatar,match_type,match_place,match_time,content,people_amount,booked_amount,picture,create_time")
+                    ->where("creator_region='%s' AND u.u_id=dm.creator_id",$my_region)
                     ->order('booked_amount desc')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
