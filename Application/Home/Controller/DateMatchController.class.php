@@ -10,7 +10,7 @@ class DateMatchController extends BaseController{
         $this->getlogin()->reqPost(array('match_type','match_place','match_time','people_amount'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
-        $data['region']=session('user.region');
+        $data['creator_region']=session('user.region');
         $this->ajaxReturn(D('DateMatch')->createDM($data));
     }
     
