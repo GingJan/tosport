@@ -11,6 +11,7 @@ class DateExerciseController extends BaseController{
         $this->getlogin()->reqPost(array('sport_type','sport_place','sport_time','people_amount'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
+        $data['creator_region']=session('user.region');
         $this->ajaxReturn(D('DateExercise')->createDE($data));
     }
     
