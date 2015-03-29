@@ -99,24 +99,24 @@ limit | 每页显示多少条 | N | int | 默认10
     "code": 20000,
     "response": [
         {
-            "u_id": "3",
             "tl_id": "6",
-            "sender_id": "3",
-            "nickname": "zjien3",
-            "avatar": null,
             "content": "hello,I'm zjien3.my second test",
-            "c_amount": null,
-            "create_time": "1422691883"
+            "create_time": "1422691883",
+            "c_amount": "1",
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
         },
         {
-            "u_id": "3",
             "tl_id": "5",
-            "sender_id": "3",
-            "nickname": "zjien3",
-            "avatar": null,
             "content": "hello,I'm zjien3.my first test",
+            "create_time": "1422691870",
             "c_amount": null,
-            "create_time": "1422691870"
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
         }
     ]
 }
@@ -144,44 +144,64 @@ limit | 每页显示多少条 | N | int | 默认10
     "code": 20000,
     "response": [
         {
-            "u_id": "3",
-            "tl_id": "6",
-            "sender_id": "3",
-            "nickname": "zjien3",
-            "avatar": null,
-            "content": "hello,I'm zjien3.my second test",
-	    "c_amount": null,
-            "create_time": "1422691883"
-        },
-        {
-            "u_id": "3",
-            "tl_id": "5",
-            "sender_id": "3",
-            "nickname": "zjien3",
-            "avatar": null,
-            "content": "hello,I'm zjien3.my first test",
-	    "c_amount": null,
-            "create_time": "1422691870"
-        },
-        {
-            "u_id": "2",
-            "tl_id": "4",
-            "sender_id": "2",
-            "nickname": "zjien1",
-            "avatar": null,
-            "content": "hello,I'm zjien1.my first test",
-	    "c_amount": null,
-            "create_time": "1422691844"
-        }
-	{
-            "u_id": "1",
-            "tl_id": "2",
-            "sender_id": "1",
-            "nickname": "handsomeguy",
-            "avatar": null,
-            "content": "hello,I'm zjien.This is my second test",
+            "tl_id": "11",
+            "content": "hello,I'm xiaobao .my test",
+            "create_time": "1422691970",
             "c_amount": null,
-            "create_time": "1422691737"
+            "like_amount": null,
+            "sender_id": "7",
+            "sender_nickname": "xiaobao",
+            "sender_avatar": null
+        },
+        {
+            "tl_id": "6",
+            "content": "hello,I'm zjien3.my second test",
+            "create_time": "1422691883",
+            "c_amount": "1",
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
+        },
+        {
+            "tl_id": "5",
+            "content": "hello,I'm zjien3.my first test",
+            "create_time": "1422691870",
+            "c_amount": null,
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
+        },
+        {
+            "tl_id": "4",
+            "content": "hello,I'm zjien1.my first test",
+            "create_time": "1422691844",
+            "c_amount": null,
+            "like_amount": null,
+            "sender_id": "2",
+            "sender_nickname": "zjien1",
+            "sender_avatar": null
+        },
+        {
+            "tl_id": "3",
+            "content": "hello,I'm zjien.This is my third test",
+            "create_time": "1422691748",
+            "c_amount": null,
+            "like_amount": null,
+            "sender_id": "1",
+            "sender_nickname": "zjien",
+            "sender_avatar": "abcdefagaga.jpg"
+        },
+        {
+            "tl_id": "2",
+            "content": "hello,I'm zjien.This is my second test",
+            "create_time": "1422691737",
+            "c_amount": null,
+            "like_amount": null,
+            "sender_id": "1",
+            "sender_nickname": "zjien",
+            "sender_avatar": "abcdefagaga.jpg"
         }
     ]
 }
@@ -207,59 +227,44 @@ limit | 每页显示多少条 | N | int | 默认10
     "code": 20000,
     "response": [
         {
-            "u_id": "6",
-            "tl_id": "12",
-            "sender_id": "6",
-            "nickname": "xiaohong",
-            "sex": "女",
-            "avatar": null,
-            "content": "hello,I'm xiaohong .my test",
-	    "c_amount": null,
-            "create_time": "1422692023"
+            "tl_id": "11",
+            "content": "hello,I'm xiaobao .my test",
+            "create_time": "1422691970",
+            "c_amount": null,
+            "like_amount": null,
+            "sender_id": "7",
+            "sender_nickname": "xiaobao",
+            "sender_avatar": null
         },
         {
-            "u_id": "5",
             "tl_id": "10",
-            "sender_id": "5",
-            "nickname": "xiaoli",
-            "sex": "女",
-            "avatar": null,
             "content": "hello,I'm xiaoli.my test",
-	    "c_amount": null,
-            "create_time": "1422691956"
-        },
-        {
-            "u_id": "5",
-            "tl_id": "9",
+            "create_time": "1422691956",
+            "c_amount": null,
+            "like_amount": null,
             "sender_id": "5",
-            "nickname": "xiaoli",
-            "sex": "女",
-            "avatar": null,
-            "content": "hello,I'm xiaoli.my test",
-	    "c_amount": null,
-            "create_time": "1422691943"
+            "sender_nickname": "xiaoli",
+            "sender_avatar": null
         },
         {
-            "u_id": "1",
-            "tl_id": "3",
-            "sender_id": "1",
-            "nickname": "handsomeguy",
-            "sex": "男",
-            "avatar": null,
-            "content": "hello,I'm zjien.This is my third test",
-	    "c_amount": null,
-            "create_time": "1422691748"
+            "tl_id": "6",
+            "content": "hello,I'm zjien3.my second test",
+            "create_time": "1422691883",
+            "c_amount": "1",
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
         },
         {
-            "u_id": "1",
-            "tl_id": "2",
-            "sender_id": "1",
-            "nickname": "handsomeguy",
-            "sex": "男",
-            "avatar": null,
-            "content": "hello,I'm zjien.This is my second test",
-	    "c_amount": null,
-            "create_time": "1422691737"
+            "tl_id": "5",
+            "content": "hello,I'm zjien3.my first test",
+            "create_time": "1422691870",
+            "c_amount": null,
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
         }
     ]
 }

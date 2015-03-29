@@ -28,24 +28,6 @@ class CommentModel extends BaseModel{
         return spt_json_error($this->getError());
     }
     
-    
-    /**
-     * 点/取消 赞
-     */
-    public function like($data){
-        if($this->where("tl_id=%d AND sender_id=%d AND `like`=1",$data['tl_id'],$data['sender_id'])->delete()){//取消赞
-            return  spt_json_success('取消赞成功');
-        }
-        $data['like']=1;
-        if($this->data($data)){
-            if($this->add()){
-                return spt_json_success('点赞成功');//点赞
-            }
-            return spt_json_error('点赞失败');
-        }
-        return spt_json_error('点赞失败');
-    }
-    
     /**
      * 显示自己发的评论
      */
@@ -111,5 +93,42 @@ class CommentModel extends BaseModel{
             return spt_json_success($res);
         }
         return spt_json_error('暂无评论');
+    }
+    
+    
+    
+    
+    /**
+     * 点/取消 赞
+     */
+    public function like($data){
+        if($this->table("spt_like")->where("tl_id=%d AND sender_id=%d",$data['tl_id'],$data['sender_id'])->delete()){//取消赞
+            return  spt_json_success('取消赞成功');
+        }
+        if($this->data($data)){
+            if($this->table("spt_like")->add()){
+                return spt_json_success('点赞成功');//点赞
+            }
+            return spt_json_error('点赞失败');
+        }
+        return spt_json_error('出现问题了');
+    }
+    
+    /**
+     * 显示所有的点赞
+     */
+    public function listsLike($me_id,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $res=$this->table("spt_like lk,spt_user_info u")
+                    ->field("lk.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar,lk.send_time")
+                    ->where("lk.receiver_id=%d AND u.u_id=lk.sender_id",$me_id)
+                    ->order("lk.send_time desc")
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无评论');
+                    
     }
 }

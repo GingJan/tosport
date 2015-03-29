@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2015 年 02 月 06 日 16:17
+-- 生成日期: 2015 年 03 月 29 日 22:14
 -- 服务器版本: 5.5.28
 -- PHP 版本: 5.3.13
 
@@ -33,19 +33,20 @@ CREATE TABLE IF NOT EXISTS `spt_comment` (
   `receiver_id` int(10) unsigned NOT NULL COMMENT '接收者u_id',
   `send_time` int(10) unsigned NOT NULL COMMENT '评论时间',
   `content` text COMMENT '评论内容',
-  `like` int(10) DEFAULT NULL,
   PRIMARY KEY (`c_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='评论表' AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='评论表' AUTO_INCREMENT=15 ;
 
 --
 -- 转存表中的数据 `spt_comment`
 --
 
-INSERT INTO `spt_comment` (`c_id`, `tl_id`, `sender_id`, `receiver_id`, `send_time`, `content`, `like`) VALUES
-(1, 2, 2, 1, 1422693636, 'hello,nice to meet you ,I''m zjien1', NULL),
-(2, 2, 2, 1, 1422693689, 'hello,nice to meet you ,I''m zjien1 whats up', NULL),
-(3, 2, 1, 2, 1422694517, 'hi,glad to see you too', NULL),
-(5, 2, 3, 1, 1422694592, 'hi,I am zjien3 ,I make a Comment', NULL);
+INSERT INTO `spt_comment` (`c_id`, `tl_id`, `sender_id`, `receiver_id`, `send_time`, `content`) VALUES
+(1, 2, 2, 1, 1422693636, 'hello,nice to meet you ,I''m zjien1'),
+(2, 2, 2, 1, 1422693689, 'hello,nice to meet you ,I''m zjien1 whats up'),
+(3, 2, 1, 2, 1422694517, 'hi,glad to see you too'),
+(5, 2, 3, 1, 1422694592, 'hi,I am zjien3 ,I make a Comment'),
+(6, 6, 5, 3, 1422706000, 'hi,this is tl_id=6'),
+(14, 7, 1, 4, 1427637037, NULL);
 
 --
 -- 触发器 `spt_comment`

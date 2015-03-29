@@ -59,4 +59,12 @@ class CommentController extends BaseController{
         $this->getlogin()->reqPost(array('tl_id'));
         $this->ajaxReturn(D('Comment')->listsSpeComment(I('post.tl_id'),$page,$limit));
     }
+    
+    /**
+     * 显示所有的点赞
+     */
+    public function listsLike($page = 1,$limit = 10){
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('Comment')->listsLike(session('user.u_id'),$page,$limit));
+    }
 }

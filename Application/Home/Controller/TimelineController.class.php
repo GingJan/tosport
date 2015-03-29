@@ -49,8 +49,7 @@ class TimelineController extends BaseController{
      */
     public function listsAllTimeline($page=1,$limit=10){
         $this->getlogin()->reqPost();
-        $me_id=session('user.u_id');
-        $this->ajaxReturn(D('Timeline')->listsAllTimeline($me_id,$page,$limit));
+        $this->ajaxReturn(D('Timeline')->listsAllTimeline(session('user.u_id'),$page,$limit));
     }
     
     /**

@@ -4,6 +4,21 @@ Api comment
 
 `Comment 接口`
 
+
+
+
+####各字段的解释
+字段 | 描述 | 备注
+--------------------- | ----------------- | ---------------------------
+c_id | 该条评论的标识符 |
+tl_id | 被评论的动态标识符 |
+sender_id | 该评论发表人的标识符（即用户id） |
+receiver_id | 被评论人的标识符（即用户id） | 
+send_time | 该条评论的发送时间 | 
+content | 评论内容 |
+like | 是否点赞 | 为null则没点赞，为1则点赞
+
+
 ###对某条动态发表评论/回复某用户
 ps:该Api需要用户登陆
 `POST`
@@ -244,6 +259,40 @@ limit | 每页显示条数 | N | int | 默认为15
             "send_time": "1422693636",
             "tl_sender_id": "1",
             "c_amount": "5"
+        }
+    ]
+}
+```
+
+
+###显示所有的点赞（点赞人）
+ps:该Api需要用户登陆
+`POST`
+
+`/Home/Comment/listsLike`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ----------------- | ----------------- | ---------------------- | ------------------
+page | 当前页码 | N | int | 默认为1
+limit | 每页显示条数 | N | int | 默认为10
+
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "sender_id": "5",
+            "sender_nickname": "xiaoli",
+            "sender_avatar": null,
+            "send_time": "1427637192"
+        },
+        {
+            "sender_id": "1",
+            "sender_nickname": "zjien",
+            "sender_avatar": "abcdefagaga.jpg",
+            "send_time": "1427637109"
         }
     ]
 }
