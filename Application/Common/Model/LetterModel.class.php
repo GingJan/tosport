@@ -28,38 +28,60 @@ class LetterModel extends BaseModel{
         return spt_json_error($this->getError());
     }
     
+    
     /**
-     * 列出收到的私信
+     * 获取消息列表
      */
-    public function listsReceiveLetter($me_id,$page,$limit){
+    public function getList($receiver_id,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->table("spt_user_info u,spt_letter l")
-                    ->field("l_id,sender_id,nickname as sender_nickname,content,send_time")
-                    ->where("receiver_id=%d AND u.u_id=l.sender_id",$me_id)
-                    ->order('send_time desc')
-                    ->limit(($page-1)*$limit,$limit)
-                    ->select();
-        
+        $page=($page-1)*$limit;
+        $res=$this->query("select ll.*,u.nickname as sender_nickname,u.avatar as sender_avatar from (select *,sum(!isread) unread_count from (select * from spt_letter where receiver_id=$receiver_id ORDER BY send_time DESC) l GROUP BY sender_id) ll,spt_user_info u where u.u_id=ll.sender_id ORDER BY send_time DESC limit $page,$limit");
+//         $subset=$this->table("spt_user_info u,spt_letter l")
+//                         ->field("l.l_id,l.sender_id,l.receiver_id,l.title,l.content,l.isread,l.send_time,u.nickname as sender_nickname,u.avatar as sender_avatar")
+//                         ->where("receiver_id=%d AND u_id=sender_id",$receiver_id)
+//                         ->order("send_time DESC")
+//                         ->select(false);//只生成sql句，不执行
+//         $res=$this->table($subset.' s')
+//                     ->group("sender_id")
+//                     ->limit(($page-1)*$limit,$limit)
+//                     ->select();
         if($res){
             return spt_json_success($res);
         }
-        return spt_json_error('暂无收到私信');
+        return spt_json_error('暂无私信');
+    }
+    
+    
+    /**
+     * 获取与某人的对话记录
+     */
+    public function getRecord($data,$page,$limit){
+        $this->pageLegal($page, $limit);
+        $subsql=$this->table("spt_user_info u,spt_letter l")
+                    ->field("l.l_id,l.receiver_id,u.nickname as receiver_nickname,u.avatar as receiver_avatar,l.title,l.content,l.isread,l.send_time,l.sender_id")
+                    ->where("l.receiver_id=%d AND u.u_id=l.receiver_id AND l.isread=0",$data['receiver_id'])
+                    ->order("l.send_time DESC")
+                    ->limit(($page-1)*$limit,$limit)
+                    ->select(false);
+        $subsql=$subsql.' sl';
+        $res=$this->table("$subsql,spt_user_info us")
+                    ->field("sl.*,us.nickname as sender_nickname,us.avatar as sender_avatar")
+                    ->where("sl.sender_id=%d AND us.u_id=sl.sender_id",$data['sender_id'])
+                    ->select();
+        $this->markRead($data['receiver_id'],$data['sender_id']);//标记为已读
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无新消息');
     }
     
     /**
-     * 列出发出的私信
+     * 标记已读
      */
-    public function listsSendLetter($me_id,$page,$limit){
-        $this->pageLegal($page, $limit);
-        $res=$this->table("spt_user_info u,spt_letter l")
-                    ->field("l_id,receiver_id,nickname as receiver_nickname,content,send_time")
-                    ->where("sender_id=%d AND u.u_id=l.receiver_id",$me_id)
-                    ->order('send_time desc')
-                    ->limit(($page-1)*$limit,$limit)
-                    ->select();
-        if($res){
-            return spt_json_success($res);
+    private function markRead($receiver_id,$sender_id){
+        if($this->where("receiver_id=%d AND sender_id=%d AND isread=0",$receiver_id,$sender_id)->setField('isread',1)){
+            return true;
         }
-        return spt_json_error('暂无发出私信');
+        return false;
     }
 }

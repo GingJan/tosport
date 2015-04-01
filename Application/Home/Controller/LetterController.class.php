@@ -7,27 +7,27 @@ class LetterController extends BaseController{
      * 发送私信
      */
     public function send(){
-        $this->getlogin()->reqPost(array('content','receiver_id'));
-        $data['content']=I('post.content');
-        $data['receiver_id']=I('post.receiver_id');
+        $this->getlogin()->reqPost(array('content','receiver_id','title'));
+        $data=I('post.');
         $data['sender_id']=session('user.u_id');
         $this->ajaxReturn(D('Letter')->send($data));
     }
     
     /**
-     * 列出收到的私信
+     * 获取消息列表
      */
-    public function listsReceiveLetter($page = 1,$limit = 15){
-        $this->getlogin()->reqPost();
-        $this->ajaxReturn(D('Letter')->listsReceiveLetter(session('user.u_id'),$page,$limit));
-    }    
+    public function getList($page = 1,$limit = 10){
+        $this->getlogin();
+        $this->ajaxReturn(D('Letter')->getList(session('user.u_id'),$page = 1,$limit = 10));
+    }
     
     /**
-     * 列出发出的私信
+     * 获取某一对话记录
      */
-    public function listsSendLetter($page = 1,$limit = 15){
-        $this->getlogin()->reqPost();
-        $this->ajaxReturn(D('Letter')->listsSendLetter(session('user.u_id'),$page,$limit));
+    public function getRecord($page = 1,$limit = 10){
+        $this->getlogin()->reqPost(array('sender_id'));
+        $this->ajaxReturn(D('Letter')->getRecord(array('sender_id'=>I('post.sender_id'),'receiver_id'=>session('user.u_id')),$page = 1,$limit = 10));
     }
+    
     
 }
