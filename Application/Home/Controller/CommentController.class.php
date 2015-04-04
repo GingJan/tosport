@@ -28,8 +28,8 @@ class CommentController extends BaseController{
      * 显示自己发的评论
      */
     public function listsMyComment($page = 1,$limit = 10){
-        $this->getlogin()->reqPost(array('me_id'));
-        $this->ajaxReturn(D('Comment')->listsMyComment(I('post.me_id')));
+        $this->getlogin()->reqPost();
+        $this->ajaxReturn(D('Comment')->listsMyComment(session('user.u_id')));
     }
     
     /**

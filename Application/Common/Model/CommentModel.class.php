@@ -31,9 +31,9 @@ class CommentModel extends BaseModel{
     /**
      * 显示自己发的评论
      */
-    public function listsMyComment($sender_id,$page,$limit){
+    public function listsMyComment($me_id,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->where("sender_id=%d",$sender_id)
+        $res=$this->where("sender_id=%d",$me_id)
                     ->order("send_time desc")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
@@ -64,7 +64,7 @@ class CommentModel extends BaseModel{
     public function listsAllComment($me_id,$page,$limit){
         $this->pageLegal($page, $limit);
         $res=$this->table("spt_user_info u,spt_comment c,spt_timeline t")
-                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.like,c.send_time,t.sender_id as tl_sender_id")
+                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.send_time,t.sender_id as tl_sender_id")
                     ->where("t.tl_id=c.tl_id AND u.u_id=c.sender_id AND (c.sender_id=%d OR c.receiver_id=%d)",$me_id,$me_id)
                     ->order("c.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
@@ -84,8 +84,8 @@ class CommentModel extends BaseModel{
     public function listsSpeComment($tl_id,$page,$limit){
         $this->pageLegal($page, $limit);
         $res=$this->table("spt_user_info u,spt_comment c,spt_timeline t")
-                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.like,c.send_time,t.sender_id as tl_sender_id")
-                    ->where("t.tl_id=%d AND t.tl_id=c.tl_id AND u.u_id=c.sender_id",$tl_id)
+                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.send_time,t.sender_id as tl_sender_id")
+                    ->where("c.tl_id=%d AND t.tl_id=c.tl_id AND u.u_id=c.sender_id",$tl_id)
                     ->order("c.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
