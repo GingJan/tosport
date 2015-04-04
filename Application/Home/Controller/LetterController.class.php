@@ -7,7 +7,7 @@ class LetterController extends BaseController{
      * 发送私信
      */
     public function send(){
-        $this->getlogin()->reqPost(array('content','receiver_id','title'));
+        $this->getlogin()->reqPost(array('content','receiver_id'));
         $data=I('post.');
         $data['sender_id']=session('user.u_id');
         $this->ajaxReturn(D('Letter')->send($data));
