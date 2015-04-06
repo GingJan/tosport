@@ -56,8 +56,6 @@ class LetterModel extends BaseModel{
      * 获取与某人的对话记录
      */
     public function getRecord($data,$page,$limit){
-//         var_dump($data);
-//         exit;
         $this->pageLegal($page, $limit);
         $subsql=$this->table("spt_user_info u,spt_letter l")
                     ->field("l.l_id,l.receiver_id,u.nickname as receiver_nickname,u.avatar as receiver_avatar,l.title,l.content,l.isread,l.send_time,l.sender_id")
@@ -71,7 +69,6 @@ class LetterModel extends BaseModel{
                     ->where("sl.sender_id=%d AND us.u_id=sl.sender_id",$data['sender_id'])
                     ->select();
         $this->markRead($data['receiver_id'],$data['sender_id']);//标记为已读
-//         var_dump();
         if($res){
             return spt_json_success($res);
         }
