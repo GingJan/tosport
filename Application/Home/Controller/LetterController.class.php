@@ -17,7 +17,7 @@ class LetterController extends BaseController{
      * 获取消息列表
      */
     public function getList($page = 1,$limit = 10){
-        $this->getlogin();
+        $this->getlogin()->reqPost();
         $this->ajaxReturn(D('Letter')->getList(session('user.u_id'),$page = 1,$limit = 10));
     }
     

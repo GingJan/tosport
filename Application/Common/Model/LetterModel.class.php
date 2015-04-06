@@ -35,7 +35,7 @@ class LetterModel extends BaseModel{
     public function getList($receiver_id,$page,$limit){
         $this->pageLegal($page, $limit);
         $page=($page-1)*$limit;
-        $res=$this->query("select ll.*,u.nickname as sender_nickname,u.avatar as sender_avatar from (select *,sum(!isread) unread_count from (select * from spt_letter where receiver_id=$receiver_id ORDER BY send_time DESC) l GROUP BY sender_id) ll,spt_user_info u where u.u_id=ll.sender_id ORDER BY send_time DESC limit $page,$limit");
+        $res=$this->query("select ll.*,u.nickname as sender_nickname,u.avatar as sender_avatar from (select *,sum(!isread) unread_count from (select * from spt_letter where receiver_id=$receiver_id AND isread=0 ORDER BY send_time DESC) l GROUP BY sender_id) ll,spt_user_info u where u.u_id=ll.sender_id ORDER BY send_time DESC limit $page,$limit");
 //         $subset=$this->table("spt_user_info u,spt_letter l")
 //                         ->field("l.l_id,l.sender_id,l.receiver_id,l.title,l.content,l.isread,l.send_time,u.nickname as sender_nickname,u.avatar as sender_avatar")
 //                         ->where("receiver_id=%d AND u_id=sender_id",$receiver_id)
@@ -61,10 +61,10 @@ class LetterModel extends BaseModel{
         $this->pageLegal($page, $limit);
         $subsql=$this->table("spt_user_info u,spt_letter l")
                     ->field("l.l_id,l.receiver_id,u.nickname as receiver_nickname,u.avatar as receiver_avatar,l.title,l.content,l.isread,l.send_time,l.sender_id")
-                    ->where("l.receiver_id=%d AND u.u_id=l.receiver_id AND l.isread=0",$data['receiver_id'])
+                    ->where("l.receiver_id=%d AND u.u_id=l.receiver_id",$data['receiver_id'])
                     ->order("l.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
-                    ->select(false);
+                    ->select(false);//只生成sql语句不执行
         $subsql=$subsql.' sl';
         $res=$this->table("$subsql,spt_user_info us")
                     ->field("sl.*,us.nickname as sender_nickname,us.avatar as sender_avatar")
