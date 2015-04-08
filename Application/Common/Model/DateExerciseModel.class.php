@@ -17,8 +17,13 @@ class DateExerciseModel extends BaseModel{
      * 创建一条约运动
      */
     public function createDE($data){
-        if(!isset($data['content'])){
-            $data['content'] = $data['sport_type'];
+        if(isset($_FILES['picture'])){
+            $res=$this->PicUpload(2,'Exercise','picture');
+            if(isset($res['imgurl'])){
+                $data['picture'] = $res['imgurl'];
+            }else{
+                return spt_json_error('图片上传失败');
+            }
         }
         if($this->create($data,1)){
             if($this->add()){
@@ -58,7 +63,7 @@ class DateExerciseModel extends BaseModel{
         $res=$this->table("spt_user_info u,spt_date_exercise de")
                    ->field("de_id,creator_id,nickname,avatar,sport_type,sport_place,sport_time,content,people_amount,booked_amount,picture,create_time")
                    ->where("creator_region='%s' AND booked_amount<people_amount AND u.u_id=de.creator_id",$my_region)
-                   ->order('create_time desc')
+                   ->order('create_time DESC')
                    ->limit(($page-1)*$limit,$limit)
                    ->select();
         if($res){
@@ -75,7 +80,7 @@ class DateExerciseModel extends BaseModel{
         $res=$this->table("spt_user_info u,spt_date_exercise de")
                     ->field("de_id,creator_id,nickname,avatar,sport_type,sport_place,sport_time,content,people_amount,booked_amount,picture,create_time")
                     ->where("creator_region='%s' AND booked_amount<people_amount AND u.u_id=de.creator_id",$my_region)
-                    ->order('de.booked_amount desc')
+                    ->order('de.booked_amount DESC')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
@@ -123,7 +128,7 @@ class DateExerciseModel extends BaseModel{
         $res=$this->table('spt_date_person dp,spt_user_info u')
                    ->field("u.u_id,u.nickname,u.sex,u.avatar,dp.de_id,dp.create_time")
                    ->where("dp.creator_id=%d AND u.u_id=dp.me_id",$creator_id)
-                   ->order("dp.create_time desc")
+                   ->order("dp.create_time DESC")
                    ->limit(($page-1)*$limit,$limit)
                    ->select();
         if($res){
@@ -139,7 +144,7 @@ class DateExerciseModel extends BaseModel{
         $this->pageLegal($page, $limit);
         $res=$this->table('spt_date_person dp,spt_date_exercise de')
                     ->where('dp.me_id=%d AND de.de_id=dp.de_id',$me_id)
-                    ->order('dp.create_time desc')
+                    ->order('dp.create_time DESC')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
