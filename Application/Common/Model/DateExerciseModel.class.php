@@ -18,7 +18,7 @@ class DateExerciseModel extends BaseModel{
      */
     public function createDE($data){
         if(isset($_FILES['picture'])){
-            $res=$this->PicUpload(2,'Exercise','picture');
+            $res=$this->PicUpload(2,'exercise','picture');
             if(isset($res['imgurl'])){
                 $data['picture'] = $res['imgurl'];
             }else{
