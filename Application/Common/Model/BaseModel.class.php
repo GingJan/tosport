@@ -74,5 +74,41 @@ class BaseModel extends AdvModel{
         return $upToken;
     }
     
+    
+    
+    /**
+     * 图片上传
+     * @param number $size 图片最大限制，默认为2M
+     * @param string $type 上传模块（头像则为'avatar'，其他为对应接口名，如动态为'timeline'）
+     * @param bool $replace 是否替换同名文件
+     * @param array $data 上传相关信息 
+     * @return array $info 返回图片上传信息
+     */
+    public function PicUpload($size=2,$type='',$field=''){
+        if(!$type || !$field){
+            return false;
+        }
+        $upload = new \Think\Upload();
+        $upload->maxSize = $size*1204*1024;
+        $upload->exts=array('jpg','png','jpeg');
+        $upload->rootPath = "./Public/";
+        $upload->savePath = 'img/'.$type.'/';
+        $upload->autoSub = false;
+        $upload->replace = false;
+        
+        if($type ==='avatar'){
+            $upload->replace = true;
+            $upload->saveExt = 'jpg';
+            $upload->saveName = session('user.account');
+        }
+        
+        $info = $upload->uploadOne($_FILES[$field]);
+        if(!$info){
+            return $upload->getError();
+        }
+        $info['imgurl'] = "Public/".$info['savepath'].$info['savename'];
+        return $info;
+    }
+    
 }
 
