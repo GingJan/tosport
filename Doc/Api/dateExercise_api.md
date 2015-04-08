@@ -39,7 +39,7 @@ sport_type | 运动类型 | Y | varchar(32) | 如：网球，羽毛球
 sport_place | 运动地点 | Y | varchar(32) | 如：五邑大学1号网球场
 sport_time | 运动时间 | Y | int | 时间戳
 people_amount | 限定人数上限 | Y | int | 人数上限不能超过25人
-picture | 附件图片 | N | string | 图片的key
+picture | 附加图片 | N | file | 
 content | 附加内容/主题 | N | text | 字数不能超过140字，如果为空则用运动类型自动填补，
 
 **Response**
@@ -93,7 +93,8 @@ de_id | 指定的约运动的id | Y | int |
         "sport_time": "1422875858",
         "content": "网球王子，来打网球吧",
         "people_amount": "2",
-        "booked_amount": "0",
+        "booked_amount": "2",
+        "picture": null,
         "creator_region": "江门",
         "create_time": "1422874342"
     }
