@@ -16,13 +16,22 @@ class TimelineModel extends BaseModel{
      * 发表一条 动态
      */
     public function send($data){
+        if(isset($_FILES['picture'])){
+            $res=$this->PicUpload(2,'timeline','picture');
+            if(isset($res['imgurl'])){
+                $data['picture'] = $res['imgurl'];
+            }else{
+                return spt_json_error('图片上传失败');//需要测试
+            }
+        }
+        
         if($this->create($data)){//这里如果没有$data参数会出问题，sender_id字段会不见
             if($this->add()){
                 return spt_json_success('发表成功');
             }
             return spt_json_error('发表失败');
         }
-        return spt_json_error($this->getError()); 
+        return spt_json_error($this->getError());
     }
     
     /**
@@ -42,7 +51,7 @@ class TimelineModel extends BaseModel{
     public function listsSpeTimeline($sender_id,$page,$limit){
         $this->pageLegal($page, $limit);
         $res=$this->table("spt_timeline tl,spt_user_info u")
-                    ->field("tl.tl_id,tl.content,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
+                    ->field("tl.tl_id,tl.content,tl.picture,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
                     ->where("tl.sender_id=%d AND u.u_id=tl.sender_id",$sender_id)
                     ->limit(($page-1)*$limit,$limit)
                     ->order('create_time desc')//以发表发表时间倒叙显示
@@ -61,7 +70,7 @@ class TimelineModel extends BaseModel{
         $res=$this->table("spt_user_info u,spt_timeline tl,spt_friend f")
                     ->distinct(true)//与下面的field('f.me_id')字段一起使用，即数据集排除f.me_id字段中重复的的记录
                     ->field("f.me_id")
-                    ->field("tl.tl_id,tl.content,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
+                    ->field("tl.tl_id,tl.content,tl.picture,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
                     //->where("(f.me_id=%d AND at.sender_id=f.friend_id) OR (f.friend_id=%d AND at.sender_id=f.me_id)",$me_id,$me_id)//取决于FriendModel的请求的完成才开启
                     ->where("u.u_id=tl.sender_id AND f.me_id=%d AND (tl.sender_id=f.friend_id OR tl.sender_id=%d)",$me_id,$me_id)
                     ->order("tl.create_time DESC")
@@ -77,11 +86,11 @@ class TimelineModel extends BaseModel{
     /**
      * 列出同城用户的动态
      */
-    public function listsCityTimeline($now_region,$page,$limit){
+    public function listsCityTimeline($region,$page,$limit){
         $this->pageLegal($page, $limit);
         $res=$this->table("spt_user_info u,spt_timeline tl")
-                    ->field("tl.tl_id,tl.content,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
-                   ->where("u.u_id=tl.sender_id AND tl.now_region='%s'",$now_region)
+                    ->field("tl.tl_id,tl.content,tl.picture,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
+                   ->where("u.u_id=tl.sender_id AND tl.now_region='%s'",$region)
                    ->order("tl.create_time desc")
                    ->limit(($page-1)*$limit,$limit)
                    ->select();

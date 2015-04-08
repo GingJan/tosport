@@ -11,7 +11,7 @@ class TimelineController extends BaseController{
         $this->getlogin()->reqPost(array('content'));
         $data=I('post.');
         $data['sender_id']=session('user.u_id');
-        $data['region']=session('user.region');
+        $data['now_region']=session('user.region');
         $this->ajaxReturn(D('Timeline')->send($data));
     }
     
