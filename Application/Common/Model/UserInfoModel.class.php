@@ -16,6 +16,8 @@ class UserInfoModel extends BaseModel{
         array('cIP','getIP',1,'callback'),
         array('last_time',NOW_TIME,1),
         array('last_IP','getIP',1,'callback'),
+        array('region','江门',1,'string'),
+//         array('nickname','account',1,'field'),
         array('last_time',NOW_TIME,4),//4代表登录时
         array('last_IP','getIP',4,'callback')
     );
@@ -42,6 +44,22 @@ class UserInfoModel extends BaseModel{
 //     public function firstLogin($data){
 //         if($this->validate()->create($data))
 //     }
+
+
+    /**
+     * 头像上传
+     */
+    public function uploadAvatar($u_id){
+        $res=$this->PicUpload(1,'avatar','avatar');
+        if(isset($res['imgurl'])){
+            if($this->where("u_id=%d",$u_id)->setField("avatar",$res['imgurl'])){
+                return spt_json_success($res['imgurl']);
+            }
+            return spt_json_error('出现问题了');
+        }
+        return spt_json_error('上传失败');
+    }
+    
     
     /**
      * 附近的人
@@ -82,7 +100,7 @@ class UserInfoModel extends BaseModel{
        if($this->create($data,2)){
            if($this->where("u_id=%d AND account='%s'",$data['u_id'],$data['account'])->save()){
                session('user',$data);
-               return spt_json_success('更新资料成功！');
+               return spt_json_success('更新资料成功！'); 
            }
            return spt_json_error('新信息与旧信息相同');
        }

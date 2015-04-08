@@ -15,13 +15,17 @@ class UserController extends BaseController{
         $data=I('post.');
         $res=D('Account')->register($data);//在Account表注册
         if(isset($res['code'])){
-            $res=D('UserInfo')->register($data);//这UserInfo表注册
-            if(isset($res['code'])){
-                $this->ajaxReturn($res);
-            }
-            $this->ajaxReturn($res);
+            $this->ajaxReturn(D('UserInfo')->register($data));
         }
         $this->ajaxReturn($res);
+    }
+    
+    /**
+     * 上传用户头像
+     */
+    public function uploadAvatar(){
+        $this->getlogin()->reqPost(array('avatar'));
+        $this->ajaxReturn(D('UserInfo')->uploadAvatar(session('user.u_id')));
     }
     
     /**
