@@ -25,6 +25,29 @@ email | 邮箱 | Y | varchar(64) | 用于找回密码
 ```
 
 
+
+
+###上传/修改 用户头像
+`POST`
+
+`/Home/User/uploadAvatar`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+------------- | ---------------- | ----------------- | ------------ | ------------------
+avatar| 头像  | Y | file | 
+
+**Response**
+```json
+{
+    "code":20000,
+    "response"："Public/img/avatar/zjien1.jpg"
+}
+```
+
+
+
+
+
 ###更改用户基本信息
 ps:该Api需要用户登陆
 
@@ -37,8 +60,7 @@ ps:该Api需要用户登陆
 nickname | 昵称 | N | varchar(32) | 为空时自动填充account,注册时默认等于account
 sex | 性别 | N | varchar(8) | 
 phone | 电话 | N | varchar(16) | 
-email | 邮箱 | N | varchar(64) | 
-avatar | 头像 | N | varchar(256) | 七牛上的图片key
+email | 邮箱 | N | varchar(64) |  
 intro | 个性签名 | N | text | 
 birth | 生日 | N | int(10) | 时间戳
 spt_favor | 运动爱好 | N | text | 字符串 
