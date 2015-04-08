@@ -18,8 +18,13 @@ class DateMatchModel extends BaseModel{
      * 创建一条约比赛
      */
     public function createDM($data){
-        if(!isset($data['content'])){
-            $data['content'] = $data['match_type'];
+        if(isset($_FILES['picture'])){
+            $res=$this->PicUpload(2,'match','picture');
+            if(isset($res['imgurl'])){
+                $data['picture'] = $res['imgurl'];
+            }else {
+                return spt_json_error('图片上传失败');
+            }
         }
         if($this->create($data,1)){
             if($this->add()){
@@ -87,6 +92,7 @@ class DateMatchModel extends BaseModel{
         return spt_json_error('暂无信息');
     }
     
+    
     /**
      * 约ta
      */
@@ -144,7 +150,7 @@ class DateMatchModel extends BaseModel{
     public function listsJoin($me_id,$page,$limit){
         $this->pageLegal($page, $limit);
         $res=$this->table("spt_match m,spt_date_match dm")
-                    ->field("dm.creator_region,dm.create_time,m.mt_id,m.dm_id,m.creator_id",true)
+                    ->field("dm.dm_id,dm.creator_id,dm.match_type,dm.match_place,dm.match_time,dm.content,dm.picture,m.create_time as joined_time")
                     ->where("m.me_id=%d AND dm.dm_id=m.dm_id",$me_id)
                     ->order("m.create_time desc")
                     ->limit(($page-1)*$limit,$limit)
