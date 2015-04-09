@@ -71,7 +71,7 @@ abstract class Controller {
             case 'EVAL' :
                 // 返回可执行的js脚本
                 header('Content-Type:text/html; charset=utf-8');
-                exit($data);            
+                exit($data);
         }
     }
 
