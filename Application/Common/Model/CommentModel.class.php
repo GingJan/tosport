@@ -57,7 +57,7 @@ class CommentModel extends BaseModel{
     
     
     /**
-     * 显示所有收到的评论/赞
+     * 显示所有收到的评论
      * @param int $page 当前页数
      * @param int $limit 每页大小
      */
