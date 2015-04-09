@@ -14,13 +14,16 @@ class GroupPersonModel extends BaseModel{
         if($this->where("gi_id=%d AND associator_id=%d",$data['gi_id'],$data['associator_id'])->find()){
             return spt_json_error('你已加入该群组了');
         }
+        if($this->table('spt_group_info gi')->where("gi_id=%d AND people>joined",$data['gi_id'])){
+            return spt_json_error('该群组人数已满');
+        }
         if($this->create($data)){
             if($this->add()){
                 return spt_json_success('成功加入该群组');
             }
             return spt_json_error('出错了');
         }
-        return spt_json_error('操作出错了');
+        return spt_json_error('出问题了');
     }
     
     /**
@@ -65,7 +68,7 @@ class GroupPersonModel extends BaseModel{
     /**
      * 设置群组成员的权限(设置某成员为管理员)
      */
-    public function setPower($data){
+    public function grantPower($data){
         if(M('GroupInfo')->where("gi_id=%d AND creator_id=%d",$data['gi_id'],$data['creator_id'])->find()){
             if($this->where("gi_id=%d AND associator_id=%d",$data['gi_id'],$data['associator_id'])->setField('power',1)){
                 return spt_json_success('设置成功');
@@ -78,7 +81,7 @@ class GroupPersonModel extends BaseModel{
     /**
      * 撤销某群组管理员的权限
      */
-    public function rescindPower($data){
+    public function revokePower($data){
         if(M('GroupInfo')->where("gi_id=%d AND creator_id=%d",$data['gi_id'],$data['creator_id'])->find()){
             if($this->where("gi_id=%d AND associator_id=%d",$data['gi_id'],$data['associator_id'])->setField('power',0)){
                 return spt_json_success('撤销成功');

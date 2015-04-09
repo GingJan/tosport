@@ -16,6 +16,7 @@ group_account| 群组账号 | Y | varchar(32) | 唯一
 name | 群组名称 | Y | varchar(32) | 唯一
 people | 容纳人数 | Y | int | 
 intro | 群组简介 | N | text | 
+picture | 群组头像 | N | file | 
 
 **Response**
 ```json
@@ -293,7 +294,7 @@ limit | 每页显示数 | N | int | 默认为10
 ps：该API需要登陆
 `POST`
 
-`/Home/Group/setPower`
+`/Home/Group/grantPower`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 ------------- | ---------------- | ----------------- | ------------ | ------------------
@@ -314,7 +315,7 @@ associator_id | 被设置成员的u_id | Y | int |
 ps：该API需要登陆
 `POST`
 
-`/Home/Group/rescindPower`
+`/Home/Group/revokePower`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 ------------- | ---------------- | ----------------- | ------------ | ------------------

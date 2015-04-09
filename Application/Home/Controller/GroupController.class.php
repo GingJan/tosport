@@ -88,21 +88,21 @@ class GroupController extends BaseController{
     /**
      * 设置群组成员的权限(设置某成员为管理员,该API只限群组管理员使用)
      */
-    public function setPower(){
+    public function grantPower(){
         $this->getlogin()->reqPost(array('gi_id','associator_id'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
-        $this->ajaxReturn(D('GroupPerson')->setPower($data));
+        $this->ajaxReturn(D('GroupPerson')->grantPower($data));
     }
     
     /**
      * 撤销某群组管理员的权限
      */
-    public function rescindPower(){
+    public function revokePower(){
         $this->getlogin()->reqPost(array('gi_id','associator_id'));
         $data=I('post.');
         $data['creator_id']=session('user.u_id');
-        $this->ajaxReturn(D('GroupPerson')->rescindPower($data));
+        $this->ajaxReturn(D('GroupPerson')->revokePower($data));
     }
     
     /**

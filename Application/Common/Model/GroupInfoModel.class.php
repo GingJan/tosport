@@ -21,10 +21,20 @@ class GroupInfoModel extends BaseModel{
      * 创建群组
      */
     public function createGroup($data){//创建了群组后，要把该创建人加入到GroupPerson表中
+        if(isset($_FILES['picture'])){
+            $res=$this->PicUpload(2,'group','picture');
+            if(isset($res['imgurl'])){
+                $data['picture'] = $res['imgurl'];
+            }else {
+                return spt_json_error('图片上传失败');
+            }
+        }
         if($this->create($data,1)){
             if($gi_id=$this->add()){
-                D('GroupPerson')->joinGroup(array('gi_id'=>$gi_id,'associator_id'=>$data['creator_id'],'power'=>2));
-                return spt_json_success('创建成功');
+                $res=D('GroupPerson')->joinGroup(array('gi_id'=>$gi_id,'associator_id'=>$data['creator_id'],'power'=>2));
+                if(isset($res['code'])){
+                    return spt_json_success('创建成功');
+                }
             }
             return spt_json_error('创建失败，请重试');
         }
