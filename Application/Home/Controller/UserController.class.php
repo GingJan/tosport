@@ -24,7 +24,7 @@ class UserController extends BaseController{
      * 上传用户头像
      */
     public function uploadAvatar(){
-        $this->getlogin()->reqPost(array('avatar'));
+        $this->getlogin()->reqPost();
         $this->ajaxReturn(D('UserInfo')->uploadAvatar(session('user.u_id')));
     }
     
