@@ -73,7 +73,7 @@ limit | 每页显示条数 | N | int | 默认为10
 
 
 
-###获取与某人的对话记录
+###获取与某人的未读记录
 ps:该Api需要用户登陆
 `POST`
 
@@ -81,9 +81,7 @@ ps:该Api需要用户登陆
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
-sender_id | 某人的id | Y | int | 即发送该私信人的id 
-page | 当前页码 | N | int | 默认为1
-limit | 每页显示条数 | N | int | 默认为10
+sender_id | 某人的id | Y | int | 即对方的id 
 
 **Response**
 ```json
@@ -94,27 +92,64 @@ limit | 每页显示条数 | N | int | 默认为10
             "l_id": "10",
             "receiver_id": "1",
             "receiver_nickname": "zjien",
-            "receiver_avatar": "abcdefagaga.jpg",
+            "receiver_avatar": "Public/img/avatar/zjien.jpg",
             "title": "3-1",
             "content": "test 2",
             "isread": "0",
             "send_time": "1422758010",
             "sender_id": "3",
             "sender_nickname": "zjien3",
-            "sender_avatar": null
+            "sender_avatar": "Public/img/avatar/zjien3.jpg"
         },
         {
             "l_id": "7",
             "receiver_id": "1",
             "receiver_nickname": "zjien",
-            "receiver_avatar": "abcdefagaga.jpg",
+            "receiver_avatar": "Public/img/avatar/zjien.jpg",
             "title": "3-1",
             "content": "test1",
             "isread": "0",
             "send_time": "1422757801",
             "sender_id": "3",
             "sender_nickname": "zjien3",
-            "sender_avatar": null
+            "sender_avatar": "Public/img/avatar/zjien3.jpg"
+        }
+    ]
+}
+```
+
+
+
+
+###获取与某人的已读记录
+ps:该Api需要用户登陆
+`POST`
+
+`/Home/Letter/getReaded`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ----------------- | ----------------- | ---------------------- | ------------------
+sender_id | 某人的id | Y | int | 即对方的id 
+page | 当前页码 | N | int | 默认为1
+limit | 每页显示条数 | N | int | 默认为10
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "l_id": "8",
+            "receiver_id": "2",
+            "receiver_nickname": "zjien1",
+            "receiver_avatar": "Public/img/avatar/zjien1.jpg",
+            "title": "3-2",
+            "content": "test2",
+            "isread": "1",
+            "send_time": "1422757810",
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": "Public/img/avatar/zjien3.jpg"
         }
     ]
 }

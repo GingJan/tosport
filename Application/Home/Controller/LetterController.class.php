@@ -18,16 +18,25 @@ class LetterController extends BaseController{
      */
     public function getList($page = 1,$limit = 10){
         $this->getlogin()->reqPost();
-        $this->ajaxReturn(D('Letter')->getList(session('user.u_id'),$page = 1,$limit = 10));
+        $this->ajaxReturn(D('Letter')->getList(session('user.u_id'),$page,$limit));
     }
     
     /**
-     * 获取某一对话记录
+     * 获取与某人的未读记录
      */
-    public function getRecord($page = 1,$limit = 10){
+    public function getRecord(){
         $this->getlogin()->reqPost(array('sender_id'));
-        $this->ajaxReturn(D('Letter')->getRecord(array('sender_id'=>I('post.sender_id'),'receiver_id'=>session('user.u_id')),$page = 1,$limit = 10));
+        $this->ajaxReturn(D('Letter')->getRecord(array('sender_id'=>I('post.sender_id'),'receiver_id'=>session('user.u_id'))));
     }
+    
+    /**
+     * 获取与某人的已读记录
+     */
+    public function getReaded($page = 1,$limit = 10){
+        $this->getlogin()->reqPost(array('sender_id'));
+        $this->ajaxReturn(D('Letter')->getReaded(array('sender_id'=>I('post.sender_id'),'receiver_id'=>session('user.u_id')),$page,$limit));
+    }
+    
     
     
 }

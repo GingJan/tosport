@@ -53,13 +53,34 @@ class LetterModel extends BaseModel{
     
     
     /**
-     * 获取与某人的对话记录
+     * 获取与某人的未读记录
      */
-    public function getRecord($data,$page,$limit){
+    public function getRecord($data){
+        $subsql=$this->table("spt_user_info u,spt_letter l")
+                    ->field("l.l_id,l.receiver_id,u.nickname as receiver_nickname,u.avatar as receiver_avatar,l.title,l.content,l.isread,l.send_time,l.sender_id")
+                    ->where("l.receiver_id=%d AND u.u_id=l.receiver_id AND l.isread=0",$data['receiver_id'])
+                    ->order("l.send_time DESC")
+                    ->select(false);//只生成sql语句不执行
+        $subsql=$subsql.' sl';
+        $res=$this->table("$subsql,spt_user_info us")
+                    ->field("sl.*,us.nickname as sender_nickname,us.avatar as sender_avatar")
+                    ->where("sl.sender_id=%d AND us.u_id=sl.sender_id",$data['sender_id'])
+                    ->select();
+        $this->markRead($data['receiver_id'],$data['sender_id']);//标记为已读
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('暂无新消息');
+    }
+    
+    /**
+     * 获取与某人的已读记录
+     */
+    public function getReaded($data,$page,$limit){
         $this->pageLegal($page, $limit);
         $subsql=$this->table("spt_user_info u,spt_letter l")
                     ->field("l.l_id,l.receiver_id,u.nickname as receiver_nickname,u.avatar as receiver_avatar,l.title,l.content,l.isread,l.send_time,l.sender_id")
-                    ->where("l.receiver_id=%d AND u.u_id=l.receiver_id",$data['receiver_id'])
+                    ->where("l.receiver_id=%d AND u.u_id=l.receiver_id AND l.isread=1",$data['receiver_id'])
                     ->order("l.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
                     ->select(false);//只生成sql语句不执行
@@ -68,7 +89,6 @@ class LetterModel extends BaseModel{
                     ->field("sl.*,us.nickname as sender_nickname,us.avatar as sender_avatar")
                     ->where("sl.sender_id=%d AND us.u_id=sl.sender_id",$data['sender_id'])
                     ->select();
-        $this->markRead($data['receiver_id'],$data['sender_id']);//标记为已读
         if($res){
             return spt_json_success($res);
         }
