@@ -52,10 +52,10 @@ class UserInfoModel extends BaseModel{
     public function uploadAvatar($u_id){
         $res=$this->PicUpload(1,'avatar','avatar');
         if(isset($res['imgurl'])){
-            if($this->where("u_id=%d",$u_id)->setField("avatar",$res['imgurl'])){
-                return spt_json_success($res['imgurl']);
+            if($this->where("u_id=%d",$u_id)->setField('avatar',$res['imgurl'])){
+                return spt_json_success($res['imgurl']);//若用户第一次上传头像，则返回头像的URL
             }
-            return spt_json_error('出现问题了');
+            return spt_json_error('更新头像成功');//若用户非第一次上传头像，则不返回URL
         }
         return spt_json_error('上传失败');
     }
