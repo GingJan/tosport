@@ -110,10 +110,5 @@ class BaseModel extends AdvModel{
         return $info;
     }
     
-    
-    protected  function  annulESC($str){
-        return str_replace('\/','/',$str);
-    }
-    
 }
 
