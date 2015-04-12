@@ -94,9 +94,9 @@ class DateExerciseModel extends BaseModel{
      */
     public function toDate($data){
         if($this->table("spt_date_person")->where("de_id=%d AND me_id=%d",$data['de_id'],$data['me_id'])->delete()){
-            return spt_json_error('取消预约成功');
+            return spt_json_success('取消预约成功');
         }
-        if($this->where("people_amount!=booked_amount AND de_id=%d",$data['de_id'])->find()){
+        if($this->where("people_amount=booked_amount AND de_id=%d",$data['de_id'])->find()){
             return spt_json_error('预约人数已经满了');
         }
         $data['create_time']=NOW_TIME;
