@@ -50,23 +50,13 @@ class DateExerciseController extends BaseController{
     }
     
     /**
-     * 约ta
+     * 预约 / 取消预约
      */
-    public function dateIt(){
+    public function toDate(){
         $this->getlogin()->reqPost(array('de_id','creator_id'));
         $data=I('post.');
         $data['me_id']=session('user.u_id');
-        $this->ajaxReturn(D('DateExercise')->dateIt($data));
-    }
-    
-    /**
-     * 取消预约
-     */
-    public function cancelDate(){
-        $this->getlogin()->reqPost(array('de_id'));
-        $data['de_id']=I('post.de_id');
-        $data['me_id']=session('user.u_id');
-        $this->ajaxReturn(D('DateExercise')->cancelDate($data));
+        $this->ajaxReturn(D('DateExercise')->toDate($data));
     }
     
     /**

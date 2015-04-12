@@ -92,12 +92,11 @@ class DateExerciseModel extends BaseModel{
     /**
      * 约ta
      */
-    public function dateIt($data){
-        if($data['me_id'] === $data['creator_id']){
-            return spt_json_error('不能自己约自己');
+    public function toDate($data){
+        if($this->table("spt_date_person")->where("de_id=%d AND me_id=%d",$data['de_id'],$data['me_id'])->delete()){
+            return spt_json_error('取消预约成功');
         }
-        $res=$this->field('people_amount,booked_amount')->where("de_id=%d",$data['de_id'])->find();
-        if($res['people_amount'] === $res['booked_amount']){
+        if($this->where("people_amount!=booked_amount AND de_id=%d",$data['de_id'])->find()){
             return spt_json_error('预约人数已经满了');
         }
         $data['create_time']=NOW_TIME;
@@ -107,17 +106,7 @@ class DateExerciseModel extends BaseModel{
             }
             return spt_json_error('预约运动失败！');
         }
-        return spt_json_error($this->getDbError());
-    }
-    
-    /**
-     * 取消预约
-     */
-    public function cancelDate($data){
-        if(M('DatePerson')->where("de_id=%d AND me_id=%d",$data['de_id'],$data['me_id'])->delete()){
-            return spt_json_success('取消成功');
-        }
-        return spt_json_error('取消失败');
+        return spt_json_error('出现问题了');
     }
     
     /**
