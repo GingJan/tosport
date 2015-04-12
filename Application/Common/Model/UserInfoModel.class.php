@@ -55,7 +55,7 @@ class UserInfoModel extends BaseModel{
             if($this->where("u_id=%d",$u_id)->setField('avatar',$res['imgurl'])){
                 return spt_json_success($res['imgurl']);//若用户第一次上传头像，则返回头像的URL
             }
-            return spt_json_error('更新头像成功');//若用户非第一次上传头像，则不返回URL
+            return spt_json_success($res['imgurl']);//若用户非第一次上传头像，则不返回URL
         }
         return spt_json_error('上传失败');
     }
