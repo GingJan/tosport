@@ -51,7 +51,8 @@ class DateMatchModel extends BaseModel{
     public function listsSpeDM($dm_id){
         $res=$this->table("spt_user_info u,spt_date_match dm")
                     ->field("dm_id,creator_id,nickname,avatar,match_type,match_place,match_time,content,people_amount,booked_amount,picture,create_time")
-                    ->where("dm_id=%d AND u.u_id=dm.creator_id",$dm_id)->find();
+                    ->where("dm_id=%d AND u.u_id=dm.creator_id",$dm_id)
+                    ->find();
         if($res){
             return spt_json_success($res);
         }
@@ -66,7 +67,7 @@ class DateMatchModel extends BaseModel{
         $res=$this->table("spt_user_info u,spt_date_match dm")
                     ->field("dm_id,creator_id,nickname,avatar,match_type,match_place,match_time,content,people_amount,booked_amount,picture,create_time")
                     ->where("creator_region='%s' AND booked_amount<people_amount AND u.u_id=dm.creator_id",$my_region)
-                    ->order('create_time desc')
+                    ->order('create_time DESC')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
@@ -83,7 +84,7 @@ class DateMatchModel extends BaseModel{
         $res=$this->table("spt_user_info u,spt_date_match dm")
                     ->field("dm_id,creator_id,nickname,avatar,match_type,match_place,match_time,content,people_amount,booked_amount,picture,create_time")
                     ->where("creator_region='%s' AND u.u_id=dm.creator_id",$my_region)
-                    ->order('booked_amount desc')
+                    ->order('booked_amount DESC')
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
@@ -92,39 +93,24 @@ class DateMatchModel extends BaseModel{
         return spt_json_error('暂无信息');
     }
     
-    
     /**
-     * 约ta
+     * 预约/取消预约
      */
-    public function dateIt($data){
-        if($data['me_id'] === $data['creator_id']){
-            return spt_json_error('不能与自己比赛');
+    public function toDate($data){
+        if($this->table("spt_match")->where("dm_id=%d AND me_id=%d",$data['dm_id'],$data['me_id'])->delete()){
+            return spt_json_success('取消预约成功');
         }
-        $res=$this->field('people_amount,booked_amount')->where("dm_id=%d",$data['dm_id'])->find();
-        if($res['people_amount'] === $res['booked_amount']){
+        if($this->where("people_amount=booked_amount AND dm_id=%d",$data['dm_id'])->find()){
             return spt_json_error('预约人数已经满了');
-        }
-        if(M('Match')->where("dm_id=%d AND me_id=%d",$data['dm_id'],$data['me_id'])->find()){
-            return spt_json_error('你已经预约了该比赛');
         }
         $data['create_time']=NOW_TIME;
         if(M('Match')->data($data)){
             if(M('Match')->add()){
-                return spt_json_success('比赛预约成功！');
+                return spt_json_success('预约比赛成功！');
             }
-            return spt_json_error('比赛预约失败！');
+            return spt_json_error('预约比赛失败！');
         }
-        return spt_json_error($this->getDbError());
-    }
-    
-    /**
-     * 取消预约
-     */
-    public function cancelDate($data){
-        if(M('Match')->where("dm_id=%d AND me_id=%d",$data['dm_id'],$data['me_id'])->delete()){
-            return spt_json_success('取消成功');
-        }
-        return spt_json_error('取消失败');
+        return spt_json_error('出现问题了');
     }
     
     /**

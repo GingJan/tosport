@@ -104,7 +104,7 @@ dm_id | 指定的约比赛的id | Y | int |
 
 ###显示同城最新的约运动（按发布时间排序）
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateMatch/listsCityDM`
 
@@ -153,7 +153,7 @@ limit | 每页显示条数 | N | int | 默认10
 
 ###显示同城热门的约运动（按预约人数排序）
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateMatch/listsHotDM`
 
@@ -200,41 +200,30 @@ limit | 每页显示条数 | N | int | 默认10
 ```
 
 
-###约Ta
+###预约 / 取消预约
 ps:该Api需要用户登陆
 `POST`
 
-`/Home/DateMatch/dateIt`
+`/Home/DateMatch/toDate`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ------------------- | ------------------- | ---------------------- | ------------------
 dm_id | 要预约的约比赛的id | Y | int | 
-creator_id | 该条约比赛发布人的id | Y | int |
+creator_id | 该条约运动发布人的id | Y | int |
 
 **Response**
 ```json
 {
     "code": 20000,
-    "response": "成功约到！"
+    "response": "预约比赛成功！"
 }
 ```
 
-
-###取消预约
-ps:该Api需要用户登陆
-`POST`
-
-`/Home/DateMatch/cancelDate`
-
-字段 | 描述 | 是否必须 | 数据类型 | 备注
---------------------- | ------------------- | ------------------- | ---------------------- | ------------------
-de_id | 要取消的约比赛的de_id | Y | int | 
-
 **Response**
 ```json
 {
     "code": 20000,
-    "response": "成功约到！"
+    "response": "取消成功"
 }
 ```
 
@@ -243,7 +232,7 @@ de_id | 要取消的约比赛的de_id | Y | int |
 
 ###列出约我的人
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateMatch/listsDateGuy`
 
@@ -289,7 +278,7 @@ limit | 每页显示条数 | N | int | 默认10
 
 ###列出我参加的比赛
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateMatch/listsJoin`
 

@@ -34,7 +34,7 @@ class DateMatchController extends BaseController{
      * 显示同城的约运动
      */
     public function listsCityDM($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateMatch')->listsCityDM(session('user.region'),$page,$limit));
     }
     
@@ -42,35 +42,25 @@ class DateMatchController extends BaseController{
      * 显示热门的约比赛
      */
     public function listsHotDM($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateMatch')->listsHotDM(session('user.region'),$page,$limit));
     }
     
     /**
-     * 约ta
+     * 预约 / 取消预约
      */
-    public function dateIt(){
+    public function toDate(){
         $this->getlogin()->reqPost(array('dm_id','creator_id'));
         $data=I('post.');
         $data['me_id']=session('user.u_id');
-        $this->ajaxReturn(D('DateMatch')->dateIt($data));
-    }
-    
-    /**
-     * 取消预约
-     */
-    public function cancelDate(){
-        $this->getlogin()->reqPost(array('dm_id'));
-        $data['dm_id']=I('post.dm_id');
-        $data['me_id']=session('user.u_id');
-        $this->ajaxReturn(D('DateMatch')->cancelDate($data));
+        $this->ajaxReturn(D('DateMatch')->toDate($data));
     }
     
     /**
      * 列出约我的人
      */
     public function listsDateGuy($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateMatch')->listsDateGuy(session('user.u_id'),$page,$limit));
     }
     
@@ -78,7 +68,7 @@ class DateMatchController extends BaseController{
      * 列出我参加的比赛
      */
     public function listsJoin($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateMatch')->listsJoin(session('user.u_id'),$page,$limit));
     }
 }
