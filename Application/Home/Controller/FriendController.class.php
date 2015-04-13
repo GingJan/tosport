@@ -35,8 +35,8 @@ class FriendController extends BaseController{
      * @param number $limit
      */
     
-    public function listsFriend($page = 1,$limit = 15){
-        $this->getlogin();
+    public function listsFriend($page = 1,$limit = 10){
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('Friend')->listsFriend(session('user.u_id'),$page,$limit));
     }
     
