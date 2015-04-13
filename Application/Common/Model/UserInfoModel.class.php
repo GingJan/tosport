@@ -17,7 +17,7 @@ class UserInfoModel extends BaseModel{
         array('last_time',NOW_TIME,1),
         array('last_IP','getIP',1,'callback'),
         array('region','江门',1,'string'),
-//         array('nickname','account',1,'field'),
+        array('nickname','account',1,'field'),
         array('last_time',NOW_TIME,4),//4代表登录时
         array('last_IP','getIP',4,'callback')
     );
@@ -28,8 +28,7 @@ class UserInfoModel extends BaseModel{
      * UserInfo表 注册
      */
     public function register($data){
-        $data['nickname']=$data['account'];
-        if($this->create($data)){
+        if($this->create($data,1)){
             if($this->add()){
                 return spt_json_success('注册成功');
             }

@@ -6,7 +6,6 @@ use Common\Controller\BaseController;
  * 用户接口
  */
 class UserController extends BaseController{
-    
     /**
      * 创建用户
      */    

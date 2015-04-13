@@ -12,7 +12,6 @@ class AccountModel extends BaseModel{
     );       
     
     protected $_auto=array(
-        array('region','江门',1,'string'),
         array('password','md5',3,'function')
     );
     
