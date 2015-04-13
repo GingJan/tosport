@@ -48,19 +48,34 @@ class TimelineModel extends BaseModel{
     /**
      * 显示某个人的动态
      */
-    public function listsSpeTimeline($sender_id,$page,$limit){
-        $this->pageLegal($page, $limit);
+    public function listsSpeTimeline($data){
+        $this->pageLegal($data['page'], $data['limit']);
         $res=$this->table("spt_timeline tl,spt_user_info u")
                     ->field("tl.tl_id,tl.content,tl.picture,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
-                    ->where("tl.sender_id=%d AND u.u_id=tl.sender_id",$sender_id)
-                    ->limit(($page-1)*$limit,$limit)
-                    ->order('create_time desc')//以发表发表时间倒叙显示
+                    ->where("tl.sender_id=%d AND u.u_id=tl.sender_id",$data['sender_id'])
+                    ->limit(($data['page']-1)*$data['limit'],$data['limit'])
+                    ->order('create_time DESC')//以发表发表时间倒叙显示
                     ->select();
         if($res){
            return spt_json_success($res);
         }
-        return spt_json_error('目前你还没发过动态');
+        return spt_json_error('目前Ta还没发过动态');
     }
+    
+    /**
+     * 显示指定某条动态
+     */
+    public function listsOneTimeline($tl_id){
+        $res=$this->table("spt_timeline tl,spt_user_info u")
+                    ->field("tl.tl_id,tl.content,tl.picture,tl.create_time,tl.c_amount,tl.like_amount,tl.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar")
+                    ->where("tl.tl_id=%d AND u.u_id=tl.sender_id",$tl_id)
+                    ->select();
+        if($res){
+            return spt_json_success($res);
+        }
+        return spt_json_error('无此动态或者已经删除');
+    }
+    
     
     /**
      * 列出我关注的人的动态（包含我的动态）

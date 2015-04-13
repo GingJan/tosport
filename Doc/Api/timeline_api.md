@@ -47,7 +47,7 @@ tl_id | 动态表对应的tl_id | Y | int |
 
 ###显示本人发过的动态
 ps:该Api需要登陆
-`POST`
+`GET`
 
 `/Home/Timeline/listsMyTimeline`
 
@@ -135,11 +135,42 @@ limit | 每页显示多少条 | N | int | 默认10
 
 
 
+###显示指定某一条动态
+ps:该Api需要登陆
+`POST`
+
+`/Home/Timeline/listsOneTimeline`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ----------------- | ----------------- | ---------------------- | ------------------------------------
+tl_id | 动态id | Y | int | 
+
+**Response**
+```json
+{
+    "code": 20000,
+    "response": [
+        {
+            "tl_id": "6",
+            "content": "hello,I'm zjien3.my second test",
+            "picture": null,
+            "create_time": "1422691883",
+            "c_amount": "1",
+            "like_amount": null,
+            "sender_id": "3",
+            "sender_nickname": "zjien3",
+            "sender_avatar": null
+        }
+    ]
+}
+```
+
+
 
 
 ###显示关注的人的动态（包含我的动态）
 ps:该Api需要登陆
-`POST`
+`GET`
 
 `/Home/Timeline/listsAllTimeline`
 
@@ -194,7 +225,7 @@ limit | 每页显示多少条 | N | int | 默认10
 
 ###显示同城动态
 ps:该Api需要登陆
-`POST`
+`GET`
 
 `/Home/Timeline/listsCityTimeline`
 
