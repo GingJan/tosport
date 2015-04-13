@@ -12,7 +12,7 @@ Api user
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 ------------- | ---------------- | ----------------- | ------------ | ------------------
 account| 账号  | Y | varchar(32) | 唯一
-password | 密码 | Y | varchar(32) | 加密
+password | 密码 | Y | varchar(32) | 长度6-12位，数字或字母
 repassword | 确认密码 | Y | varchar(32) | 要与password匹配
 email | 邮箱 | Y | varchar(64) | 用于找回密码
 
