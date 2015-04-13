@@ -71,7 +71,7 @@ receiver_id | 发表该动态人的u_id | Y | int |
 
 ###显示自己发的评论
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/Comment/listsMyComment`
 
@@ -123,10 +123,10 @@ c_id | 评论表的id | Y | int | 对应Comment表的c_id
 
 ###显示所有收到的评论和赞
 ps:该Api需要用户登陆
-pps:返回的like字段为1说明被人点赞了，否则为NULL
-`POST`
+pps:如果c_id为NULL说明该条为赞，如果lk_id为NULL说明该条为评论
+`GET`
 
-`/Home/Comment/listsAllComment`
+`/Home/Comment/listsAllMessage`
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
@@ -140,74 +140,34 @@ limit | 每页显示条数 | N | int | 默认为10
     "code": 20000,
     "response": [
         {
-            "c_id": "10",
-            "u_id": "3",
-            "tl_id": "2",
-            "nickname": "zjien3",
-            "avatar": null,
-            "c_sender_id": "3",
-            "c_receiver_id": "1",
-            "content": null,
-            "like": "1",
-            "send_time": "1422695089",
-            "tl_sender_id": "1",
-            "c_amount": "5"
+            "tl_id": "7",
+            "c_id": null,
+            "lk_id": "1",
+            "sender_id": "1",
+            "sender_nickname": "zjien",
+            "sender_avatar": "Public/img/avatar/zjien.jpg",
+            "send_time": "1427637109",
+            "content": null
         },
         {
-            "c_id": "5",
-            "u_id": "3",
-            "tl_id": "2",
-            "nickname": "zjien3",
-            "avatar": null,
-            "c_sender_id": "3",
-            "c_receiver_id": "1",
-            "content": "hi,I am zjien3 ,I make a Comment",
-            "like": null,
-            "send_time": "1422694592",
-            "tl_sender_id": "1",
-            "c_amount": "5"
+            "tl_id": "7",
+            "c_id": "14",
+            "lk_id": null,
+            "sender_id": "1",
+            "sender_nickname": "zjien",
+            "sender_avatar": "Public/img/avatar/zjien.jpg",
+            "send_time": "1427637150",
+            "content": "hello"
         },
         {
-            "c_id": "3",
-            "u_id": "1",
-            "tl_id": "2",
-            "nickname": "handsomeguy",
-            "avatar": null,
-            "c_sender_id": "1",
-            "c_receiver_id": "2",
-            "content": "hi,glad to see you too",
-            "like": null,
-            "send_time": "1422694517",
-            "tl_sender_id": "1",
-            "c_amount": "5"
-        },
-        {
-            "c_id": "2",
-            "u_id": "2",
-            "tl_id": "2",
-            "nickname": "zjien1",
-            "avatar": null,
-            "c_sender_id": "2",
-            "c_receiver_id": "1",
-            "content": "hello,nice to meet you ,I'm zjien1 whats up",
-            "like": null,
-            "send_time": "1422693689",
-            "tl_sender_id": "1",
-            "c_amount": "5"
-        },
-        {
-            "c_id": "1",
-            "u_id": "2",
-            "tl_id": "2",
-            "nickname": "zjien1",
-            "avatar": null,
-            "c_sender_id": "2",
-            "c_receiver_id": "1",
-            "content": "hello,nice to meet you ,I'm zjien1",
-            "like": null,
-            "send_time": "1422693636",
-            "tl_sender_id": "1",
-            "c_amount": "5"
+            "tl_id": "7",
+            "c_id": null,
+            "lk_id": "2",
+            "sender_id": "5",
+            "sender_nickname": "xiaoli",
+            "sender_avatar": "Public/img/avatar/xiaoli.jpg",
+            "send_time": "1427637192",
+            "content": null
         }
     ]
 }
@@ -223,9 +183,7 @@ ps:该Api需要用户登陆
 
 字段 | 描述 | 是否必须 | 数据类型 | 备注
 --------------------- | ----------------- | ----------------- | ---------------------- | ------------------
-tl_id | 指定动态的tl_id | Y | int |  
-page | 当前页码 | N | int | 默认为1
-limit | 每页显示条数 | N | int | 默认为15
+tl_id | 指定动态的tl_id | Y | int |
 
 **Response**
 ```json
@@ -267,7 +225,7 @@ limit | 每页显示条数 | N | int | 默认为15
 
 ###显示所有的点赞（点赞人）
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/Comment/listsLike`
 

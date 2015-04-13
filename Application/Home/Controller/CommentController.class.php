@@ -28,8 +28,8 @@ class CommentController extends BaseController{
      * 显示自己发的评论
      */
     public function listsMyComment($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
-        $this->ajaxReturn(D('Comment')->listsMyComment(session('user.u_id')));
+        $this->getlogin()->reqGet();
+        $this->ajaxReturn(D('Comment')->listsMyComment(session('user.u_id'),$page,$limit));
     }
     
     /**
@@ -43,28 +43,28 @@ class CommentController extends BaseController{
     }
     
     /**
-     * 显示所有的评论/消息/赞
+     * 显示所有的评论/赞
      * @param number $page
      * @param number $limit
      */
-    public function listsAllComment($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();//不再进行提交方式验证，get/post都可以
-        $this->ajaxReturn(D('Comment')->listsAllComment(session('user.u_id'),$page,$limit));
+    public function listsAllMessage($page = 1,$limit = 10){
+        $this->getlogin()->reqGet();
+        $this->ajaxReturn(D('Comment')->listsAllMessage(session('user.u_id'),$page,$limit));
     }
     
     /**
      * 显示特定某条动态的评论/赞
      */
-    public function listsSpeComment($page = 1,$limit = 10){
+    public function listsSpeComment(){
         $this->getlogin()->reqPost(array('tl_id'));
-        $this->ajaxReturn(D('Comment')->listsSpeComment(I('post.tl_id'),$page,$limit));
+        $this->ajaxReturn(D('Comment')->listsSpeComment(I('post.tl_id')));
     }
     
     /**
      * 显示所有的点赞
      */
     public function listsLike($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('Comment')->listsLike(session('user.u_id'),$page,$limit));
     }
 }

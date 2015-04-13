@@ -61,14 +61,16 @@ class CommentModel extends BaseModel{
      * @param int $page 当前页数
      * @param int $limit 每页大小
      */
-    public function listsAllComment($me_id,$page,$limit){
+    public function listsAllMessage($me_id,$page,$limit){
         $this->pageLegal($page, $limit);
-        $res=$this->table("spt_user_info u,spt_comment c,spt_timeline t")
-                    ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.send_time,t.sender_id as tl_sender_id")
-                    ->where("t.tl_id=c.tl_id AND u.u_id=c.sender_id AND (c.sender_id=%d OR c.receiver_id=%d)",$me_id,$me_id)
-                    ->order("c.send_time DESC")
-                    ->limit(($page-1)*$limit,$limit)
-                    ->select();
+//         $res=$this->field('tl_id,c_id,lk_id,sender_id,sender_nickname,sender_avatar,send_time,content')
+//                     ->table('Comment_like')
+//                     ->union(array('field'=>'tl_id,c_id,NULL lk_id,sender_id,sender_nickname,sender_avatar,send_time,content','table'=>'spt_comment c,spt_user_info u'))
+//                     ->union(array('field'=>'tl_id,NULL c_id,lk_id,sender_id,sender_nickname,sender_avatar,send_time,content','table'=>'spt_like l,spt_user_info u'))
+//                     ->where('u_idc.sender_id')
+//                     ->select();
+        $page=($page-1)*$limit;
+        $res=$this->query("select c.tl_id,c.c_id,NULL lk_id,c.sender_id,u.nickname sender_nickname,u.avatar sender_avatar,c.send_time,c.content from spt_comment c,spt_user_info u where (c.receiver_id=$me_id AND u.u_id=c.sender_id) UNION select l.tl_id,NULL c_id,l.lk_id,l.sender_id,u.nickname sender_nickname,u.avatar sender_avatar,l.send_time,NULL content from spt_like l,spt_user_info u where (l.receiver_id=$me_id AND u.u_id=l.sender_id) ORDER BY send_time LIMIT $page,$limit");
         if($res){
             return spt_json_success($res);
         }
@@ -81,22 +83,17 @@ class CommentModel extends BaseModel{
      * @param int $page 当前页数
      * @param int $limit 每页大小
      */
-    public function listsSpeComment($tl_id,$page,$limit){
-        $this->pageLegal($page, $limit);
+    public function listsSpeComment($tl_id){
         $res=$this->table("spt_user_info u,spt_comment c,spt_timeline t")
                     ->field("c.c_id,u.u_id,c.tl_id,u.nickname,u.avatar,c.sender_id as c_sender_id,c.receiver_id as c_receiver_id,c.content,c.send_time,t.sender_id as tl_sender_id")
                     ->where("c.tl_id=%d AND t.tl_id=c.tl_id AND u.u_id=c.sender_id",$tl_id)
                     ->order("c.send_time DESC")
-                    ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
             return spt_json_success($res);
         }
         return spt_json_error('暂无评论');
     }
-    
-    
-    
     
     /**
      * 点/取消 赞
@@ -122,7 +119,7 @@ class CommentModel extends BaseModel{
         $res=$this->table("spt_like lk,spt_user_info u")
                     ->field("lk.sender_id,u.nickname as sender_nickname,u.avatar as sender_avatar,lk.send_time")
                     ->where("lk.receiver_id=%d AND u.u_id=lk.sender_id",$me_id)
-                    ->order("lk.send_time desc")
+                    ->order("lk.send_time DESC")
                     ->limit(($page-1)*$limit,$limit)
                     ->select();
         if($res){
