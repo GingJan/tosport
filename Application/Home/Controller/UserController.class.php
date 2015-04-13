@@ -84,7 +84,7 @@ class UserController extends BaseController{
      * 附近的人
      */
     public function nearby($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('UserInfo')->nearby(session('user.u_id'),$page,$limit));
     }
     

@@ -167,7 +167,7 @@ repassword | 确认密码 | Y | varchar(32) | 与newPassword匹配
 
 ###附近的人
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/User/nearby`
 
