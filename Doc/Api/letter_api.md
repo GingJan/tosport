@@ -28,7 +28,7 @@ receiver_id | 收信人u_id | Y | int |
 
 ###获取消息列表
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/Letter/getList`
 

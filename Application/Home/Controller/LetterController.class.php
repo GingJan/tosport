@@ -17,7 +17,7 @@ class LetterController extends BaseController{
      * 获取消息列表
      */
     public function getList($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('Letter')->getList(session('user.u_id'),$page,$limit));
     }
     
@@ -32,8 +32,10 @@ class LetterController extends BaseController{
     /**
      * 获取与某人的已读记录
      */
-    public function getReaded($page = 1,$limit = 10){
+    public function getReaded(){
         $this->getlogin()->reqPost(array('sender_id'));
+        $page=I('post.page',1);
+        $limit=I('post.limit',10);
         $this->ajaxReturn(D('Letter')->getReaded(array('sender_id'=>I('post.sender_id'),'receiver_id'=>session('user.u_id')),$page,$limit));
     }
     
