@@ -15,7 +15,7 @@ class DateVenueController extends BaseController{
      * 显示所有的场馆(均为同城场馆)
      */
     public function listsCityVenue($page =1,$limit =10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateVenue')->listsCityVenue(session('user.region'),$page,$limit));
     }
     
@@ -41,7 +41,7 @@ class DateVenueController extends BaseController{
      * 显示我预约的场馆
      */
     public function listsDate($page =1,$limit =10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateVenue')->listsDate(session('user.u_id'),$page,$limit));
     }
 }
