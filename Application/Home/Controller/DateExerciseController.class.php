@@ -37,7 +37,7 @@ class DateExerciseController extends BaseController{
      * 显示同城的约运动
      */
     public function listsCityDE($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateExercise')->listsCityDE(session('user.region'),$page,$limit));
     }
     
@@ -45,7 +45,7 @@ class DateExerciseController extends BaseController{
      * 显示热门的约运动
      */
     public function listsHotDE($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateExercise')->listsHotDE(session('user.region'),$page,$limit));
     }
     
@@ -63,7 +63,7 @@ class DateExerciseController extends BaseController{
      * 列出约我的人
      */
     public function listsDateGuy($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateExercise')->listsDateGuy(session('user.u_id'),$page,$limit));
     }
        
@@ -71,7 +71,7 @@ class DateExerciseController extends BaseController{
      * 列出我参加的约运动
      */
     public function listsJoin($page = 1,$limit = 10){
-        $this->getlogin()->reqPost();
+        $this->getlogin()->reqGet();
         $this->ajaxReturn(D('DateExercise')->listsJoin(session('user.u_id'),$page,$limit));
     }
 }

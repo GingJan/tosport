@@ -106,9 +106,14 @@ de_id | 指定的约运动的id | Y | int |
 
 ###显示同城最新的约运动（按发布时间排序）
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateExercise/listsCityDE`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ------------------- | ------------------- | ---------------------- | ------------------
+page | 当前页码 | N | int | 默认为1
+limit | 每页大小 | N |int | 默认为10
 
 **Response**
 ```json
@@ -152,9 +157,14 @@ ps:该Api需要用户登陆
 
 ###显示同城热门的约运动（按预约人数排序）
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateExercise/listsHotDE`
+
+字段 | 描述 | 是否必须 | 数据类型 | 备注
+--------------------- | ------------------- | ------------------- | ---------------------- | ------------------
+page | 当前页码 | N | int | 默认为1
+limit | 每页大小 | N |int | 默认为10
 
 **Response**
 ```json
@@ -228,7 +238,7 @@ creator_id | 该条约运动发布人的id | Y | int |
 
 ###列出约我的人
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateExercise/listsDateGuy`
 
@@ -267,7 +277,7 @@ limit | 每页大小 | N |int | 默认为10
 
 ###列出我参加的约运动
 ps:该Api需要用户登陆
-`POST`
+`GET`
 
 `/Home/DateExercise/listsJoin`
 
