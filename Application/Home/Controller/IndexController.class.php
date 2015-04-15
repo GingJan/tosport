@@ -23,7 +23,11 @@ class IndexController extends Controller {
 	
 	public function resetPage(){
 	    $this->display('resetPassword');
-	    
+	}
+	
+	public function upload(){
+	    $this->display();
+	    exit;
 	}
 	
 }

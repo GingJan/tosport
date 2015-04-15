@@ -43,14 +43,28 @@ if(file_exists($local_config)){
     return array_merge($common_config,$config);
 }
 
+//     return array_merge($common_config,array(
+// 	    //默认数据库配置
+// 		'DB_TYPE'              => 'mysql',
+// 		'DB_HOST'              => 'localhost',  //主机名
+// 		'DB_PORT'              =>  3306,        //端口
+// 		'DB_NAME'              => 'tosport',    //数据库名称
+// 		'DB_CHARSET'           => 'utf8',       //字符集
+// 		'DB_PREFIX'            => 'spt_',       //表前缀
+//         'DB_USER'			   => 'root',		//默认数据库用户名
+//         'DB_PWD'			   => '123'			//数据库密码    
+//     ));
+    
+    
+    /*coding.net数据库配置信息*/
     return array_merge($common_config,array(
-	    //默认数据库配置
-		'DB_TYPE'              => 'mysql',
-		'DB_HOST'              => 'localhost',  //主机名
-		'DB_PORT'              =>  3306,        //端口
-		'DB_NAME'              => 'tosport',    //数据库名称
-		'DB_CHARSET'           => 'utf8',       //字符集
-		'DB_PREFIX'            => 'spt_',       //表前缀
-        'DB_USER'			   => 'root',		//默认数据库用户名
-        'DB_PWD'			   => '123'			//数据库密码    
+        //默认数据库配置
+        'DB_TYPE'              => 'mysql',
+        'DB_HOST'              => '10.9.1.188',  //主机名
+        'DB_PORT'              =>  3306,        //端口
+        'DB_NAME'              => 'cf_cc84a906_82a5_4e13_8fd4_59ce4949379e',    //数据库名称
+        'DB_CHARSET'           => 'utf8',       //字符集
+        'DB_PREFIX'            => 'spt_',       //表前缀
+        'DB_USER'			   => 'w4gvOpxamyGTo34L',		//默认数据库用户名
+        'DB_PWD'			   => 'q2XCCNJeCIr6XSKF'			//数据库密码
     ));
