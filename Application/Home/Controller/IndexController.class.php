@@ -27,7 +27,6 @@ class IndexController extends Controller {
 	
 	public function upload(){
 	    $this->display();
-	    exit;
 	}
 	
 }
