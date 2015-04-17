@@ -37,11 +37,11 @@ $common_config = array(
 
 //以下为配置文件的合成
 //CONF_PATH 公共配置路径： APP_PATH . 'Common' . 'Conf/'
-$local_config = CONF_PATH.'local_config.php';
-if(file_exists($local_config)){
-    $config = require($local_config);
-    return array_merge($common_config,$config);
-}
+// $local_config = CONF_PATH.'local_config.php';
+// if(file_exists($local_config)){
+//     $config = require($local_config);
+//     return array_merge($common_config,$config);
+// }
 
 //     return array_merge($common_config,array(
 // 	    //默认数据库配置
@@ -57,14 +57,31 @@ if(file_exists($local_config)){
     
     
     /*coding.net数据库配置信息*/
+
+//     if($_ENV['VCAP_SERVICES']){
+//         $mysql_config = json_decode($_ENV['VCAP_SERVICES']);
+//         $mysql_config=$mysql_config['mysql'][0]['credentials'];
+//         var_dump($mysql_config);
+//     }
     return array_merge($common_config,array(
-        //默认数据库配置
-        'DB_TYPE'              => 'mysql',
-        'DB_HOST'              => '10.9.1.188',  //主机名
-        'DB_PORT'              =>  3306,        //端口
-        'DB_NAME'              => 'cf_cc84a906_82a5_4e13_8fd4_59ce4949379e',    //数据库名称
-        'DB_CHARSET'           => 'utf8',       //字符集
-        'DB_PREFIX'            => 'spt_',       //表前缀
-        'DB_USER'			   => 'w4gvOpxamyGTo34L',		//默认数据库用户名
-        'DB_PWD'			   => 'q2XCCNJeCIr6XSKF'			//数据库密码
+        'DB_TYPE' => 'mysql', // 数据库类型
+        'DB_HOST' => '10.9.1.188', // 服务器地址
+        'DB_NAME' => 'cf_cc84a906_82a5_4e13_8fd4_59ce4949379e', // 数据库名
+        'DB_USER' => 'w4gvOpxamyGTo34L', // 用户名
+        'DB_PWD' => 'q2XCCNJeCIr6XSKF', // 密码
+        'DB_PORT' => 3306, // 端口
+        'DB_PREFIX'            => 'spt_'
     ));
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
