@@ -5,6 +5,10 @@ The API of ToSport，约运动API
 Please go to Docs directory to read more details，THX
 
 
+##BaseUrl
+tosport.coding.io
+
+
 ## 目录结构
 ```markdown
 |-Application 应用目录
@@ -12,6 +16,7 @@ Please go to Docs directory to read more details，THX
 |  |  |-Common      function.php自定义函数放此处
 |  |  |-Conf        通用配置文件，本地配置文件
 |  |  |-Controller  BaseController 放此处
+|
 |  |  
 |  |-Home
 |  |  |-...
@@ -29,3 +34,4 @@ Please go to Docs directory to read more details，THX
 |
 |-...
 ```
+
