@@ -55,24 +55,20 @@ $common_config = array(
 //         'DB_PWD'			   => '123'			//数据库密码    
 //     ));
     
-    
     /*coding.net数据库配置信息*/
-
-//     if($_ENV['VCAP_SERVICES']){
-//         $mysql_config = json_decode($_ENV['VCAP_SERVICES']);
-//         $mysql_config=$mysql_config['mysql'][0]['credentials'];
-//         var_dump($mysql_config);
-//     }
+    if($_ENV['VCAP_SERVICES']){
+        $mysql_config = json_decode($_ENV['VCAP_SERVICES'],true);
+        $mysql_config=$mysql_config['mysql'][0]['credentials'];
+    }
     return array_merge($common_config,array(
-        'DB_TYPE' => 'mysql', // 数据库类型
-        'DB_HOST' => '10.9.1.188', // 服务器地址
-        'DB_NAME' => 'cf_cc84a906_82a5_4e13_8fd4_59ce4949379e', // 数据库名
-        'DB_USER' => 'w4gvOpxamyGTo34L', // 用户名
-        'DB_PWD' => 'q2XCCNJeCIr6XSKF', // 密码
-        'DB_PORT' => 3306, // 端口
-        'DB_PREFIX'            => 'spt_'
+        'DB_TYPE'               => 'mysql', // 数据库类型
+        'DB_HOST'               => $mysql_config['hostname'], // 服务器地址
+        'DB_NAME'               => $mysql_config['name'], // 数据库名
+        'DB_USER'               => $mysql_config['username'], // 用户名
+        'DB_PWD'                => $mysql_config['password'], // 密码
+        'DB_PORT'               => $mysql_config['port'], // 端口
+        'DB_PREFIX'             => 'spt_'
     ));
-    
     
     
     
