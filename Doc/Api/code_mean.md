@@ -1,7 +1,7 @@
 #基本说明：
 
 ##BaseUrl
-`tosport.coding.io`
+`http://tosport.coding.io`
 
 #返回数据格式说明：
 ###以下为json格式：
