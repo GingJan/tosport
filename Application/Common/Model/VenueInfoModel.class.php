@@ -4,11 +4,10 @@ namespace Common\Model;
 use Common\Model\BaseModel;
 class VenueInfoModel extends BaseModel{
     protected $_validate=array(
-        array('name','','场馆名称不能为空',self::MUST_VALIDATE,'notequal',3),
-        array('people','','场馆最大允许预约人数不能为空',self::MUST_VALIDATE,'notequal',3),
-        array('type','','提供的运动项目不能为空',self::MUST_VALIDATE,'notequal',3),
-        array('price','','场馆价格不能为空',self::MUST_VALIDATE,'notequal',3),
-        array('region','','场馆所在城市不能为空',self::MUST_VALIDATE,'notequal',1)
+        array('people','','场馆最大允许预约人数不能为空',self::EXISTS_VALIDATE,'notequal',3),
+        array('type','','提供的运动项目不能为空',self::EXISTS_VALIDATE,'notequal',3),
+        array('price','','场馆价格不能为空',self::EXISTS_VALIDATE,'notequal',3),
+        array('region','','场馆所在城市不能为空',self::EXISTS_VALIDATE,'notequal',1)
     );
     
     protected $_auto=array(
@@ -17,7 +16,7 @@ class VenueInfoModel extends BaseModel{
         array('is_ban',0,1,'string')
     );
     
-    protected $readonlyField=array('remainder','bought','region');//该三字段是不允许修改的
+    protected $readonlyField=array('vi_id','ma_id','name','bought','region');//该三字段是不允许修改的
 
     /*管理员*/
     /**
