@@ -109,6 +109,14 @@ class BaseModel extends AdvModel{
         $info['imgurl'] = "Public/".$info['savepath'].$info['savename'];
         return $info;
     }
+
+    /**
+     *
+     */
+    protected function checkPage(&$page,&$limit){
+        $limit = $limit < 10? 10 : (int)$limit;
+        $page = $page > 1? ($page-1)*$limit : 0;
+    }
     
 }
 

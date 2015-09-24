@@ -282,9 +282,8 @@ label {
         $('#mz-result').text('');
         $.ajax({
             type: req_method,
-            //url: '/svn/tosport' + abs_url,
+            url: '/ToSportForSae' + abs_url,
             //url: '/index.php' + abs_url,
-            url: abs_url,
             data: send_data,
             dataType: 'text',
             success: function(text) {
