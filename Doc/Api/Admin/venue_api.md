@@ -1,8 +1,8 @@
-Api manager
+Api venue
 ===
 >By zjien
 
-`Manager 接口`
+`Venue 接口`
 
 ##管理员
 以下接口只适用于管理员

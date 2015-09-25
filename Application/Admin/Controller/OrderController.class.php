@@ -8,7 +8,7 @@ class OrderController extends BaseController{
      * 查看预约订单列表
      */
     public function listBooking() {
-        $this->getlogin()->checkPrivilege(array(2));
+        $this->getlogin()->checkPrivilege(array(2))->reqGet();
         $this->ajaxReturn(D('DateVenue')->listBooking(session('user.parent_ma_id'),I('get.page',1)));
     }
 

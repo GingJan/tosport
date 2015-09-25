@@ -84,8 +84,9 @@ class DateVenueModel extends BaseModel{
      */
     public function listOrderDetail($data){
         $res = $this->table('spt_date_venue dv,spt_user_info ui')
-                    ->where("dv.ma_id=%d AND dv_id=%d AND ui.u_id=dv.subscriber",$data['ma_id'],$data['dv_id'])
+                    ->where("dv.ma_id=%d AND dv.dv_id=%d AND ui.u_id=dv.subscriber",$data['ma_id'],$data['dv_id'])
                     ->find();
+        unset($res['account'],$res['u_id'],$res['avatar']);
         return $res? spt_json_success($res) : spt_json_error('暂无数据');
     }
 
